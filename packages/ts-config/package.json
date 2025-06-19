@@ -1,0 +1,6 @@
+{
+  "name": "@workspace/typescript-config",
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,27 @@
+export const fieldsOfStudy = [
+  "Computer Science",
+  "Medicine",
+  "Chemistry",
+  "Biology",
+  "Materials Science",
+  "Physics",
+  "Geology",
+  "Psychology",
+  "Art",
+  "History",
+  "Geography",
+  "Sociology",
+  "Business",
+  "Political Science",
+  "Economics",
+  "Philosophy",
+  "Mathematics",
+  "Engineering",
+  "Environmental Science",
+  "Agricultural and Food Sciences",
+  "Education",
+  "Law",
+  "Linguistics",
+] as const;
+
+export type FieldOfStudy = (typeof fieldsOfStudy)[number];

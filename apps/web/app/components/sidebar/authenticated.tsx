@@ -1,0 +1,352 @@
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@workspace/ui/src/components/sidebar";
+import {
+  CreditCard,
+  Folder,
+  Folders,
+  LogOut,
+  MoreVertical,
+  MoveLeft,
+  MoveRight,
+  Plus,
+  Search,
+  Settings,
+  Trash2,
+  UserCog,
+} from "@workspace/ui/src/iconography";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@workspace/ui/src/components/dropdown-menu";
+import { SignOutButton, useUser } from "@clerk/nextjs";
+import { Separator } from "@workspace/ui/src/components/separator";
+import Link from "next/link";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@workspace/ui/src/components/avatar";
+import { useTheme } from "next-themes";
+import { Label } from "@workspace/ui/src/components/label";
+import { Switch } from "@workspace/ui/src/components/switch";
+import {
+  useAddSearchToFolderMutation,
+  useGetCurrentUserFoldersQuery,
+  useGetCurrentUserSearchesQuery,
+  useRemoveSearchFromFolderMutation,
+} from "@/queries";
+import { getRandomSidebarNoSearchPlaceholder } from "../../utils/placeholders/no-searches";
+import { DeleteSearchDialogContent } from "../dialogs/search/delete";
+import { Doc, Id } from "@workspace/backend/convex/_generated/dataModel";
+import { Dialog, DialogTrigger } from "@workspace/ui/src/components/dialog";
+import { Checkbox } from "@workspace/ui/src/components/checkbox";
+import { toast } from "@workspace/ui/src/components/sonner";
+import { playToastSound } from "@workspace/ui/src/lib/sound";
+import { ReactNode } from "react";
+
+const MyDropdownMenuItem = (props: {
+  folder: Doc<"folders">;
+  searchId: Id<"searches">;
+}) => {
+  const checked = props.folder.searchIds.includes(props.searchId);
+
+  const { mutateAsync: addSearchToFolderMutation } =
+    useAddSearchToFolderMutation();
+  const { mutateAsync: removeSearchFromFolderMutation } =
+    useRemoveSearchFromFolderMutation();
+
+  const onSelect = (e: Event) => {
+    e.preventDefault();
+    if (checked) {
+      toast.promise(
+        removeSearchFromFolderMutation({
+          folderId: props.folder._id,
+          searchId: props.searchId,
+        }),
+        {
+          loading: "Removing from folder...",
+          success: () => {
+            return {
+              message: "Removed from folder",
+              richColors: true,
+            };
+          },
+          error: { message: "Failed to remove from folder", richColors: true },
+        }
+      );
+    } else {
+      toast.promise(
+        addSearchToFolderMutation({
+          folderId: props.folder._id,
+          searchId: props.searchId,
+        }),
+        {
+          loading: "Adding to folder...",
+          success: () => {
+            playToastSound();
+            return {
+              message: "Added to folder - played sound!",
+              richColors: true,
+            };
+          },
+          error: { message: "Failed to add to folder", richColors: true },
+        }
+      );
+    }
+  };
+
+  return (
+    <DropdownMenuItem
+      onSelect={onSelect}
+      className="flex items-center justify-between gap-4"
+    >
+      <div className="flex items-center gap-1">
+        <Folder />
+        <div className="text-muted-foreground">/</div>
+        <div className="">{props.folder.name}</div>
+      </div>
+      <Checkbox className="[&_*]:!stroke-black" checked={checked} />
+    </DropdownMenuItem>
+  );
+};
+
+const SidebarMenuItem_Search = (props: {
+  searchQuery: string;
+  searchId: Id<"searches">;
+  folders: Doc<"folders">[];
+}) => {
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton asChild>
+        <Link href={`/search?q=${encodeURIComponent(props.searchQuery)}`}>
+          <span>{props.searchQuery}</span>
+        </Link>
+      </SidebarMenuButton>
+
+      <Dialog>
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger asChild>
+            <SidebarMenuAction>
+              <MoreVertical />
+            </SidebarMenuAction>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="right" align="start">
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger className="gap-2">
+                <Plus className="size-4 text-muted-foreground" />
+                <span>Add to Folder</span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent>
+                  {props.folders.map((folder) => (
+                    <MyDropdownMenuItem
+                      key={folder._id}
+                      folder={folder}
+                      searchId={props.searchId}
+                    />
+                  ))}
+                  <DropdownMenuItem>Create new +</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+
+            <DialogTrigger asChild>
+              <DropdownMenuItem variant="destructive">
+                <Trash2 />
+                <span>Delete</span>
+              </DropdownMenuItem>
+            </DialogTrigger>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DeleteSearchDialogContent
+          name={props.searchQuery}
+          searchId={props.searchId}
+        />
+      </Dialog>
+    </SidebarMenuItem>
+  );
+};
+
+// return searches sorted by today, yesterday, last 7 days, Last 30 days, Older...
+const sortSearchesByDate = (searches: Doc<"searches">[]) => {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  const last7Days = new Date(today);
+  last7Days.setDate(last7Days.getDate() - 7);
+  const last30Days = new Date(today);
+  last30Days.setDate(last30Days.getDate() - 30);
+
+  const sortedSearches = searches.reduce(
+    (acc, search) => {
+      const searchDate = new Date(search._creationTime);
+
+      if (searchDate >= today) {
+        acc.today.push(search);
+      } else if (searchDate >= yesterday) {
+        acc.yesterday.push(search);
+      } else if (searchDate >= last7Days) {
+        acc.last7Days.push(search);
+      } else if (searchDate >= last30Days) {
+        acc.last30Days.push(search);
+      } else {
+        acc.older.push(search);
+      }
+
+      return acc;
+    },
+    {
+      today: [] as Doc<"searches">[],
+      yesterday: [] as Doc<"searches">[],
+      last7Days: [] as Doc<"searches">[],
+      last30Days: [] as Doc<"searches">[],
+      older: [] as Doc<"searches">[],
+    }
+  );
+
+  return sortedSearches;
+};
+
+const SearchMenu = (props: {
+  searches: Doc<"searches">[];
+  folders: Doc<"folders">[];
+}) => {
+  const sortedSearches = sortSearchesByDate(props.searches);
+
+  return (
+    <SidebarMenu>
+      {sortedSearches.today.length > 0 && (
+        <>
+          <SidebarGroupLabel className="font-light">Today</SidebarGroupLabel>
+          {sortedSearches.today.map((search, i) => (
+            <SidebarMenuItem_Search
+              key={i}
+              searchQuery={search.query}
+              searchId={search._id}
+              folders={props.folders}
+            />
+          ))}
+        </>
+      )}
+
+      {sortedSearches.yesterday.length > 0 && (
+        <>
+          <SidebarGroupLabel>Yesterday</SidebarGroupLabel>
+          {sortedSearches.yesterday.map((search, i) => (
+            <SidebarMenuItem_Search
+              key={i}
+              searchQuery={search.query}
+              searchId={search._id}
+              folders={props.folders}
+            />
+          ))}
+        </>
+      )}
+
+      {sortedSearches.last7Days.length > 0 && (
+        <>
+          <SidebarGroupLabel>Last 7 Days</SidebarGroupLabel>
+          {sortedSearches.last7Days.map((search, i) => (
+            <SidebarMenuItem_Search
+              key={i}
+              searchQuery={search.query}
+              searchId={search._id}
+              folders={props.folders}
+            />
+          ))}
+        </>
+      )}
+
+      {sortedSearches.last30Days.length > 0 && (
+        <>
+          <SidebarGroupLabel>Last 30 Days</SidebarGroupLabel>
+          {sortedSearches.last30Days.map((search, i) => (
+            <SidebarMenuItem_Search
+              key={i}
+              searchQuery={search.query}
+              searchId={search._id}
+              folders={props.folders}
+            />
+          ))}
+        </>
+      )}
+
+      {sortedSearches.older.length > 0 && (
+        <>
+          <SidebarGroupLabel>Older</SidebarGroupLabel>
+          {sortedSearches.older.map((search, i) => (
+            <SidebarMenuItem_Search
+              key={i}
+              searchQuery={search.query}
+              searchId={search._id}
+              folders={props.folders}
+            />
+          ))}
+        </>
+      )}
+    </SidebarMenu>
+  );
+};
+
+export function SearchGroup() {
+  let returnDiv: ReactNode;
+
+  const {
+    data: searches = [],
+    isPending: searchesPending,
+    error: searchesError,
+  } = useGetCurrentUserSearchesQuery();
+
+  const {
+    data: folders = [],
+    isPending: foldersPending,
+    error: foldersError,
+  } = useGetCurrentUserFoldersQuery();
+
+  if (searchesPending || foldersPending) {
+    returnDiv = <div className="text-neutral-500">Loading...</div>;
+  } else if (searchesError || foldersError) {
+    returnDiv = (
+      <div className="text-destructive">
+        Error loading searches:{" "}
+        {searchesError?.message || foldersError?.message}
+      </div>
+    );
+  } else if (searches.length === 0) {
+    returnDiv = (
+      <div className="text-neutral-500">
+        🦗 {getRandomSidebarNoSearchPlaceholder()}
+      </div>
+    );
+  } else {
+    returnDiv = <SearchMenu searches={searches} folders={folders} />;
+  }
+
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel>Searches</SidebarGroupLabel>
+      <SidebarGroupContent>{returnDiv}</SidebarGroupContent>
+    </SidebarGroup>
+  );
+}

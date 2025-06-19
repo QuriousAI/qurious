@@ -1,0 +1,287 @@
+[
+    {
+        "question": "Can universal basic income reduce poverty levels?",
+        "emoji": "💰",
+        "topic": "Economics"
+    },
+    {
+        "question": "What are the economic impacts of 5G technology on global markets?",
+        "emoji": "📶",
+        "topic": "Economics"
+    },
+    {
+        "question": "Does rent control increase housing prices?",
+        "emoji": "🏠",
+        "topic": "Economics"
+    },
+    {
+        "question": "Compare the nutritional value of plant-based proteins vs. animal-based proteins.",
+        "emoji": "🥦",
+        "topic": "Nutrition and Diet"
+    },
+    {
+        "question": "How much protein do I need to eat per day to gain muscle?",
+        "emoji": "💪",
+        "topic": "Nutrition and Diet"
+    },
+    {
+        "question": "Detail the for and against cases of red wine improving cardiovascular health.",
+        "emoji": "🍷",
+        "topic": "Nutrition and Diet"
+    },
+    {
+        "question": "Write a review on the challenges of gender-responsive budgeting in South Korea.",
+        "emoji": "📊",
+        "topic": "Business"
+    },
+    {
+        "question": "Does middle management play a crucial role in organizational change?",
+        "emoji": "🏢",
+        "topic": "Business"
+    },
+    {
+        "question": "Do OKRs improve business outcomes?",
+        "emoji": "🎯",
+        "topic": "Business"
+    },
+    {
+        "question": "What were the key differences between the American and French Revolutions? Generate a table showing causes, key figures, and outcomes.",
+        "emoji": "📜",
+        "topic": "History"
+    },
+    {
+        "question": "Compare the political philosophies of Thomas Hobbes and John Locke.",
+        "emoji": "⚖️",
+        "topic": "History"
+    },
+    {
+        "question": "Compare the economic impacts of the Great Depression in the USA and Europe.",
+        "emoji": "📉",
+        "topic": "History"
+    },
+    {
+        "question": "Create a table comparing the efficacy and side effects of prescription-strength retinoids for acne treatment.",
+        "emoji": "🧴",
+        "topic": "Skin Care"
+    },
+    {
+        "question": "Can antioxidants improve skin health?",
+        "emoji": "🍊",
+        "topic": "Skin Care"
+    },
+    {
+        "question": "Compare salicylic acid vs benzoyl peroxide for acne.",
+        "emoji": "💊",
+        "topic": "Skin Care"
+    },
+    {
+        "question": "Does climate change affect polar bear populations?",
+        "emoji": "🐻‍❄️",
+        "topic": "Environmental Science"
+    },
+    {
+        "question": "Can urban green spaces improve air quality?",
+        "emoji": "🌳",
+        "topic": "Environmental Science"
+    },
+    {
+        "question": "Write a blog on innovative methods for reducing plastic waste.",
+        "emoji": "♻️",
+        "topic": "Environmental Science"
+    },
+    {
+        "question": "Discuss the importance of consistent sleep timing for health.",
+        "emoji": "🛌",
+        "topic": "Sleep"
+    },
+    {
+        "question": "Is MBSR effective for improving sleep outcomes?",
+        "emoji": "🧘",
+        "topic": "Sleep"
+    },
+    {
+        "question": "Which room temperatures are best for maximizing sleep time?",
+        "emoji": "🌡️",
+        "topic": "Sleep"
+    },
+    {
+        "question": "Does work-life balance vary across cultures?",
+        "emoji": "🌍",
+        "topic": "Sociology"
+    },
+    {
+        "question": "Compare the psychological impacts of social media usage among different cultures.",
+        "emoji": "📱",
+        "topic": "Sociology"
+    },
+    {
+        "question": "Review the relationship between healthcare access and multicultural families.",
+        "emoji": "🏥",
+        "topic": "Sociology"
+    },
+    {
+        "question": "Compare supervised vs. unsupervised learning for image recognition.",
+        "emoji": "🧠",
+        "topic": "AI and Machine Learning"
+    },
+    {
+        "question": "How do neural networks mimic the human brain?",
+        "emoji": "🤖",
+        "topic": "AI and Machine Learning"
+    },
+    {
+        "question": "How do AI models handle ethical dilemmas in autonomous vehicles?",
+        "emoji": "🚗",
+        "topic": "AI and Machine Learning"
+    },
+    {
+        "question": "Does magnesium supplementation improve sleep?",
+        "emoji": "🌙",
+        "topic": "Supplements"
+    },
+    {
+        "question": "Does adding l-theanine to coffee improve focus?",
+        "emoji": "☕",
+        "topic": "Supplements"
+    },
+    {
+        "question": "Does creatine supplementation improve cognition in healthy populations?",
+        "emoji": "🧠",
+        "topic": "Supplements"
+    },
+    {
+        "question": "Can anxiety disorders be hereditary?",
+        "emoji": "🧬",
+        "topic": "Mental Health"
+    },
+    {
+        "question": "Does social media negatively impact mental health?",
+        "emoji": "📱",
+        "topic": "Mental Health"
+    },
+    {
+        "question": "Are there long-term effects of chronic stress?",
+        "emoji": "⏳",
+        "topic": "Mental Health"
+    },
+    {
+        "question": "How do mRNA vaccines work? Explain like I'm 10.",
+        "emoji": "💉",
+        "topic": "Medicine and Healthcare"
+    },
+    {
+        "question": "Does zinc help with cold symptoms?",
+        "emoji": "🤧",
+        "topic": "Medicine and Healthcare"
+    },
+    {
+        "question": "Does mental health affect pain perception?",
+        "emoji": "🧠",
+        "topic": "Medicine and Healthcare"
+    },
+    {
+        "question": "What is the impact of teacher-student ratios on academic performance?",
+        "emoji": "👩‍🏫",
+        "topic": "Education and Learning Strategies"
+    },
+    {
+        "question": "Are standardized tests effective predictors of economic outcomes?",
+        "emoji": "📝",
+        "topic": "Education and Learning Strategies"
+    },
+    {
+        "question": "Compare evidence for active vs. passive learning in classroom settings.",
+        "emoji": "📚",
+        "topic": "Education and Learning Strategies"
+    },
+    {
+        "question": "Is there a genetic predisposition to developing type 2 diabetes?",
+        "emoji": "🧬",
+        "topic": "Patient Care"
+    },
+    {
+        "question": "Are statins effective in elderly patients?",
+        "emoji": "👵",
+        "topic": "Patient Care"
+    },
+    {
+        "question": "What are the latest advancements in insulin delivery systems for diabetes?",
+        "emoji": "💉",
+        "topic": "Patient Care"
+    },
+    {
+        "question": "List the benefits of regular cardiovascular workouts.",
+        "emoji": "🏃",
+        "topic": "Fitness and Exercise"
+    },
+    {
+        "question": "Can lifting weights improve bone density in elderly people?",
+        "emoji": "🏋️",
+        "topic": "Fitness and Exercise"
+    },
+    {
+        "question": "What are the most effective recovery methods after high-intensity workouts? Make a table showing the effectiveness, time required, and common drawbacks of each method.",
+        "emoji": "⏱️",
+        "topic": "Fitness and Exercise"
+    },
+    {
+        "question": "What is the impact of prenatal stress on fetal brain development?",
+        "emoji": "🤰",
+        "topic": "Parenting and Child Development"
+    },
+    {
+        "question": "RRL on the importance of sleep for child development.",
+        "emoji": "😴",
+        "topic": "Parenting and Child Development"
+    },
+    {
+        "question": "Can bilingualism improve cognitive abilities in children?",
+        "emoji": "🧠",
+        "topic": "Parenting and Child Development"
+    },
+    {
+        "question": "Can CRISPR technology be used to treat inherited genetic disorders?",
+        "emoji": "🧬",
+        "topic": "Pharma and Biotech"
+    },
+    {
+        "question": "Review the latest advancements in CAR-T cell therapy for cancer treatment.",
+        "emoji": "🧪",
+        "topic": "Pharma and Biotech"
+    },
+    {
+        "question": "Do mRNA vaccines have the potential to treat malaria?",
+        "emoji": "🌍",
+        "topic": "Pharma and Biotech"
+    },
+    {
+        "question": "Effectiveness of different concurrency control mechanisms in multi-threaded applications.",
+        "emoji": "🧵",
+        "topic": "Computer Science"
+    },
+    {
+        "question": "Can homomorphic encryption ensure complete data privacy?",
+        "emoji": "🔐",
+        "topic": "Computer Science"
+    },
+    {
+        "question": "Will quantum computing advances break cryptography?",
+        "emoji": "💻",
+        "topic": "Computer Science"
+    },
+    {
+        "question": "Can mindfulness meditation reduce anxiety symptoms?",
+        "emoji": "🧘",
+        "topic": "Psychology"
+    },
+    {
+        "question": "Is intelligence determined by genes or environment? Give the case for both sides.",
+        "emoji": "🧬",
+        "topic": "Psychology"
+    },
+    {
+        "question": "Generate a table analyzing different theories of psychological motivation including their key concepts and applications in practice.",
+        "emoji": "📊",
+        "topic": "Psychology"
+    }
+]
