@@ -19,8 +19,8 @@ import { PaperCard, SearchCard } from "../../../../components/cards";
 import { Id } from "@workspace/backend/convex/_generated/dataModel";
 import { Switch } from "@workspace/ui/src/components/switch";
 import Tiptap from "../../../../components/tiptap";
-import { Heading } from "../../../../components/heading";
-import { Folder } from "@workspace/ui/src/iconography";
+import { Heading } from "../../../../components/global-heading";
+import { Folder, NotebookPen, User } from "@workspace/ui/src/iconography";
 
 const PapersTab = (props) => {
   const {
@@ -74,13 +74,8 @@ const PapersTab = (props) => {
         <p className="text-muted-foreground">No papers in this folder yet.</p>
       ) : (
         <div className="space-y-2">
-          {papers.map((paper, index) => (
-            <PaperCard
-              authenticated={false}
-              paper={paper}
-              key={index}
-              resultIndex={index + 1}
-            />
+          {papers.map((paper, i) => (
+            <PaperCard paper={paper} key={i} resultIndex={i + 1} />
           ))}
         </div>
       )}
@@ -181,7 +176,7 @@ export function FolderClientComponent(props: { folderId: string }) {
           </Label>
           <Switch
             id="privacy-toggle"
-            checked={folder.isPrivate}
+            checked={!folder.public}
             onCheckedChange={(checked) => {
               updateFolderPrivacyMutation.mutate({
                 folderId: props.folderId as Id<"folders">,
@@ -191,7 +186,7 @@ export function FolderClientComponent(props: { folderId: string }) {
           />
         </div>
         <p className="text-xs text-muted-foreground">
-          {folder.isPrivate
+          {!folder.public
             ? "Only you can see this folder"
             : "Anyone can see this folder"}
         </p>
@@ -199,10 +194,18 @@ export function FolderClientComponent(props: { folderId: string }) {
 
       <div className="mt-1 text-neutral-400">{folder.description}</div>
       <Separator className="mt-4" />
-      <div className="mt-4">
-        <Heading heading="Notes" />
+      <div className="mt-4 flex flex-col gap-2">
+        <Heading
+          heading="Notes"
+          subHeading="Add and edit notes for this folder."
+          icon={<NotebookPen />}
+        />
         <div className="border p-2 rounded-md">
-          <Tiptap content={folder.content} folderId={folder._id} />
+          <Tiptap
+            content={folder.content}
+            folderId={folder._id}
+            editable={true}
+          />
         </div>
       </div>
       <Tabs defaultValue="papers" className="mt-6">

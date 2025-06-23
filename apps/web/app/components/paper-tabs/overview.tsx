@@ -35,7 +35,7 @@ export const TableSnapshop = (props: { data: any }) => {
               <TableCell className="font-medium">{label}</TableCell>
               <TableCell>
                 {value ? (
-                  <div className="text-wrap">{value}</div>
+                  <div className="text-wrap">{value as string}</div>
                 ) : (
                   <div className="text-destructive border rounded-md bg-card w-fit px-2 flex items-center gap-1">
                     <AlertCircle className="size-4" /> Couldn't Extract
@@ -62,6 +62,7 @@ export const PaperSnapShot = (props: { paper: Paper }) => {
       "Outcomes",
       "Results",
     ],
+    enabled: true,
   });
 
   if (isPending) {

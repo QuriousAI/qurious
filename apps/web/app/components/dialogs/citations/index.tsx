@@ -1,9 +1,4 @@
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@workspace/ui/src/components/tooltip";
-import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -23,120 +18,74 @@ import { type Author, Paper } from "@workspace/semantic-scholar/src";
 import { useCopyToClipboard } from "react-use";
 import { Separator } from "@workspace/ui/src/components/separator";
 import { toast } from "@workspace/ui/src/components/sonner";
+import { Cite } from "@citation-js/core";
+import "@citation-js/plugin-csl";
 
-type CitationInfo = {
-  authors: Author[]; // e.g., ["John Smith", "Jane Doe"]
-  title: string;
-  year: number;
-  publisher: string;
-  city?: string;
-  page?: number;
-  index?: number;
-};
-
-type CitationFunction = (info: CitationInfo) => string;
-
-function formatAuthors(authors: Author[], style: string): string {
-  if (authors.length === 0) return "";
-
-  switch (style) {
-    case "APA":
-      return authors.length <= 20
-        ? authors
-            .map((a) => `${a.name}`)
-            .join(", ")
-            .replace(/, ([^,]*)$/, " & $1")
-        : `${authors[0].name} et al.`;
-
-    case "MLA":
-    case "Chicago":
-    case "Harvard":
-      return authors.length === 1
-        ? authors[0].name
-        : authors.length === 2
-          ? `${authors[0].name} and ${authors[1].name}`
-          : `${authors[0]} et al.`;
-
-    case "IEEE":
-      return authors.length <= 3 ? authors.join(", ") : `${authors[0]} et al.`;
-
-    case "AMA":
-    case "Vancouver":
-      return authors.join(", ");
-
-    default:
-      return authors.join(", ");
-  }
-}
-
-const citationStyles: {
-  citationStyleName: string;
-  citationFunc: CitationFunction;
-}[] = [
+const citationStyles = [
   {
-    citationStyleName: "APA",
-    citationFunc: (info) => {
-      const authors = formatAuthors(info.authors, "APA");
-      return `${authors}. (${info.year}). *${info.title}*. ${info.publisher}.`;
-    },
+    displayName: "APA",
+    code: "apa",
+  },
+  // {
+  //   displayName: "MLA",
+  //   code: "mla",
+  // },
+  // {
+  //   displayName: "Chicago",
+  //   code: "chicago",
+  // },
+  {
+    displayName: "Harvard",
+    code: "harvard1",
   },
   {
-    citationStyleName: "MLA",
-    citationFunc: (info) => {
-      const authors = formatAuthors(info.authors, "MLA");
-      return `${authors}. *${info.title}*. ${info.publisher}, ${info.year}.`;
-    },
+    displayName: "Vancouver",
+    code: "vancouver",
   },
-  {
-    citationStyleName: "Chicago",
-    citationFunc: (info) => {
-      const authors = formatAuthors(info.authors, "Chicago");
-      return `${authors}. *${info.title}*. ${info.city ?? "Unknown"}: ${info.publisher}, ${info.year}.`;
-    },
-  },
-  {
-    citationStyleName: "IEEE",
-    citationFunc: (info) => {
-      const authors = formatAuthors(info.authors, "IEEE");
-      return `[${info.index ?? 1}] ${authors}, *${info.title}*, ${info.city ?? "Unknown"}: ${info.publisher}, ${info.year}.`;
-    },
-  },
-  {
-    citationStyleName: "AMA",
-    citationFunc: (info) => {
-      const authors = formatAuthors(info.authors, "AMA");
-      return `${info.index ?? 1}. ${authors}. *${info.title}*. ${info.city ?? "Unknown"}, ${info.publisher}; ${info.year}.`;
-    },
-  },
-  {
-    citationStyleName: "Harvard",
-    citationFunc: (info) => {
-      const authors = formatAuthors(info.authors, "Harvard");
-      return `${authors}, ${info.year}. *${info.title}*. ${info.city ?? "Unknown"}: ${info.publisher}.`;
-    },
-  },
-  {
-    citationStyleName: "Vancouver",
-    citationFunc: (info) => {
-      const authors = formatAuthors(info.authors, "Vancouver");
-      return `${info.index ?? 1}. ${authors}. ${info.title}. ${info.city ?? "Unknown"}: ${info.publisher}; ${info.year}.`;
-    },
-  },
+  // {
+  //   displayName: "BibteX",
+  //   code: "bibtex",
+  // },
+  // {
+  //   displayName: "AMA/Numeric",
+  //   code: "ama",
+  // },
 ];
 
 export const CiteThisPaperDialog = (props: { paper: Paper }) => {
   const [_, copyToClipboard] = useCopyToClipboard();
 
-  const onClickCopyAndToast = (citation: string, citationStyleName: string) => {
-    copyToClipboard(citation);
-    toast.success(`Copied ${citationStyleName} citation to clipboard.`);
+  const generateCitation = (styleCode: string): string => {
+    const cite = new Cite({
+      title: props.paper.title,
+      author: props.paper.authors.map((a) => {
+        const [first, ...rest] = a.name.split(" ");
+        return {
+          given: first,
+          family: rest.join(" "),
+        };
+      }),
+      issued: { "date-parts": [[new Date(props.paper.year).getFullYear()]] },
+      "container-title": props.paper.journal,
+      // volume: props.paper.volume,
+      // issue: props.paper.issue,
+      // page: props.paper.pages,
+      // DOI: props.paper.doi,
+    });
+
+    const output = cite.format("bibliography", {
+      template: styleCode,
+      lang: "en-US",
+    });
+
+    return output;
   };
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <Button variant="outline" size="icon">
-          <Quote />
+      <DialogTrigger asChild>
+        <Button variant="outline">
+          <Quote /> Cite Paper
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -150,65 +99,31 @@ export const CiteThisPaperDialog = (props: { paper: Paper }) => {
         <Tabs defaultValue="APA">
           <TabsList>
             {citationStyles.map((style) => (
-              <TabsTrigger
-                value={style.citationStyleName}
-                key={style.citationStyleName}
-              >
-                {style.citationStyleName}
+              <TabsTrigger value={style.displayName} key={style.code}>
+                {style.displayName}
               </TabsTrigger>
             ))}
           </TabsList>
-          {citationStyles.map((style) => (
-            <TabsContent
-              key={style.citationStyleName}
-              value={style.citationStyleName}
-            >
-              <div className="flex flex-col gap-2">
-                {style.citationFunc({
-                  authors: props.paper.authors,
-                  title: "Sample Title",
-                  year: 2024,
-                  publisher: "Sample Publisher",
-                  city: "Sample City",
-                  page: 1,
-                  index: 1,
-                })}
+          {citationStyles.map((style) => {
+            const citation = generateCitation(style.code);
 
-                <Separator />
+            return (
+              <TabsContent key={style.code} value={style.displayName}>
+                <div className="flex flex-col gap-2">
+                  <div className="rounded-md bg-muted p-4 text-sm font-medium text-muted-foreground whitespace-pre-line">
+                    {citation}
+                  </div>
 
-                <Button
-                  variant="secondary"
-                  onClick={() =>
-                    onClickCopyAndToast(
-                      style.citationFunc({
-                        authors: props.paper.authors,
-                        title: "Sample Title",
-                        year: 2024,
-                        publisher: "Sample Publisher",
-                        city: "Sample City",
-                        page: 1,
-                        index: 1,
-                      }),
-                      style.citationStyleName
-                    )
-                  }
-                >
-                  <Clipboard /> Copy
-                </Button>
-              </div>
-            </TabsContent>
-          ))}
+                  <Separator />
+                  <Button variant="secondary">
+                    <Clipboard /> Copy
+                  </Button>
+                </div>
+              </TabsContent>
+            );
+          })}
         </Tabs>
       </DialogContent>
     </Dialog>
   );
 };
-
-export const CiteThisPaperDialogWithTooltip = (props: { paper: Paper }) => (
-  <Tooltip>
-    <TooltipTrigger>
-      <CiteThisPaperDialog paper={props.paper} />
-    </TooltipTrigger>
-    <TooltipContent>Cite this paper</TooltipContent>
-  </Tooltip>
-);

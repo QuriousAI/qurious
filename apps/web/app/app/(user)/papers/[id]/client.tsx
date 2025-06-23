@@ -1,7 +1,5 @@
 "use client";
 
-import { getAuthorString } from "@/utils/author";
-import { Card, CardHeader, CardTitle } from "@workspace/ui/src/components/card";
 import { Separator } from "@workspace/ui/src/components/separator";
 import {
   Tabs,
@@ -10,11 +8,9 @@ import {
   TabsTrigger,
 } from "@workspace/ui/src/components/tabs";
 import Link from "next/link";
-import { useState } from "react";
 import { useGetPaperDetailsQuery, useGetPaperSnapshotQuery } from "@/queries";
 
 import type { Paper } from "@workspace/semantic-scholar/src";
-import { constructGraphFromPaper } from "@/utils/paper-graph-view";
 import { Skeleton } from "@workspace/ui/src/components/skeleton";
 
 import { ReferencesTabContent } from "@/components/paper-tabs/references";
@@ -22,6 +18,7 @@ import { CitationsTabContent } from "@/components/paper-tabs/citations";
 import { GraphViewTabContent } from "@/components/paper-tabs/graph-view";
 import { RecommendedTabContent } from "@/components/paper-tabs/recommended";
 import { OverviewTabContent } from "@/components/paper-tabs/overview";
+import { Badge } from "@workspace/ui/src/components/badge";
 
 const PaperHero = (props: { paper: Paper }) => {
   if (!props.paper.authors) {
@@ -35,7 +32,7 @@ const PaperHero = (props: { paper: Paper }) => {
         <div className="flex flex-col gap-2">
           <div className="text-2xl font-bold">{props.paper.title}</div>
           <div className="w-lg text-sm text-neutral-400">
-            {getAuthorString(props.paper.authors)}
+            {/* {getAuthorString(props.paper.authors)} */} Authors go here
           </div>
           <div className="text-sm text-neutral-400">
             {props.paper.publicationDate
@@ -70,7 +67,9 @@ const PaperHero = (props: { paper: Paper }) => {
                         className="flex items-center gap-1 text-xs"
                       >
                         <span className="font-medium">{key}:</span>
-                        <span className="text-muted-foreground">{value}</span>
+                        <span className="text-muted-foreground">
+                          {value as string}
+                        </span>
                       </div>
                     )
                   )}
@@ -100,9 +99,9 @@ const TabTriggers = [
   { id: "overview", label: "Overview" },
   { id: "references", label: "References" },
   { id: "citations", label: "Citations" },
-  { id: "graph-view", label: "Graph View" },
+  { id: "graph-view", label: "Graph View", badge: "Beta" },
   { id: "recommended", label: "Recommended" },
-] as const;
+];
 
 const PaperTabs = (props: { paper: Paper }) => {
   return (
@@ -112,10 +111,10 @@ const PaperTabs = (props: { paper: Paper }) => {
           {TabTriggers.map((tab) => (
             <TabsTrigger
               key={tab.id}
-              className="cursor-pointer p-4 text-lg hover:underline"
+              className="cursor-pointer p-4 text-lg hover:underline gap-4"
               value={tab.id}
             >
-              {tab.label}
+              {tab.label} {tab.badge && <Badge variant="secondary">Beta</Badge>}
             </TabsTrigger>
           ))}
         </TabsList>
@@ -172,6 +171,26 @@ export const PaperComponent = (props: { id: string }) => {
   return (
     <>
       <PaperHero paper={data} />
+      {/* <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 w-full">
+        {props.auth ? (
+          <AddPaperToFolderDropdownMenu
+            folders={props.folders}
+            paperId={props.paper.paperId!}
+          />
+        ) : (
+          <Button variant="outline">
+            <FileText /> Add to Folder
+          </Button>
+        )}
+
+        <CiteThisPaperDialog paper={props.paper} />
+
+        <Button variant="outline" onClick={() => refetch()}>
+          <FileText /> Extract Snapshot
+        </Button>
+
+        <AskPaperDrawer />
+      </div> */}
       <PaperTabs paper={data} />
     </>
   );

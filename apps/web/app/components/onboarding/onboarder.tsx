@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useNextStep } from "nextstepjs";
 import { useEffect } from "react";
 
-const Onboarder = () => {
+export const Onboarder = () => {
   const searchParams = useSearchParams();
   const { startNextStep } = useNextStep();
 
@@ -16,5 +16,3 @@ const Onboarder = () => {
 
   return null;
 };
-
-export default Onboarder;

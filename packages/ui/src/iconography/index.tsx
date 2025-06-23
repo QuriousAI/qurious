@@ -45,6 +45,11 @@ export {
   File,
   StickyNote,
   Palette,
+  MessageCircleQuestion,
+  Construction,
+  AlertCircleIcon,
+  Text,
+  Files,
 } from "lucide-react";
 
 export { SiDiscord as Discord } from "@icons-pack/react-simple-icons";

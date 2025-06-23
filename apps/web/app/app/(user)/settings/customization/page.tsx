@@ -1,6 +1,7 @@
 import { Separator } from "@workspace/ui/src/components/separator";
-import { Heading } from "@/components/heading";
-import { ContentSettingsBox } from "@/app/(user)/settings/customization/content-setting-box";
+import { Heading } from "@/components/global-heading";
+import { ContentSettingsBox } from "./client";
+import { Palette } from "@workspace/ui/src/iconography";
 
 export const metadata = {
   title: "Customization Settings | Qurious",
@@ -11,7 +12,8 @@ export default function CustomizationSettingsPage() {
     <div className="space-y-2">
       <Heading
         heading="Customization Settings"
-        subHeading="Customize your app appearance and preferences."
+        subHeading="Customize your AI preferences."
+        icon={<Palette />}
       />
       <ContentSettingsBox />
     </div>

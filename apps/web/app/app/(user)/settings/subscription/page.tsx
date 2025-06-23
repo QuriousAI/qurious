@@ -1,6 +1,7 @@
 import { Separator } from "@workspace/ui/src/components/separator";
-import { Heading } from "@/components/heading";
+import { Heading } from "@/components/global-heading";
 import { SubscriptionClient } from "./client";
+import { CreditCard } from "@workspace/ui/src/iconography";
 
 export const metadata = {
   title: "Subscription Settings | Qurious",
@@ -12,6 +13,7 @@ export default function SubscriptionSettingsPage() {
       <Heading
         heading="Subscription Settings"
         subHeading="Manage your subscription and billing preferences."
+        icon={<CreditCard />}
       />
       <SubscriptionClient />
     </div>

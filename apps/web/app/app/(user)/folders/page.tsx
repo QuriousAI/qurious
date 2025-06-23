@@ -1,4 +1,4 @@
-import { FolderAuthSTate } from "./client";
+import { FolderClient } from "./client";
 
 export const metadata = {
   title: "Folders | Qurious",
@@ -6,11 +6,5 @@ export const metadata = {
 };
 
 export default function FoldersPage() {
-  return (
-    // <div className="flex flex-col items-center justify-center w-full">
-    // <div className="p-4 w-full">
-    <FolderAuthSTate />
-    // </div>
-    // </div>
-  );
+  return <FolderClient />;
 }

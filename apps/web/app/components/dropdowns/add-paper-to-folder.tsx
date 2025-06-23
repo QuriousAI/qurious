@@ -1,11 +1,6 @@
 "use client";
 
 import { Doc } from "@workspace/backend/convex/_generated/dataModel";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@workspace/ui/src/components/tooltip";
 import { Folder, FolderPlus } from "@workspace/ui/src/iconography";
 import { Button } from "@workspace/ui/src/components/button";
 import {
@@ -20,26 +15,10 @@ import { Checkbox } from "@workspace/ui/src/components/checkbox";
 import { toast } from "@workspace/ui/src/components/sonner";
 import {
   useAddPaperToFolderMutation,
+  useGetCurrentUserFoldersQuery,
   useRemovePaperFromFolderMutation,
 } from "@/queries";
 import { playToastSound } from "@workspace/ui/src/lib/sound";
-
-export const AddPaperToFolderDropdownMenuWithTooltip = (props: {
-  folders: Doc<"folders">[];
-  paperId: string;
-}) => {
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <AddPaperToFolderDropdownMenu
-          folders={props.folders}
-          paperId={props.paperId}
-        />
-      </TooltipTrigger>
-      <TooltipContent>Add to folder</TooltipContent>
-    </Tooltip>
-  );
-};
 
 const FolderCheckbox = (props: { folder: Doc<"folders">; paperId: string }) => {
   const { mutateAsync: addPaperToFolderMutation } =
@@ -110,21 +89,19 @@ const FolderCheckbox = (props: { folder: Doc<"folders">; paperId: string }) => {
  * This is a button that opens a Dropdown Menu with a list of folders.
  * It allows the user to select one or more folders to add a paper/remove a paper from
  */
-export const AddPaperToFolderDropdownMenu = (props: {
-  folders: Doc<"folders">[];
-  paperId: string;
-}) => {
+export const AddPaperToFolderDropdownMenu = (props: { paperId: string }) => {
+  const { data: folders = [] } = useGetCurrentUserFoldersQuery();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline">
           <FolderPlus />
+          Add to Folder
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>Folders /</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        {props.folders.map((folder) => (
+        {folders.map((folder) => (
           <FolderCheckbox
             key={folder._id}
             folder={folder}

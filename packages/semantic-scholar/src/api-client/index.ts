@@ -84,7 +84,9 @@ export class SemanticScholarAPIClient {
       fields: options.fields.join(","),
     }).toString();
 
-    return fetchSemanticScholarAPI<Paper[]>(
+    return fetchSemanticScholarAPI<{
+      recommendedPapers: Paper[];
+    }>(
       `${RECOMMENDATIONS_API_URL}/papers/forpaper/${options.paperId}?${searchParams}`
     );
   }
@@ -94,9 +96,11 @@ export class SemanticScholarAPIClient {
       fields: options.fields.join(","),
     }).toString();
 
-    return fetchSemanticScholarAPI<Paper[]>(
-      `${GRAPH_API_URL}/paper/${options.paperId}/references?${searchParams}`
-    );
+    return fetchSemanticScholarAPI<{
+      data: {
+        citedPaper: Paper;
+      }[];
+    }>(`${GRAPH_API_URL}/paper/${options.paperId}/references?${searchParams}`);
   }
 
   getPaperCitations(options: { paperId: string; fields: string[] }) {
@@ -104,8 +108,10 @@ export class SemanticScholarAPIClient {
       fields: options.fields.join(","),
     }).toString();
 
-    return fetchSemanticScholarAPI<Paper[]>(
-      `${GRAPH_API_URL}/paper/${options.paperId}/citations?${searchParams}`
-    );
+    return fetchSemanticScholarAPI<{
+      data: {
+        citingPaper: Paper;
+      }[];
+    }>(`${GRAPH_API_URL}/paper/${options.paperId}/citations?${searchParams}`);
   }
 }

@@ -19,7 +19,14 @@ export const getPaperReferences = action({
     paperId: v.string(),
     fields: v.array(v.string()),
   },
-  handler: async (ctx, args): Promise<Paper[]> => {
+  handler: async (
+    ctx,
+    args
+  ): Promise<{
+    data: {
+      citedPaper: Paper;
+    }[];
+  }> => {
     return await getPaperReferencesCache.fetch(ctx, {
       paperId: args.paperId,
       fields: args.fields,

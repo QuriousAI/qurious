@@ -10,78 +10,53 @@ import {
 import { Paper } from "@workspace/semantic-scholar/src";
 import { Doc } from "@workspace/backend/convex/_generated/dataModel";
 import Link from "next/link";
-import {
-  Dot,
-  File,
-  FileText,
-  Loader2,
-  NotebookPen,
-  StickyNote,
-} from "@workspace/ui/src/iconography";
-import { getAuthorString } from "@/utils/author";
+import { File, FileText } from "@workspace/ui/src/iconography";
 
-// import { AskPaperDrawer } from "@/components/_todo/ask-paper-drawer";
-
-import { AddPaperToFolderDropdownMenuWithTooltip } from "@/components/dropdown";
-import { CiteThisPaperDialogWithTooltip } from "@/components/dialogs";
-import { CopyToClipboardButtonWithTooltip } from "@/components/buttons/";
+import { AddPaperToFolderDropdownMenu } from "@/components/dropdowns/add-paper-to-folder";
+import { CiteThisPaperDialog } from "@/components/dialogs";
 import { Button } from "@workspace/ui/src/components/button";
 import { useGetPaperSnapshotQuery } from "@/queries";
-import { useState } from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@workspace/ui/src/components/tooltip";
-import { toast } from "@workspace/ui/src/components/sonner";
-import { TableSnapshop } from "../paper-tabs/overview";
 
-type PaperCardProps = { paper: Paper; resultIndex: number } & (
-  | { authenticated: true; folders: Doc<"folders">[] }
-  | { authenticated: false; folders?: never }
+import { TableSnapshop } from "../paper-tabs/overview";
+import { Separator } from "@workspace/ui/src/components/separator";
+import { AskPaperDrawer } from "../drawers/ask-paper";
+import { Authenticated } from "convex/react";
+
+const FileIndexIcon = (props: { resultIndex: number }) => (
+  <div className="relative flex items-center justify-center text-muted-foreground">
+    <File className="size-12" strokeWidth={1} />
+    <div className="absolute translate-y-1 text-lg font-medium">
+      {props.resultIndex}
+    </div>
+  </div>
 );
 
-const PaperCardHeader = (props: {
-  resultIndex: number;
-  paperTitle: string;
-  paperId: string;
-}) => {
+const PaperCardHeader = (props: { resultIndex: number; paper: Paper }) => {
   return (
     <CardHeader>
       <CardTitle className="flex items-center gap-4 text-lg">
-        {/* <div className="text-muted-foreground">{props.resultIndex}</div> */}
-        <div className="relative flex items-center justify-center text-muted-foreground">
-          <File className="size-12" strokeWidth={1} />
-          <div className="absolute translate-y-1 text-lg font-medium">
-            {props.resultIndex}
-          </div>
-        </div>
+        <FileIndexIcon resultIndex={props.resultIndex} />
         <Link
-          href={`/papers/${props.paperId}`}
+          href={`/papers/${props.paper.paperId}`}
           className="underline-offset-4 hover:underline decoration-white/50"
         >
-          {props.paperTitle}
+          {props.paper.title}
         </Link>
       </CardTitle>
     </CardHeader>
   );
 };
 
-const PaperCardContent = (props: {
-  abstract: string | undefined;
-  tldr: string | undefined;
-}) => {
-  let content;
+const PaperCardContent = (props: { paper: Paper }) => {
+  let content = "Summary unavailable.";
 
   // first, it checks if tldr is present, if it then it sets the content to tldr,
   // if not present then it checks if abstract is present, if it then it sets the content to abstract,
   // if not present then it sets the content to "Summary unavailable."
-  if (props.tldr) {
-    content = `TL;DR: ${props.tldr}`;
-  } else if (props.abstract) {
-    content = `Abstract: ${props.abstract.length > 300 ? props.abstract.slice(0, 297) + "..." : props.abstract}`;
-  } else {
-    content = "Summary unavailable.";
+  if (props.paper.tldr) {
+    content = `TL;DR: ${props.paper.tldr.text}`;
+  } else if (props.paper.abstract) {
+    content = `Abstract: ${props.paper.abstract.length > 300 ? props.paper.abstract.slice(0, 297) + "..." : props.paper.abstract}`;
   }
 
   return (
@@ -93,87 +68,17 @@ const PaperCardContent = (props: {
   );
 };
 
-const LeftSide = (props: {
-  pubDate: string;
-  citationCount: number;
-  influentialCitationCount: number;
-  authors: any[];
-  journal: string;
-  fieldsOfStudy: string[];
-  publicationTypes: string[];
-}) => (
-  <div className="text-muted-foreground flex flex-col items-start text-sm">
-    <div className="flex items-center gap-0">
-      <div>{props.pubDate}</div>
-      <Dot />
-      <div className="flex items-center gap-1">
-        <NotebookPen className="size-5" /> {props.journal}
-      </div>
-      <Dot />
-      <div className="flex items-center gap-0">
-        {props.citationCount} citations ({props.influentialCitationCount}{" "}
-        influential)
-      </div>
-    </div>
-    {/* <div className="flex items-center gap-0">
-        {props.publicationTypes.join(", ")} <Dot />{" "}
-        {props.fieldsOfStudy.join(", ")}
-      </div> */}
-    <div className="">{getAuthorString(props.authors)}</div>
-  </div>
-);
-
-const FakeFolderIcon = () => {
-  return (
-    <div
-      className="flex items-center justify-center cursor-pointer hover:opacity-80"
-      onClick={() => (window.location.href = "/signup")}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="text-muted-foreground"
-      >
-        <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.89l-.812-1.22A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
-      </svg>
-    </div>
-  );
-};
-const RightSide = (props: {
-  paper: Paper;
-  folders: Doc<"folders">[];
-  auth: boolean;
-}) => {
-  return (
-    <div className="flex gap-2">
-      {props.auth ? (
-        <AddPaperToFolderDropdownMenuWithTooltip
-          folders={props.folders}
-          paperId={props.paper.paperId!}
-        />
-      ) : (
-        <FakeFolderIcon />
-      )}
-
-      {/* Second Icon - Cite this paper */}
-      <CiteThisPaperDialogWithTooltip paper={props.paper} />
-    </div>
-  );
+const PaperInformationFooter = ({ paper }: { paper: Paper }) => {
+  return null;
 };
 
-const PaperCardFooter = (props: {
-  paper: Paper;
-  folders: Doc<"folders">[];
-  auth: boolean;
-}) => {
-  const { data, isPending, error, refetch } = useGetPaperSnapshotQuery({
+const PaperCardFooter = (props: { paper: Paper }) => {
+  const {
+    data: paperSnapshot,
+    isPending,
+    error,
+    refetch,
+  } = useGetPaperSnapshotQuery({
     abstract: props.paper.abstract,
     fields: [
       "Methods",
@@ -184,67 +89,40 @@ const PaperCardFooter = (props: {
       "Outcomes",
       "Results",
     ],
-    enabled: false, // Don't run query on mount
+    enabled: false,
   });
-
-  const onBtnClick = () => {
-    toast("Input received!");
-    refetch();
-  };
 
   return (
     <CardFooter className="flex-col">
-      <div className="flex">
-        <LeftSide
-          pubDate={props.paper.publicationDate!}
-          citationCount={props.paper.citationCount!}
-          influentialCitationCount={props.paper.influentialCitationCount!}
-          authors={props.paper.authors!}
-          journal={props.paper.journal?.name!}
-          fieldsOfStudy={props.paper.fieldsOfStudy ?? []}
-          publicationTypes={props.paper.publicationTypes ?? []}
-        />
-        <RightSide
-          paper={props.paper}
-          folders={props.folders}
-          auth={props.auth}
-        />
+      <PaperInformationFooter paper={props.paper} />
+
+      <Separator className="my-3 rounded-full" />
+
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 w-full">
+        <Authenticated>
+          <AddPaperToFolderDropdownMenu paperId={props.paper.paperId!} />
+        </Authenticated>
+
+        <CiteThisPaperDialog paper={props.paper} />
+
+        <Button variant="outline" onClick={() => refetch()}>
+          <FileText /> Extract Snapshot
+        </Button>
+
+        <AskPaperDrawer />
       </div>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button size="icon" variant="outline" onClick={() => onBtnClick()}>
-            {data ? <FileText /> : <Loader2 />}
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Paper Snapshot</TooltipContent>
-      </Tooltip>
-      {data && (
-        <div className="">
-          <TableSnapshop data={data} />
-        </div>
-      )}
-      FUCKING SHOW ACTION BUTTONS HERES
+
+      {paperSnapshot && <TableSnapshop data={paperSnapshot} />}
     </CardFooter>
   );
 };
 
-export const PaperCard = (props: PaperCardProps) => {
+export const PaperCard = (props: { paper: Paper; resultIndex: number }) => {
   return (
-    <Card className="py-4 transition-all duration-500" id="tour-paper-card">
-      <PaperCardHeader
-        resultIndex={props.resultIndex}
-        paperTitle={props.paper.title!}
-        paperId={props.paper.paperId!}
-      />
-      <PaperCardContent
-        abstract={props.paper.abstract}
-        tldr={props.paper.tldr?.text}
-      />
-      <PaperCardFooter
-        paper={props.paper}
-        folders={props.folders!}
-        auth={props.authenticated}
-      />
+    <Card>
+      <PaperCardHeader resultIndex={props.resultIndex} paper={props.paper} />
+      <PaperCardContent paper={props.paper} />
+      <PaperCardFooter paper={props.paper} />
     </Card>
   );
 };

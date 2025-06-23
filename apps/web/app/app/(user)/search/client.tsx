@@ -12,14 +12,15 @@ import {
   Paper,
 } from "@workspace/semantic-scholar/src";
 import { Separator } from "@workspace/ui/src/components/separator";
-import { ChevronDown, Search } from "@workspace/ui/src/iconography";
-import Markdown from "react-markdown";
 import {
-  RelevantPapersContent,
-  SearchCardList,
-} from "../../../components/lists";
+  ChevronDown,
+  Files,
+  Search,
+  Text,
+} from "@workspace/ui/src/iconography";
+import Markdown from "react-markdown";
 import { extractFieldsfromPapers } from "@/utils/extractor";
-import { Heading } from "../../../components/heading";
+import { Heading } from "../../../components/global-heading";
 import { Skeleton } from "@workspace/ui/src/components/skeleton";
 import { GlobalErrorHandler } from "../../../components/global-error";
 import { CopyToClipboardButtonWithTooltip } from "../../../components/buttons";
@@ -45,6 +46,7 @@ import { useMemo, useState } from "react";
 import { Button } from "@workspace/ui/src/components/button";
 import { SORTING } from "../../../components/search-bar";
 import { useGetCurrentUserQuery } from "@/queries/users";
+import { PaperCard, SearchCard } from "@/components/cards";
 
 const PageSeparator = () => {
   return <Separator className="max-w-1/3 bg-muted self-center" />;
@@ -164,7 +166,9 @@ export const SearchResult = (props: {
       );
     if (sortBy === "date")
       return relevantPapers?.sort(
-        (a, b) => new Date(b.publicationDate) - new Date(a.publicationDate)
+        (a, b) =>
+          new Date(b.publicationDate).getTime() -
+          new Date(a.publicationDate).getTime()
       );
     if (sortBy === "influencialCitationCount")
       return relevantPapers?.sort(
@@ -180,6 +184,7 @@ export const SearchResult = (props: {
           heading="Summary"
           subHeading={`Showing summary of ${relevantPapers ? relevantPapers.length : 0} papers.`}
           tooltip="LLM generated summary based on user preferences."
+          icon={<Text />}
           actions={
             <CopyToClipboardButtonWithTooltip
               textToCopy={summaryData}
@@ -212,17 +217,24 @@ export const SearchResult = (props: {
           heading="Suggested"
           subHeading="Showing suggestions related to query."
           tooltip="LLM generated suggestions based on user preferences."
+          icon={<Search />}
         />
         {suggestedQuestionsIsPending ? (
           <Skeleton className="w-full h-12" />
         ) : suggestedQuestionsError ? (
           <div>Error: {suggestedQuestionsError.message}</div>
         ) : (
-          <SearchCardList
-            questions={suggestedQuestions.map((question) => ({
-              question,
-            }))}
-          />
+          // <SearchCardList
+          //   questions={suggestedQuestions.map((question) => ({
+          //     question,
+          //   }))}
+          // />
+
+          <div className="flex flex-col gap-2">
+            {suggestedQuestions.map((question) => (
+              <SearchCard questionText={question} />
+            ))}
+          </div>
         )}
       </div>
 
@@ -231,12 +243,13 @@ export const SearchResult = (props: {
       <div className="flex flex-col gap-2" id="tour-relavant-papers">
         <Heading
           heading="Relevant Papers"
+          icon={<Files />}
           subHeading="Found 0 relevant papers, showing top 0 results."
           tooltip="Papers ranked by relevance to your search query."
           actions={
             <div className="flex items-center gap-2">
               {/* Sorting Button */}
-              <Select value={sortBy} onValueChange={setSortBy}>
+              <Select value={sortBy}>
                 <SelectTrigger>
                   <SelectValue placeholder="Sort By" />
                 </SelectTrigger>
@@ -273,7 +286,11 @@ export const SearchResult = (props: {
         ) : relevantPapersError ? (
           <GlobalErrorHandler error={relevantPapersError} />
         ) : (
-          <RelevantPapersContent papers={relevantPapers} />
+          <div className="flex flex-col gap-6">
+            {relevantPapers.map((paper, i) => (
+              <PaperCard paper={paper} resultIndex={i + 1} key={i} />
+            ))}
+          </div>
         )}
       </div>
 

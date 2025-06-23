@@ -2,7 +2,6 @@ import { Button } from "@workspace/ui/src/components/button";
 import { Label } from "@workspace/ui/src/components/label";
 import { Textarea } from "@workspace/ui/src/components/textarea";
 import { Trash2 } from "@workspace/ui/src/iconography";
-import { InformationToolTip } from "@/components/information-tooltip";
 import {
   useDeleteAllFoldersMutation,
   useDeleteAllSearchesMutation,

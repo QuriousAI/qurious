@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@workspace/ui/src/components/tooltip";
 
-export const InformationToolTip = ({ content }: { content: string }) => {
+export const InformationTooltip = ({ content }: { content: string }) => {
   return (
     <Tooltip>
       <TooltipTrigger>

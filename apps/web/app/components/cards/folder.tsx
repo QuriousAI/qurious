@@ -29,7 +29,7 @@ import { DeleteFolderDialogContent } from "@/components/dialogs/folder/delete";
 import { Doc } from "@workspace/backend/convex/_generated/dataModel";
 import { EditFolderDialogContent } from "@/components/dialogs/folder/edit";
 import { Separator } from "@workspace/ui/src/components/separator";
-import { InformationToolTip } from "@/components/heading/info-tooltip";
+import { InformationTooltip } from "@/components/information-tooltip";
 
 {
   /*
@@ -109,9 +109,9 @@ const OptionsDialogWithDropDown = (props: { folder: Doc<"folders"> }) => {
 
 export const FolderCard = (props: { folder: Doc<"folders"> }) => {
   return (
-    <Card className=" gap-2 py-4">
+    <Card className="gap-2 py-4">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 font-semibold">
+        <CardTitle className="flex items-center gap-3 font-semibold">
           <Folder className="text-muted-foreground size-5" />
           <div className="flex text-xl items-center gap-2">
             <Link
@@ -121,7 +121,7 @@ export const FolderCard = (props: { folder: Doc<"folders"> }) => {
               {props.folder.name}
             </Link>
             {props.folder.type === "SYSTEM_CREATED_BOOKMARKS_FOLDER" && (
-              <InformationToolTip content="This is a system created folder for your bookmarks. You're free to edit or delete it." />
+              <InformationTooltip content="This is a system created folder for your bookmarks. You're free to edit or delete it." />
             )}
           </div>
         </CardTitle>

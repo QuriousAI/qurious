@@ -51,7 +51,6 @@ import { Label } from "@workspace/ui/src/components/label";
 import { Switch } from "@workspace/ui/src/components/switch";
 import {
   useAddSearchToFolderMutation,
-  useGetCurrentUserFoldersQuery,
   useGetCurrentUserSearchesQuery,
   useRemoveSearchFromFolderMutation,
 } from "@/queries";
@@ -63,83 +62,14 @@ import { Checkbox } from "@workspace/ui/src/components/checkbox";
 import { toast } from "@workspace/ui/src/components/sonner";
 import { playToastSound } from "@workspace/ui/src/lib/sound";
 import { ReactNode } from "react";
+import { AddSearchToFolderDropdownMenu } from "../dropdowns/add-search-to-folder";
 
-const MyDropdownMenuItem = (props: {
-  folder: Doc<"folders">;
-  searchId: Id<"searches">;
-}) => {
-  const checked = props.folder.searchIds.includes(props.searchId);
-
-  const { mutateAsync: addSearchToFolderMutation } =
-    useAddSearchToFolderMutation();
-  const { mutateAsync: removeSearchFromFolderMutation } =
-    useRemoveSearchFromFolderMutation();
-
-  const onSelect = (e: Event) => {
-    e.preventDefault();
-    if (checked) {
-      toast.promise(
-        removeSearchFromFolderMutation({
-          folderId: props.folder._id,
-          searchId: props.searchId,
-        }),
-        {
-          loading: "Removing from folder...",
-          success: () => {
-            return {
-              message: "Removed from folder",
-              richColors: true,
-            };
-          },
-          error: { message: "Failed to remove from folder", richColors: true },
-        }
-      );
-    } else {
-      toast.promise(
-        addSearchToFolderMutation({
-          folderId: props.folder._id,
-          searchId: props.searchId,
-        }),
-        {
-          loading: "Adding to folder...",
-          success: () => {
-            playToastSound();
-            return {
-              message: "Added to folder - played sound!",
-              richColors: true,
-            };
-          },
-          error: { message: "Failed to add to folder", richColors: true },
-        }
-      );
-    }
-  };
-
-  return (
-    <DropdownMenuItem
-      onSelect={onSelect}
-      className="flex items-center justify-between gap-4"
-    >
-      <div className="flex items-center gap-1">
-        <Folder />
-        <div className="text-muted-foreground">/</div>
-        <div className="">{props.folder.name}</div>
-      </div>
-      <Checkbox className="[&_*]:!stroke-black" checked={checked} />
-    </DropdownMenuItem>
-  );
-};
-
-const SidebarMenuItem_Search = (props: {
-  searchQuery: string;
-  searchId: Id<"searches">;
-  folders: Doc<"folders">[];
-}) => {
+const SidebarMenuItem_Search = (props: { search: Doc<"searches"> }) => {
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild>
-        <Link href={`/search?q=${encodeURIComponent(props.searchQuery)}`}>
-          <span>{props.searchQuery}</span>
+        <Link href={`/search?q=${encodeURIComponent(props.search.query)}`}>
+          <span>{props.search.query}</span>
         </Link>
       </SidebarMenuButton>
 
@@ -151,24 +81,7 @@ const SidebarMenuItem_Search = (props: {
             </SidebarMenuAction>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="right" align="start">
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger className="gap-2">
-                <Plus className="size-4 text-muted-foreground" />
-                <span>Add to Folder</span>
-              </DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent>
-                  {props.folders.map((folder) => (
-                    <MyDropdownMenuItem
-                      key={folder._id}
-                      folder={folder}
-                      searchId={props.searchId}
-                    />
-                  ))}
-                  <DropdownMenuItem>Create new +</DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
+            <AddSearchToFolderDropdownMenu searchId={props.search._id} />
 
             <DialogTrigger asChild>
               <DropdownMenuItem variant="destructive">
@@ -178,9 +91,10 @@ const SidebarMenuItem_Search = (props: {
             </DialogTrigger>
           </DropdownMenuContent>
         </DropdownMenu>
+
         <DeleteSearchDialogContent
-          name={props.searchQuery}
-          searchId={props.searchId}
+          name={props.search.query}
+          searchId={props.search._id}
         />
       </Dialog>
     </SidebarMenuItem>
@@ -228,10 +142,7 @@ const sortSearchesByDate = (searches: Doc<"searches">[]) => {
   return sortedSearches;
 };
 
-const SearchMenu = (props: {
-  searches: Doc<"searches">[];
-  folders: Doc<"folders">[];
-}) => {
+const SearchMenu = (props: { searches: Doc<"searches">[] }) => {
   const sortedSearches = sortSearchesByDate(props.searches);
 
   return (
@@ -240,12 +151,7 @@ const SearchMenu = (props: {
         <>
           <SidebarGroupLabel className="font-light">Today</SidebarGroupLabel>
           {sortedSearches.today.map((search, i) => (
-            <SidebarMenuItem_Search
-              key={i}
-              searchQuery={search.query}
-              searchId={search._id}
-              folders={props.folders}
-            />
+            <SidebarMenuItem_Search key={i} search={search} />
           ))}
         </>
       )}
@@ -254,12 +160,7 @@ const SearchMenu = (props: {
         <>
           <SidebarGroupLabel>Yesterday</SidebarGroupLabel>
           {sortedSearches.yesterday.map((search, i) => (
-            <SidebarMenuItem_Search
-              key={i}
-              searchQuery={search.query}
-              searchId={search._id}
-              folders={props.folders}
-            />
+            <SidebarMenuItem_Search key={i} search={search} />
           ))}
         </>
       )}
@@ -268,12 +169,7 @@ const SearchMenu = (props: {
         <>
           <SidebarGroupLabel>Last 7 Days</SidebarGroupLabel>
           {sortedSearches.last7Days.map((search, i) => (
-            <SidebarMenuItem_Search
-              key={i}
-              searchQuery={search.query}
-              searchId={search._id}
-              folders={props.folders}
-            />
+            <SidebarMenuItem_Search key={i} search={search} />
           ))}
         </>
       )}
@@ -282,12 +178,7 @@ const SearchMenu = (props: {
         <>
           <SidebarGroupLabel>Last 30 Days</SidebarGroupLabel>
           {sortedSearches.last30Days.map((search, i) => (
-            <SidebarMenuItem_Search
-              key={i}
-              searchQuery={search.query}
-              searchId={search._id}
-              folders={props.folders}
-            />
+            <SidebarMenuItem_Search key={i} search={search} />
           ))}
         </>
       )}
@@ -296,12 +187,7 @@ const SearchMenu = (props: {
         <>
           <SidebarGroupLabel>Older</SidebarGroupLabel>
           {sortedSearches.older.map((search, i) => (
-            <SidebarMenuItem_Search
-              key={i}
-              searchQuery={search.query}
-              searchId={search._id}
-              folders={props.folders}
-            />
+            <SidebarMenuItem_Search key={i} search={search} />
           ))}
         </>
       )}
@@ -318,19 +204,12 @@ export function SearchGroup() {
     error: searchesError,
   } = useGetCurrentUserSearchesQuery();
 
-  const {
-    data: folders = [],
-    isPending: foldersPending,
-    error: foldersError,
-  } = useGetCurrentUserFoldersQuery();
-
-  if (searchesPending || foldersPending) {
+  if (searchesPending) {
     returnDiv = <div className="text-neutral-500">Loading...</div>;
-  } else if (searchesError || foldersError) {
+  } else if (searchesError) {
     returnDiv = (
       <div className="text-destructive">
-        Error loading searches:{" "}
-        {searchesError?.message || foldersError?.message}
+        Error loading searches: {searchesError?.message}
       </div>
     );
   } else if (searches.length === 0) {
@@ -340,7 +219,7 @@ export function SearchGroup() {
       </div>
     );
   } else {
-    returnDiv = <SearchMenu searches={searches} folders={folders} />;
+    returnDiv = <SearchMenu searches={searches} />;
   }
 
   return (

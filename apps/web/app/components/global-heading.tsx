@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
-import { InformationToolTip } from "./info-tooltip";
-import { Folders } from "@workspace/ui/src/iconography";
+import { InformationTooltip } from "./information-tooltip";
 
 export const Heading = (props: {
   heading: string;
@@ -14,7 +13,7 @@ export const Heading = (props: {
       <div className="flex items-center gap-2">
         {props.icon}
         <div className="text-2xl font-semibold">{props.heading}</div>
-        {props.tooltip && <InformationToolTip content={props.tooltip} />}
+        {props.tooltip && <InformationTooltip content={props.tooltip} />}
       </div>
       <div className="text-muted-foreground">{props.subHeading}</div>
     </div>

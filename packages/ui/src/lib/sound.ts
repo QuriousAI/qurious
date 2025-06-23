@@ -1,5 +1,5 @@
 const AUDIO_OPTIONS = {
-  added_to_folder: "./pop.mp3",
+  added_to_folder: "/pop.mp3",
 };
 
 export const playToastSound = (

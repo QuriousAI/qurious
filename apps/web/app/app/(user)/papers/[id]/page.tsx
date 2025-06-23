@@ -49,9 +49,5 @@ export default async function PaperPage(props: Props) {
 
   const { id } = params;
 
-  return (
-    <Suspense fallback={<Skeleton className="h-[80vh] w-full" />}>
-      <PaperComponent id={id} />
-    </Suspense>
-  );
+  return <PaperComponent id={id} />;
 }

@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@citation-js/core": "^0.7.18",
+    "@citation-js/plugin-csl": "^0.7.18",
     "@clerk/nextjs": "^6.20.1",
     "@clerk/themes": "^2.2.48",
     "@convex-dev/react-query": "0.0.0-alpha.8",
@@ -21,6 +23,7 @@
     "@workspace/semantic-scholar": "workspace:*",
     "@workspace/ui": "workspace:*",
     "convex": "^1.24.2",
+    "d3": "^7.9.0",
     "echarts-for-react": "^3.0.2",
     "html-to-image": "^1.11.13",
     "motion": "^12.15.0",
@@ -32,12 +35,14 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.4",
     "react-markdown": "^10.1.0",
+    "react-scan": "^0.3.4",
     "react-use": "^17.6.0",
     "tiptap-markdown": "^0.8.10",
     "zod": "^3.25.28"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/d3": "^7.4.3",
     "@types/node": "^20",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19",

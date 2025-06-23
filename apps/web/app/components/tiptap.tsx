@@ -9,7 +9,11 @@ import { toast } from "@workspace/ui/src/components/sonner";
 import { useRef } from "react";
 import { Markdown } from "tiptap-markdown";
 
-const Tiptap = (props: { content: string; folderId: Id<"folders"> }) => {
+const Tiptap = (props: {
+  content: string;
+  folderId: Id<"folders">;
+  editable: boolean;
+}) => {
   const hasShownToast = useRef(false);
 
   const updateFolderContentMutation = useUpdateFolderContentMutation();
@@ -17,6 +21,7 @@ const Tiptap = (props: { content: string; folderId: Id<"folders"> }) => {
   const editor = useEditor({
     extensions: [StarterKit, Markdown],
     content: props.content,
+    editable: props.editable,
     onUpdate: () => {
       if (!hasShownToast.current) {
         toast.warning("You have unsaved changes.", {

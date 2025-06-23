@@ -1,10 +1,9 @@
 import { SearchBar } from "@/components/search-bar";
-import { SearchResult } from "@/app/(user)/search/search-result";
+import { SearchResult } from "./client";
 import {
   fieldsOfStudy,
   publicationTypes,
 } from "@workspace/semantic-scholar/src/index";
-import { Separator } from "@workspace/ui/src/components/separator";
 import { z } from "zod";
 
 const ParamsSchema = z.object({
@@ -63,7 +62,7 @@ export default async function SearchPage(props: Props) {
   } = ParamsSchema.parse(searchParams);
 
   return (
-    <>
+    <div className="flex flex-col gap-6">
       <SearchBar q={q} />
       <SearchResult
         q={q}
@@ -73,6 +72,6 @@ export default async function SearchPage(props: Props) {
         publicationTypes={publicationTypes}
         fieldsOfStudy={fieldsOfStudy}
       />
-    </>
+    </div>
   );
 }

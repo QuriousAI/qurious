@@ -19,28 +19,18 @@ export const ReferencesTabContent = (props: { paperId: string }) => {
   });
 
   if (isLoading) {
-    return <div>Loading references...</div>;
+    return "Loading references...";
   }
 
-  if (!references) {
-    return <div>No references found~!</div>;
+  if (references.data.length === 0) {
+    return "No references found~!";
   }
-
-  console.log(references);
 
   return (
-    <div className="">
-      <div className="mt-2 flex flex-col gap-4">
-        {references.data.map((r, i) => (
-          //   <ReferenceTabCard reference={r} key={i} />
-          <PaperCard
-            paper={r.citedPaper}
-            resultIndex={i + 1}
-            authenticated={false}
-            key={i}
-          />
-        ))}
-      </div>
+    <div className="flex flex-col gap-4">
+      {references.data.map((r, i) => (
+        <PaperCard paper={r.citedPaper} resultIndex={i + 1} key={i} />
+      ))}
     </div>
   );
 };

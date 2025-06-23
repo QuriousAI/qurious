@@ -1,13 +1,8 @@
 import { getRandomGroupedQuestions } from "@/utils/questions";
 import { SearchBar } from "@/components/search-bar";
 import { APP_CONTENT, APP_NAME } from "@workspace/ui/src/content";
-import { Separator } from "@workspace/ui/src/components/separator";
-import { SearchCardList } from "@/components/lists";
-import Onboarder from "@/components/onboarding/onboarder";
-import { useUser } from "@clerk/nextjs";
 // import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
-import { Skeleton } from "@workspace/ui/src/components/skeleton";
-import DownloadLogo from "@/components/download-logo";
+import { SearchCard } from "@/components/cards";
 
 export const metadata = {
   title: "Home | Qurious",
@@ -56,7 +51,15 @@ export default function Home() {
           {genericTopics.map((topic) => (
             <div className="flex flex-col gap-2">
               <div className="font-medium pl-2">{topic.topic}</div>
-              <SearchCardList questions={topic.questions} />
+              <div className="flex flex-col gap-2">
+                {topic.questions.map((question, i) => (
+                  <SearchCard
+                    key={i}
+                    questionEmoji={question.emoji}
+                    questionText={question.question}
+                  />
+                ))}
+              </div>
             </div>
           ))}
         </div>

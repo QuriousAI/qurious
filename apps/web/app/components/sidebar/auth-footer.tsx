@@ -52,7 +52,10 @@ export const SidebarMenuItem_UserDropwn = () => {
           className="w-[var(--radix-dropdown-menu-trigger-width)]"
         >
           <DropdownMenuItem>
-            <Link href="/account" className="flex w-full items-center gap-2">
+            <Link
+              href="/settings/account"
+              className="flex w-full items-center gap-2"
+            >
               <UserCog className="size-5 text-white" />
               <span>Account</span>
             </Link>

@@ -10,5 +10,5 @@ export function ReactScan(): JSX.Element {
     });
   }, []);
 
-  return <></>;
+  return null;
 }

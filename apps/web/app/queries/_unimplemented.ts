@@ -12,7 +12,7 @@ export const useGetSubscriptionQuery = () =>
   });
 
 // Parse PDF
-export const useParsePDFQuery = (pdfUrl: string) =>
-  useQuery({
-    ...convexAction(api.myActions.downloadPDF.parsePDF, { pdfUrl }),
-  });
+// export const useParsePDFQuery = (pdfUrl: string) =>
+//   useQuery({
+//     ...convexAction(api.myActions.downloadPDF.parsePDF, { pdfUrl }),
+//   });
