@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@workspace/ui/src/components/card";
 import { Badge } from "@workspace/ui/src/components/badge";
+import Link from "next/link";
 
 export function SubscriptionClient() {
   const userData = useQuery(api.users.queries.getCurrentUser);
@@ -73,7 +74,7 @@ export function SubscriptionClient() {
             additional credits below.
           </p>
           <button className="rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-            Purchase Credits
+            <Link href="https://test.checkout.dodopayments.com/buy/pdt_1rRVmQaYdPvh3FcrzgFJ7?quantity=1">Purchase Credits</Link>
           </button>
         </CardContent>
       </Card>

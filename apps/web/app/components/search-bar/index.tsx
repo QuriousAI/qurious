@@ -59,13 +59,13 @@ const SearchToggleGroup = () => {
     //     <TooltipContent>Coming soon; AI-Agent powered research!</TooltipContent>
     //   </Tooltip>
     // </ToggleGroup>
-    <div className="select-none rounded-lg flex border overflow-hidden items-center justify-center shadow-xs">
-      <div className="text-sm bg-accent h-full px-2 flex items-center">
+    <div className="select-none rounded-lg flex border overflow-hidden items-center justify-center shadow-md text-sidebar-accent-foreground">
+      <div className="text-sm bg-sidebar-accent/50 border-accent border rounded-lg rounded-r-none h-full px-2 flex items-center">
         Normal Search
       </div>
-      <Separator orientation="vertical" />
+      <Separator orientation="vertical" className="bg-sidebar-accent" />
       <Tooltip>
-        <TooltipTrigger className="text-sm px-2">Agentic Search</TooltipTrigger>
+        <TooltipTrigger className="text-sm px-2 text-sidebar-accent-foreground/50 cursor-not-allowed">Agentic Search</TooltipTrigger>
         <TooltipContent>Coming soon; AI-Agent powered research!</TooltipContent>
       </Tooltip>
     </div>
