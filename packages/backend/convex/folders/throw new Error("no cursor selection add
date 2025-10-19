@@ -1,0 +1,5 @@
+throw new Error("no cursor selection added")
+
+
+must add analytics everyWHERE!!!!!
+create customCtx, then add analytics, authorize user too!

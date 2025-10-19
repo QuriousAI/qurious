@@ -1,8 +1,8 @@
 import { FolderClientComponent } from "./client";
 import { fetchQuery } from "convex/nextjs";
-import { api } from "@workspace/backend/convex/_generated/api";
+import { api } from "@workspace/backend/_generated/api";
 import {} from "@clerk/nextjs";
-import { Id } from "@workspace/backend/convex/_generated/dataModel";
+import { Id } from "@workspace/backend/_generated/dataModel";
 
 type Props = {
   params?: Promise<{

@@ -1,7 +1,7 @@
 "use client"; // 👈 important for using DOM APIs in App Router
 
-import { Button } from "@workspace/ui/src/components/button";
-import { AppLogo } from "@workspace/ui/src/iconography";
+import { Button } from "@workspace/design-system/components/button";
+import { AppLogo } from "@workspace/design-system/icons";
 import { toSvg } from "html-to-image";
 import { useRef } from "react";
 

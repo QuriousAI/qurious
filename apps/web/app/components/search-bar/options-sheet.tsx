@@ -1,4 +1,4 @@
-import { CircleHelp, Filter } from "@workspace/ui/src/iconography";
+import { CircleHelp, Filter } from "@workspace/design-system/icons";
 import {
   Sheet,
   SheetTrigger,
@@ -7,13 +7,13 @@ import {
   SheetTitle,
   SheetDescription,
   SheetFooter,
-} from "@workspace/ui/src/components/sheet";
-import { Separator } from "@workspace/ui/src/components/separator";
-import { toast } from "@workspace/ui/src/components/sonner";
+} from "@workspace/design-system/components/sheet";
+import { Separator } from "@workspace/design-system/components/separator";
+import { toast } from "@workspace/design-system/components/sonner";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button } from "@workspace/ui/src/components/button";
+import { Button } from "@workspace/design-system/components/button";
 import {
   Form,
   FormControl,
@@ -21,16 +21,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@workspace/ui/src/components/form";
+} from "@workspace/design-system/components/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@workspace/ui/src/components/select";
-import { Switch } from "@workspace/ui/src/components/switch";
-import { Input } from "@workspace/ui/src/components/input";
+} from "@workspace/design-system/components/select";
+import { Switch } from "@workspace/design-system/components/switch";
+import { Input } from "@workspace/design-system/components/input";
 import {
   MultiSelector,
   MultiSelectorContent,
@@ -38,12 +38,12 @@ import {
   MultiSelectorItem,
   MultiSelectorList,
   MultiSelectorTrigger,
-} from "@workspace/ui/src/components/extensions/multi-select";
+} from "@workspace/design-system/components/extensions/multi-select";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@workspace/ui/src/components/tooltip";
+} from "@workspace/design-system/components/tooltip";
 import {
   fieldsOfStudy,
   publicationTypes,

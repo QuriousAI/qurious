@@ -1,6 +1,6 @@
 import { getRandomGroupedQuestions } from "@/utils/questions";
 import { SearchBar } from "@/components/search-bar";
-import { APP_CONTENT, APP_NAME } from "@workspace/ui/src/content";
+import { APP_CONTENT, APP_NAME } from "@workspace/design-system/content";
 // import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
 import { SearchCard } from "@/components/cards";
 

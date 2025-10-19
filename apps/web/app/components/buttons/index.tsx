@@ -2,11 +2,11 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@workspace/ui/src/components/tooltip";
-import { Button } from "@workspace/ui/src/components/button";
-import { toast } from "@workspace/ui/src/components/sonner";
+} from "@workspace/design-system/components/tooltip";
+import { Button } from "@workspace/design-system/components/button";
+import { toast } from "@workspace/design-system/components/sonner";
 import { useCopyToClipboard } from "react-use";
-import { Clipboard, Share2 } from "@workspace/ui/src/iconography";
+import { Clipboard, Share2 } from "@workspace/design-system/icons";
 
 export const CopyToClipboardButtonWithTooltip = (props: {
   textToCopy: string;

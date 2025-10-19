@@ -1,6 +1,6 @@
 import { PaperComponent } from "./client";
-import { api } from "@workspace/backend/convex/_generated/api";
-import { Skeleton } from "@workspace/ui/src/components/skeleton";
+import { api } from "@workspace/backend/_generated/api";
+import { Skeleton } from "@workspace/design-system/components/skeleton";
 import { fetchAction } from "convex/nextjs";
 import { Suspense } from "react";
 

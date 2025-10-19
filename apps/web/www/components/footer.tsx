@@ -1,4 +1,4 @@
-import { Discord } from "@workspace/ui/src/iconography";
+import { Discord } from "@workspace/design-system/icons";
 import Link from "next/link";
 
 const GreenPing = () => (
@@ -8,34 +8,36 @@ const GreenPing = () => (
   </span>
 );
 
-const FooterMap = [
-  {
-    name: "Product",
-    children: [
-      { name: "Features", link: "/features" },
-      { name: "Pricing", link: "/pricing" },
-      { name: "Credits", link: "/credits" },
-      { name: "Help Center", link: process.env.NEXT_PUBLIC_WEB_HELP_URL },
-    ],
-  },
-  {
-    name: "Company",
-    children: [
-      { name: "Contact", link: "/contact" },
-      { name: "Blog", link: process.env.NEXT_PUBLIC_WEB_BLOG_URL },
-      { name: "Discord", link: "" },
-    ],
-  },
-  {
-    name: "Legal",
-    children: [
-      { name: "Privacy Policy", link: "/privacy" },
-      { name: "Terms & Conditions", link: "/terms" },
-    ],
-  },
-];
+
 
 export const Footer = () => {
+  const FooterMap = [
+    {
+      name: "Product",
+      children: [
+        { name: "Features", link: "/features" },
+        { name: "Pricing", link: "/pricing" },
+        { name: "Credits", link: "/credits" },
+        { name: "Help Center", link: process.env.NEXT_PUBLIC_WEB_HELP_URL },
+      ],
+    },
+    {
+      name: "Company",
+      children: [
+        { name: "Contact", link: "/contact" },
+        { name: "Blog", link: process.env.NEXT_PUBLIC_WEB_BLOG_URL },
+        { name: "Discord", link: "" },
+      ],
+    },
+    {
+      name: "Legal",
+      children: [
+        { name: "Privacy Policy", link: "/privacy" },
+        { name: "Terms & Conditions", link: "/terms" },
+      ],
+    },
+  ];
+
   return (
     <div className="bg-neutral-900 w-full flex justify-around py-12">
       <div className="flex flex-col gap-4">
@@ -51,7 +53,7 @@ export const Footer = () => {
         </Link>
 
         <Link
-          href={process.env.NEXT_PUBLIC_WEB_STATUS_URL}
+          href={process.env.NEXT_PUBLIC_WEB_STATUS_URL ?? ""}
           target="_blank"
           className="text-sm flex gap-2 items-center"
         >
@@ -67,8 +69,8 @@ export const Footer = () => {
               {section.children.map((item) => (
                 <Link
                   key={item.name}
-                  href={item.link}
-                  target={item.link.startsWith("http") ? "_blank" : undefined}
+                  href={item.link?? ""}
+                  target={item.link?.startsWith("http") ? "_blank" : undefined}
                   className="text-sm text-neutral-500 hover:text-neutral-300 transition-colors"
                 >
                   {item.name}

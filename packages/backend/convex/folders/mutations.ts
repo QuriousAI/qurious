@@ -44,6 +44,7 @@ export const addSearchToFolder = mutation({
   },
 });
 
+// wait, can anyone with the convex url endpoint run this?
 export const removeSearchFromFolder = mutation({
   args: {
     folderId: v.id("folders"),

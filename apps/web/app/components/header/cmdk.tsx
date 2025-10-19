@@ -9,9 +9,9 @@ import {
   SlashIcon,
   User,
   UserCog,
-} from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/icons";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { Card, CardContent } from "@workspace/ui/src/components/card";
+import { Card, CardContent } from "@workspace/design-system/components/card";
 import React, {
   ReactNode,
   ReactPortal,
@@ -31,8 +31,8 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "@workspace/ui/src/components/command";
-import { SidebarTrigger } from "@workspace/ui/src/components/sidebar";
+} from "@workspace/design-system/components/command";
+import { SidebarTrigger } from "@workspace/design-system/components/sidebar";
 import Link from "next/link";
 
 import posthog from "posthog-js";

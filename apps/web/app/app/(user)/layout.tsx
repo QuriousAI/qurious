@@ -1,11 +1,11 @@
 // Providers
-import { TooltipProvider } from "@workspace/ui/src/components/tooltip";
+import { TooltipProvider } from "@workspace/design-system/components/tooltip";
 import {
   SidebarInset,
   SidebarProvider,
-} from "@workspace/ui/src/components/sidebar";
+} from "@workspace/design-system/components/sidebar";
 import { NextStepProvider } from "nextstepjs";
-import { Toaster } from "@workspace/ui/src/components/sonner";
+import { Toaster } from "@workspace/design-system/components/sonner";
 import { AppSidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
 import { AlphaWarning } from "@/components/alpha-warning";

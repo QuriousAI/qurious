@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "web-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,19 +16,20 @@
     "@clerk/themes": "^2.2.48",
     "@convex-dev/react-query": "0.0.0-alpha.8",
     "@hookform/resolvers": "^5.0.1",
+    "@t3-oss/env-nextjs": "^0.13.8",
     "@tanstack/react-query": "^5.77.2",
     "@tiptap/pm": "^2.14.0",
     "@tiptap/react": "^2.14.0",
     "@tiptap/starter-kit": "^2.14.0",
     "@workspace/backend": "workspace:*",
     "@workspace/semantic-scholar": "workspace:*",
-    "@workspace/ui": "workspace:*",
+    "@workspace/design-system": "workspace:*",
     "convex": "^1.24.2",
     "d3": "^7.9.0",
     "echarts-for-react": "^3.0.2",
     "html-to-image": "^1.11.13",
     "motion": "^12.15.0",
-    "next": "15.3.2",
+    "next": "15.5.4",
     "next-themes": "^0.4.6",
     "nextstepjs": "^2.1.1",
     "posthog-js": "^1.252.0",
@@ -39,7 +40,7 @@
     "react-scan": "^0.3.4",
     "react-use": "^17.6.0",
     "tiptap-markdown": "^0.8.10",
-    "zod": "^3.25.28"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

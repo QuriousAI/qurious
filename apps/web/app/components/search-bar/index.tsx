@@ -1,28 +1,28 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Button } from "@workspace/ui/src/components/button";
-import { Textarea } from "@workspace/ui/src/components/textarea";
-import { ChevronRight, Search } from "@workspace/ui/src/iconography";
+import { Button } from "@workspace/design-system/components/button";
+import { Textarea } from "@workspace/design-system/components/textarea";
+import { ChevronRight, Search } from "@workspace/design-system/icons";
 import { useState } from "react";
 import { SearchBarOptionsSheet } from "./options-sheet";
 import {
   ToggleGroup,
   ToggleGroupItem,
-} from "@workspace/ui/src/components/toggle-group";
+} from "@workspace/design-system/components/toggle-group";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@workspace/ui/src/components/tooltip";
+} from "@workspace/design-system/components/tooltip";
 import { useCreateSearchMutation } from "@/queries";
 import {
   Card,
   CardContent,
   CardFooter,
-} from "@workspace/ui/src/components/card";
+} from "@workspace/design-system/components/card";
 import Link from "next/link";
-import { Separator } from "@workspace/ui/src/components/separator";
+import { Separator } from "@workspace/design-system/components/separator";
 
 export const FILTERS = {
   minimumCitations: 0,

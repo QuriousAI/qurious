@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@workspace/ui/src/components/button";
+import { Button } from "@workspace/design-system/components/button";
 import {
   Card,
   CardHeader,
@@ -8,27 +8,27 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@workspace/ui/src/components/card";
-import { Dialog, DialogTrigger } from "@workspace/ui/src/components/dialog";
+} from "@workspace/design-system/components/card";
+import { Dialog, DialogTrigger } from "@workspace/design-system/components/dialog";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@workspace/ui/src/components/dropdown-menu";
+} from "@workspace/design-system/components/dropdown-menu";
 import {
   EllipsisVertical,
   Edit2,
   Trash2,
   Dot,
   Folder,
-} from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/icons";
 import { useState } from "react";
 import Link from "next/link";
 import { DeleteFolderDialogContent } from "@/components/dialogs/folder/delete";
-import { Doc } from "@workspace/backend/convex/_generated/dataModel";
+import { Doc } from "@workspace/backend/_generated/dataModel";
 import { EditFolderDialogContent } from "@/components/dialogs/folder/edit";
-import { Separator } from "@workspace/ui/src/components/separator";
+import { Separator } from "@workspace/design-system/components/separator";
 import { InformationTooltip } from "@/components/information-tooltip";
 
 {

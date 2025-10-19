@@ -1,5 +1,5 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { APP_NAME } from "@workspace/ui/src/content";
+import { APP_NAME } from "@workspace/design-system/content";
 
 /**
  * Shared layout configurations

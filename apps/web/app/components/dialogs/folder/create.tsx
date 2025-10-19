@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@workspace/ui/src/components/button";
-import { Input } from "@workspace/ui/src/components/input";
+import { Button } from "@workspace/design-system/components/button";
+import { Input } from "@workspace/design-system/components/input";
 import {
   Dialog,
   DialogTrigger,
@@ -11,11 +11,11 @@ import {
   DialogClose,
   DialogHeader,
   DialogFooter,
-} from "@workspace/ui/src/components/dialog";
-import { Label } from "@workspace/ui/src/components/label";
-import { Plus } from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/components/dialog";
+import { Label } from "@workspace/design-system/components/label";
+import { Plus } from "@workspace/design-system/icons";
 import { useState } from "react";
-import { toast } from "@workspace/ui/src/components/sonner";
+import { toast } from "@workspace/design-system/components/sonner";
 import { useCreateFolderMutation } from "@/queries";
 
 export function CreateFolderDialog() {

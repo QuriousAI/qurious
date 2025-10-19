@@ -5,19 +5,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@workspace/ui/src/components/dialog";
-import { Clipboard, Quote } from "@workspace/ui/src/iconography";
-import { Button } from "@workspace/ui/src/components/button";
+} from "@workspace/design-system/components/dialog";
+import { Clipboard, Quote } from "@workspace/design-system/icons";
+import { Button } from "@workspace/design-system/components/button";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@workspace/ui/src/components/tabs";
+} from "@workspace/design-system/components/tabs";
 import { type Author, Paper } from "@workspace/semantic-scholar/src";
 import { useCopyToClipboard } from "react-use";
-import { Separator } from "@workspace/ui/src/components/separator";
-import { toast } from "@workspace/ui/src/components/sonner";
+import { Separator } from "@workspace/design-system/components/separator";
+import { toast } from "@workspace/design-system/components/sonner";
 import { Cite } from "@citation-js/core";
 import "@citation-js/plugin-csl";
 

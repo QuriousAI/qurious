@@ -2,9 +2,10 @@ import type { WebhookEvent as ClerkWebhookEvent } from "@clerk/backend";
 import { Webhook as SvixWebhook } from "svix";
 import { httpAction } from "../_generated/server";
 import { internal } from "../_generated/api";
+import { envVariables } from "../env";
 
 async function validateClerkWebhookRequest(req: Request) {
-  const clerkSvixWebhook = new SvixWebhook(process.env.CLERK_WEBHOOK_SECRET!);
+  const clerkSvixWebhook = new SvixWebhook(envVariables.CLERK_WEBHOOK_SECRET);
 
   const payloadString = await req.text();
   const svixHeaders = {
@@ -40,6 +41,8 @@ export const clerkHandler = httpAction(async (ctx, request) => {
       await ctx.runMutation(internal.users.mutations.createFromClerk, {
         data: event.data,
       });
+      throw new Error("supposed to send welcome email here with resend")
+      
       break;
 
     case "user.updated":

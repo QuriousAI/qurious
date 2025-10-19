@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SidebarTrigger } from "@workspace/ui/src/components/sidebar";
+import { SidebarTrigger } from "@workspace/design-system/components/sidebar";
 import { Cmdk } from "./cmdk";
 import { ModeToggle } from "./mode-toggle";
 import { HeaderBreadcrumb } from "./breadcrumb";
@@ -16,6 +16,7 @@ export const Header = () => {
         <Cmdk />
         <Help />
         <ModeToggle />
+        {/* <Notification /> */}
       </div>
     </header>
   );

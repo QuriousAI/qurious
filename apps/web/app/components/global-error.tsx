@@ -2,15 +2,15 @@ import {
   Alert,
   AlertTitle,
   AlertDescription,
-} from "@workspace/ui/src/components/alert";
+} from "@workspace/design-system/components/alert";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@workspace/ui/src/components/card";
-import { AlertCircle } from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/components/card";
+import { AlertCircle } from "@workspace/design-system/icons";
 import { ConvexError } from "convex/values";
 
 export const GlobalErrorHandler = (props: { error: Error }) => {

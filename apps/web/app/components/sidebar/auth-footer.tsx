@@ -1,7 +1,7 @@
 import {
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@workspace/ui/src/components/sidebar";
+} from "@workspace/design-system/components/sidebar";
 import {
   ChevronDown,
   CreditCard,
@@ -9,21 +9,21 @@ import {
   Settings,
   Settings2,
   UserCog,
-} from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@workspace/ui/src/components/dropdown-menu";
+} from "@workspace/design-system/components/dropdown-menu";
 import { SignOutButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@workspace/ui/src/components/avatar";
+} from "@workspace/design-system/components/avatar";
 
 /** This is the menu item for the user dropdown. Trigger = User Bar, Content = Dropdown For User Settings */
 export const SidebarMenuItem_UserDropwn = () => {

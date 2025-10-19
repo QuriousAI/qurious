@@ -1,6 +1,6 @@
 "use client";
 
-import { Id } from "@workspace/backend/convex/_generated/dataModel";
+import { Id } from "@workspace/backend/_generated/dataModel";
 import {
   Dialog,
   DialogHeader,
@@ -10,11 +10,11 @@ import {
   DialogClose,
   DialogTrigger,
   DialogContent,
-} from "@workspace/ui/src/components/dialog";
-import { Button } from "@workspace/ui/src/components/button";
+} from "@workspace/design-system/components/dialog";
+import { Button } from "@workspace/design-system/components/button";
 import { useDeleteSearchMutation } from "@/queries";
-import { toast } from "@workspace/ui/src/components/sonner";
-import { Trash2 } from "@workspace/ui/src/iconography";
+import { toast } from "@workspace/design-system/components/sonner";
+import { Trash2 } from "@workspace/design-system/icons";
 
 export function DeleteSearchDialogContent(props: {
   name: string;

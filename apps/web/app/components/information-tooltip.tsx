@@ -1,9 +1,9 @@
-import { CircleHelp } from "@workspace/ui/src/iconography";
+import { CircleHelp } from "@workspace/design-system/icons";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@workspace/ui/src/components/tooltip";
+} from "@workspace/design-system/components/tooltip";
 
 export const InformationTooltip = ({ content }: { content: string }) => {
   return (

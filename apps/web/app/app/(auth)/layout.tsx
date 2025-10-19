@@ -1,5 +1,5 @@
-import { Command } from "@workspace/ui/src/iconography";
-import { Meteors } from "@workspace/ui/src/components/magicui/meteors";
+import { Command } from "@workspace/design-system/icons";
+import { Meteors } from "@workspace/design-system/components/magicui/meteors";
 
 export default function AuthLayout({
   children,

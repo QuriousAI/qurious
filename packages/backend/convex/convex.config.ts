@@ -3,8 +3,19 @@ import { defineApp } from "convex/server";
 import cache from "@convex-dev/action-cache/convex.config";
 import { z } from "zod";
 
-const app = defineApp();
-app.use(cache);
+
+throw new Error("can't initlaize app until dodopayments compoennt is installed.")
+throw new Error("integrate notification system")
+
+
+
+
+const app = defineApp()
+app.use(cache)
+app.use(dodopayments)
+app.use(resend)
+
+
 
 // const envVariables = z.object({
 //   // Convex

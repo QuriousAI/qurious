@@ -8,66 +8,16 @@ import {
   NavigationMenuTrigger,
   NavigationMenuLink,
   navigationMenuTriggerStyle,
-} from "@workspace/ui/src/components/navigation-menu";
+} from "@workspace/design-system/components/navigation-menu";
 import Link from "next/link";
-import { MoveRight } from "@workspace/ui/src/iconography";
-import { Separator } from "@workspace/ui/src/components/separator";
-import { Button } from "@workspace/ui/src/components/button";
+import { MoveRight } from "@workspace/design-system/icons";
+import { Separator } from "@workspace/design-system/components/separator";
+import { Button } from "@workspace/design-system/components/button";
 import { useEffect, useState } from "react";
 
-import { cn } from "@workspace/ui/src/lib/utils";
+import { cn } from "@workspace/design-system/lib/utils";
 
-const NAVIGATION_LINKS = [
-  {
-    name: "Product",
-    children: [
-      {
-        name: "Features",
-        link: "/features",
-        description:
-          "Explore Qurious's powerful features for AI-powered learning and knowledge management",
-      },
-      {
-        name: "Pricing",
-        link: "/pricing",
-        description: "Flexible pricing plans to suit your learning needs",
-      },
-      {
-        name: "Credits",
-        link: "/credits",
-        description:
-          "Learn about our credit system and how to manage your usage",
-      },
-    ],
-  },
-  {
-    name: "Company",
-    children: [
-      {
-        name: "Contact",
-        link: "/contact",
-        description: "Get in touch with our team for support or inquiries",
-      },
-    ],
-  },
-  {
-    name: "Legal",
-    children: [
-      {
-        name: "Privacy Policy",
-        link: "/privacy",
-        description: "How we protect and handle your data",
-      },
-      {
-        name: "Terms & Conditions",
-        link: "/terms",
-        description: "Our terms of service and usage conditions",
-      },
-    ],
-  },
-  { name: "Blog", link: process.env.NEXT_PUBLIC_WEB_BLOG_URL },
-  { name: "Help", link: process.env.NEXT_PUBLIC_WEB_HELP_URL },
-];
+
 
 const NavChild = (props) => {
   return (
@@ -84,8 +34,60 @@ const NavChild = (props) => {
   );
 };
 
-const HeaderNavigationMenu = () => (
-  <NavigationMenu viewport={false}>
+const HeaderNavigationMenu = () => {
+  const NAVIGATION_LINKS = [
+    {
+      name: "Product",
+      children: [
+        {
+          name: "Features",
+          link: "/features",
+          description:
+            "Explore Qurious's powerful features for AI-powered learning and knowledge management",
+        },
+        {
+          name: "Pricing",
+          link: "/pricing",
+          description: "Flexible pricing plans to suit your learning needs",
+        },
+        {
+          name: "Credits",
+          link: "/credits",
+          description:
+            "Learn about our credit system and how to manage your usage",
+        },
+      ],
+    },
+    {
+      name: "Company",
+      children: [
+        {
+          name: "Contact",
+          link: "/contact",
+          description: "Get in touch with our team for support or inquiries",
+        },
+      ],
+    },
+    {
+      name: "Legal",
+      children: [
+        {
+          name: "Privacy Policy",
+          link: "/privacy",
+          description: "How we protect and handle your data",
+        },
+        {
+          name: "Terms & Conditions",
+          link: "/terms",
+          description: "Our terms of service and usage conditions",
+        },
+      ],
+    },
+    { name: "Blog", link: process.env.NEXT_PUBLIC_WEB_BLOG_URL },
+    { name: "Help", link: process.env.NEXT_PUBLIC_WEB_HELP_URL },
+  ];
+
+  return <NavigationMenu viewport={false}>
     <NavigationMenuList className="h-4 gap-4">
       {NAVIGATION_LINKS.map((nl, i) => (
         <>
@@ -107,7 +109,7 @@ const HeaderNavigationMenu = () => (
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="w-sm flex flex-col gap-2">
-                    {nl.children.map((nl_x) => (
+                    {nl.children?.map((nl_x) => (
                       <NavChild
                         name={nl_x.name}
                         description={nl_x.description}
@@ -123,7 +125,7 @@ const HeaderNavigationMenu = () => (
       ))}
     </NavigationMenuList>
   </NavigationMenu>
-);
+};
 
 export function Header() {
   const [menuState, setMenuState] = useState(false);
@@ -141,7 +143,7 @@ export function Header() {
     <header
       className={cn(
         "z-100 top-0 sticky flex transition-all duration-300 items-center justify-between border-b border-neutral-700/80 bg-neutral-800/30 backdrop-blur-sm px-8 py-4 shadow-2xl  w-full",
-        isScrolled && "w-3/4 top-4 border rounded-lg"
+        isScrolled && "w-3/4 top-4 border rounded-2xl"
       )}
     >
       <div className="text-lg">Qurious</div>

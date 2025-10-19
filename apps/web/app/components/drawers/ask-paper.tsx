@@ -1,5 +1,5 @@
-import { Badge } from "@workspace/ui/src/components/badge";
-import { Button } from "@workspace/ui/src/components/button";
+import { Badge } from "@workspace/design-system/components/badge";
+import { Button } from "@workspace/design-system/components/button";
 import {
   Drawer,
   DrawerClose,
@@ -9,12 +9,12 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@workspace/ui/src/components/drawer";
-import { Separator } from "@workspace/ui/src/components/separator";
+} from "@workspace/design-system/components/drawer";
+import { Separator } from "@workspace/design-system/components/separator";
 import {
   Construction,
   MessageCircleQuestion,
-} from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/icons";
 
 const LeftSidePreview = () => {
   return "LeftSidePreview";

@@ -4,12 +4,12 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@workspace/ui/src/components/card";
-import { InfiniteSlider } from "@workspace/ui/src/components/motion-primitives/infinite-slider";
-import { ProgressiveBlur } from "@workspace/ui/src/components/motion-primitives/progressive-blur";
+} from "@workspace/design-system/components/card";
+import { InfiniteSlider } from "@workspace/design-system/components/motion-primitives/infinite-slider";
+import { ProgressiveBlur } from "@workspace/design-system/components/motion-primitives/progressive-blur";
 
 const ReviewCard = (props) => (
-  <Card className="w-md bg-card/50 backdrop-blur-3xl">
+  <Card className="w-md bg-card/25">
     <CardHeader>
       <CardTitle>
         {Array.from({ length: props.rating }, (_, i) => (

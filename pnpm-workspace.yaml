@@ -1,3 +1,6 @@
 packages:
-  - "apps/web/*"
-  - "packages/*"
+  - apps/web/*
+  - apps/mobile/*
+  - apps/browser/*
+  - packages/*
+  - tools/*

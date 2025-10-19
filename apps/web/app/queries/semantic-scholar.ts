@@ -1,4 +1,4 @@
-import { api } from "@workspace/backend/convex/_generated/api";
+import { api } from "@workspace/backend/_generated/api";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { convexAction, useConvex } from "@convex-dev/react-query";
 import { FieldOfStudy, PublicationType } from "@workspace/semantic-scholar/src";

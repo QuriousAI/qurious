@@ -1,20 +1,20 @@
 "use client";
 
-import { Separator } from "@workspace/ui/src/components/separator";
+import { Separator } from "@workspace/design-system/components/separator";
 import { CreateFolderDialog } from "@/components/dialogs";
 import { Authenticated, Unauthenticated, AuthLoading } from "convex/react";
 import { Heading } from "../../../components/global-heading";
-import { Folders } from "@workspace/ui/src/iconography";
+import { Folders } from "@workspace/design-system/icons";
 
 import { FolderCard } from "@/components/cards/folder";
 import { useGetCurrentUserFoldersQuery } from "@/queries";
-import { SearchX } from "@workspace/ui/src/iconography";
+import { SearchX } from "@workspace/design-system/icons";
 
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@workspace/ui/src/components/alert";
+} from "@workspace/design-system/components/alert";
 
 export const FoldersList = () => {
   const { data, isPending, error } = useGetCurrentUserFoldersQuery();

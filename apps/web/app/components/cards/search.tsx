@@ -1,8 +1,8 @@
 "use client";
 
-import { Card, CardContent } from "@workspace/ui/src/components/card";
+import { Card, CardContent } from "@workspace/design-system/components/card";
 import Link from "next/link";
-import { Search } from "@workspace/ui/src/iconography";
+import { Search } from "@workspace/design-system/icons";
 import { useCreateSearchMutation } from "@/queries";
 
 export const SearchCard = (props: {

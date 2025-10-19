@@ -1,3 +1,4 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/css/neutral.css';
+/* Why is neutral.css necessary? */
 @import 'fumadocs-ui/css/preset.css';

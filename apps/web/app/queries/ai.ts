@@ -1,4 +1,4 @@
-import { api } from "@workspace/backend/convex/_generated/api";
+import { api } from "@workspace/backend/_generated/api";
 import { useQuery } from "@tanstack/react-query";
 import { convexAction } from "@convex-dev/react-query";
 import { ConvexError } from "convex/values";

@@ -1,7 +1,7 @@
 import { useGetPaperSnapshotQuery } from "@/queries";
 import { Paper } from "@workspace/semantic-scholar/src";
-import { Separator } from "@workspace/ui/src/components/separator";
-import { Skeleton } from "@workspace/ui/src/components/skeleton";
+import { Separator } from "@workspace/design-system/components/separator";
+import { Skeleton } from "@workspace/design-system/components/skeleton";
 
 import {
   Table,
@@ -11,8 +11,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@workspace/ui/src/components/table";
-import { AlertCircle } from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/components/table";
+import { AlertCircle } from "@workspace/design-system/icons";
 
 export const TableSnapshop = (props: { data: any }) => {
   return (

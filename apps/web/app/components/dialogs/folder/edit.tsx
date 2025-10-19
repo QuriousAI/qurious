@@ -7,15 +7,15 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@workspace/ui/src/components/dialog";
-import { Label } from "@workspace/ui/src/components/label";
-import { Input } from "@workspace/ui/src/components/input";
-import { Button } from "@workspace/ui/src/components/button";
+} from "@workspace/design-system/components/dialog";
+import { Label } from "@workspace/design-system/components/label";
+import { Input } from "@workspace/design-system/components/input";
+import { Button } from "@workspace/design-system/components/button";
 import { useState } from "react";
-import { toast } from "@workspace/ui/src/components/sonner";
-import { Switch } from "@workspace/ui/src/components/switch";
+import { toast } from "@workspace/design-system/components/sonner";
+import { Switch } from "@workspace/design-system/components/switch";
 import { useUpdateFolderNameMutation } from "@/queries";
-import { Doc } from "@workspace/backend/convex/_generated/dataModel";
+import { Doc } from "@workspace/backend/_generated/dataModel";
 
 export function EditFolderDialogContent(props: { folder: Doc<"folders"> }) {
   const [name, setName] = useState(props.folder.name);

@@ -10,9 +10,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
-} from "@workspace/ui/src/components/sidebar";
+} from "@workspace/design-system/components/sidebar";
 import Link from "next/link";
-import { APP_NAME } from "@workspace/ui/src/content";
+import { APP_NAME } from "@workspace/design-system/content";
 import {
   Folders,
   Search,
@@ -22,13 +22,13 @@ import {
   Discord,
   Home,
   AppLogo,
-} from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/icons";
 import { SignUpButton } from "@clerk/nextjs";
-import { Button } from "@workspace/ui/src/components/button";
-import { APP_CONTENT } from "@workspace/ui/src/content";
+import { Button } from "@workspace/design-system/components/button";
+import { APP_CONTENT } from "@workspace/design-system/content";
 import { SidebarMenuItem_UserDropwn } from "./auth-footer";
 import { SearchGroup } from "./authenticated";
-import { Skeleton } from "@workspace/ui/src/components/skeleton";
+import { Skeleton } from "@workspace/design-system/components/skeleton";
 
 const SearchGroupSkeleton = () => {
   return (

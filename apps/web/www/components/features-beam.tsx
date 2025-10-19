@@ -2,9 +2,9 @@
 
 import React, { forwardRef, useRef } from "react";
 
-import { cn } from "@workspace/ui/src/lib/utils";
-import { AnimatedBeam } from "@workspace/ui/src/components/magicui/animated-beam";
-import { User } from "@workspace/ui/src/iconography";
+import { cn } from "@workspace/design-system/lib/utils";
+import { AnimatedBeam } from "@workspace/design-system/components/magicui/animated-beam";
+import { User } from "@workspace/design-system/icons";
 
 const Circle = forwardRef<
   HTMLDivElement,

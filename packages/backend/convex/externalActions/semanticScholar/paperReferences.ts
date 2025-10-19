@@ -46,6 +46,13 @@ export const getPaperReferencesInternal = internalAction({
       fields: args.fields,
     });
 
+    client.capture({
+      distinctId: ctx.auth.getUserIdentity(),
+      event: "get_paper_refereneces",
+      properties: {...args}
+    });
+    
+
     if (result.isErr()) throw new ConvexError(result.error);
 
     return result.value;

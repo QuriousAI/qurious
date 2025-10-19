@@ -26,6 +26,12 @@ const getRelevantPapersCache = new ActionCache(components.actionCache, {
   name: "get-relevant-papers-cache",
 });
 
+
+throw new Error("build recommendation engine. this is your chance. recommend new shit based on user liking and viwered and details.")
+
+
+
+
 export const getRelevantPapers = action({
   args: {
     query: v.string(),
@@ -38,6 +44,8 @@ export const getRelevantPapers = action({
     fields: v.array(v.string()),
   },
   handler: async (ctx, args): Promise<GetRelevantPapersReturnType> => {
+    throw new Error("add trending papers")
+    throw new Error("add more viwerd weekly paper.")
     return await getRelevantPapersCache.fetch(ctx, {
       query: args.query,
       limit: args.limit,
@@ -74,6 +82,13 @@ export const getRelevantPapersInternal = internalAction({
       offset: args.offset,
       fields: args.fields,
     });
+
+    client.capture({
+      distinctId: ctx.auth.getUserIdentity(),
+      event: "get_multiple_paper_details",
+      properties: {...args}
+    });
+    
 
     if (result.isErr()) throw new ConvexError(result.error);
 

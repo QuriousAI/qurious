@@ -1,14 +1,14 @@
 "use client";
 
-import { Separator } from "@workspace/ui/src/components/separator";
+import { Separator } from "@workspace/design-system/components/separator";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@workspace/ui/src/components/tabs";
-import { Textarea } from "@workspace/ui/src/components/textarea";
-import { Label } from "@workspace/ui/src/components/label";
+} from "@workspace/design-system/components/tabs";
+import { Textarea } from "@workspace/design-system/components/textarea";
+import { Label } from "@workspace/design-system/components/label";
 import {
   useGetFolderByIdQuery,
   useGetMultiplePapersDetailsQuery,
@@ -16,11 +16,11 @@ import {
   useUpdateFolderPrivacyMutation,
 } from "@/queries";
 import { PaperCard, SearchCard } from "../../../../components/cards";
-import { Id } from "@workspace/backend/convex/_generated/dataModel";
-import { Switch } from "@workspace/ui/src/components/switch";
+import { Id } from "@workspace/backend/_generated/dataModel";
+import { Switch } from "@workspace/design-system/components/switch";
 import Tiptap from "../../../../components/tiptap";
 import { Heading } from "../../../../components/global-heading";
-import { Folder, NotebookPen, User } from "@workspace/ui/src/iconography";
+import { Folder, NotebookPen, User } from "@workspace/design-system/icons";
 
 const PapersTab = (props) => {
   const {

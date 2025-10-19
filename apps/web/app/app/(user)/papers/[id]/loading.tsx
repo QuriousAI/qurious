@@ -1,4 +1,4 @@
-import { Skeleton } from "@workspace/ui/src/components/skeleton";
+import { Skeleton } from "@workspace/design-system/components/skeleton";
 
 export default function Loading() {
   return (

@@ -1,20 +1,20 @@
-import { Folder, Plus } from "@workspace/ui/src/iconography";
+import { Folder, Plus } from "@workspace/design-system/icons";
 import {
   DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-} from "@workspace/ui/src/components/dropdown-menu";
+} from "@workspace/design-system/components/dropdown-menu";
 import {
   useAddSearchToFolderMutation,
   useGetCurrentUserFoldersQuery,
   useRemoveSearchFromFolderMutation,
 } from "@/queries";
-import { Doc, Id } from "@workspace/backend/convex/_generated/dataModel";
-import { Checkbox } from "@workspace/ui/src/components/checkbox";
-import { toast } from "@workspace/ui/src/components/sonner";
-import { playToastSound } from "@workspace/ui/src/lib/sound";
+import { Doc, Id } from "@workspace/backend/_generated/dataModel";
+import { Checkbox } from "@workspace/design-system/components/checkbox";
+import { toast } from "@workspace/design-system/components/sonner";
+import { playToastSound } from "@workspace/design-system/lib/sound";
 
 const MyDropdownMenuItem = (props: {
   folder: Doc<"folders">;

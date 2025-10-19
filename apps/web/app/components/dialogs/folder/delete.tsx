@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@workspace/ui/src/components/button";
+import { Button } from "@workspace/design-system/components/button";
 import {
   DialogHeader,
   DialogDescription,
@@ -8,10 +8,10 @@ import {
   DialogContent,
   DialogFooter,
   DialogClose,
-} from "@workspace/ui/src/components/dialog";
-import { toast } from "@workspace/ui/src/components/sonner";
+} from "@workspace/design-system/components/dialog";
+import { toast } from "@workspace/design-system/components/sonner";
 import { useDeleteFolderMutation } from "@/queries";
-import { Id } from "@workspace/backend/convex/_generated/dataModel";
+import { Id } from "@workspace/backend/_generated/dataModel";
 
 export function DeleteFolderDialogContent(props: {
   name: string;

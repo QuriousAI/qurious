@@ -2,13 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-// import { Textarea } from "@workspace/ui/components/ui/textarea";
-// import { Button } from "@workspace/ui/components/button";
-// import { Search } from "@workspace/ui/iconography";
-import { Textarea } from "@workspace/ui/src/components/textarea";
-import { Button } from "@workspace/ui/src/components/button";
-import { BorderTrail } from "@workspace/ui/src/components/motion-primitives/border-trail";
-import { Search } from "@workspace/ui/src/iconography";
+// import { Textarea } from "@workspace/design-system/components/ui/textarea";
+// import { Button } from "@workspace/design-system/components/button";
+// import { Search } from "@workspace/design-system/icons";
+import { Textarea } from "@workspace/design-system/components/textarea";
+import { Button } from "@workspace/design-system/components/button";
+import { BorderTrail } from "@workspace/design-system/components/motion-primitives/border-trail";
+import { Search } from "@workspace/design-system/icons";
 
 export default function SearchBar() {
   const [search, setSearch] = useState("");
@@ -31,7 +31,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="relative rounded-full border-none border-neutral-600/80 shadow-2xl transition-all duration-300 hover:border-neutral-500 w-4xl">
+    <div className="relative rounded-full border border-neutral-600/80 shadow-2xl transition-all duration-300 hover:border-neutral-500 w-4xl">
       <Textarea
         placeholder="Search a question"
         className="flex resize-none truncate overflow-hidden rounded-full border-0 bg-white px-7 py-6 font-medium focus-visible:ring-0 md:text-lg"
@@ -47,8 +47,8 @@ export default function SearchBar() {
         size={100}
       /> */}
       <BorderTrail
-        className="bg-linear-to-l from-blue-200 via-blue-500 to-blue-200 dark:from-amber-400 dark:via-amber-500 dark:to-amber-700"
-        size={120}
+        className="bg-linear-to-l from-amber-700 via-amber-800 to-amber-900"
+        size={100}
       />
       <Button
         asChild

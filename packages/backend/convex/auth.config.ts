@@ -1,7 +1,9 @@
+import { envVariables } from "./env";
+
 export default {
   providers: [
     {
-      domain: process.env.CLERK_ISSUER_URL,
+      domain: envVariables.CLERK_ISSUER_URL,
       applicationID: "convex",
     },
   ],

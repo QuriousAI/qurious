@@ -11,39 +11,39 @@ import {
   FieldOfStudy,
   Paper,
 } from "@workspace/semantic-scholar/src";
-import { Separator } from "@workspace/ui/src/components/separator";
+import { Separator } from "@workspace/design-system/components/separator";
 import {
   ChevronDown,
   Files,
   Search,
   Text,
-} from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/icons";
 import Markdown from "react-markdown";
 import { extractFieldsfromPapers } from "@/utils/extractor";
 import { Heading } from "../../../components/global-heading";
-import { Skeleton } from "@workspace/ui/src/components/skeleton";
+import { Skeleton } from "@workspace/design-system/components/skeleton";
 import { GlobalErrorHandler } from "../../../components/global-error";
 import { CopyToClipboardButtonWithTooltip } from "../../../components/buttons";
 import {
   Braces,
   Download,
   FileSpreadsheet,
-} from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@workspace/ui/src/components/dropdown-menu";
+} from "@workspace/design-system/components/dropdown-menu";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@workspace/ui/src/components/select";
+} from "@workspace/design-system/components/select";
 import { useMemo, useState } from "react";
-import { Button } from "@workspace/ui/src/components/button";
+import { Button } from "@workspace/design-system/components/button";
 import { SORTING } from "../../../components/search-bar";
 import { useGetCurrentUserQuery } from "@/queries/users";
 import { PaperCard, SearchCard } from "@/components/cards";

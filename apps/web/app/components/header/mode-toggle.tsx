@@ -1,22 +1,22 @@
 "use client";
 
 import * as React from "react";
-import { Moon, Sun } from "@workspace/ui/src/iconography";
+import { Moon, Sun } from "@workspace/design-system/icons";
 import { useTheme } from "next-themes";
 
-import { Button } from "@workspace/ui/src/components/button";
+import { Button } from "@workspace/design-system/components/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@workspace/ui/src/components/dropdown-menu";
+} from "@workspace/design-system/components/dropdown-menu";
 
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@workspace/ui/src/components/tooltip";
+} from "@workspace/design-system/components/tooltip";
 
 export function ModeToggle() {
   const { setTheme } = useTheme();

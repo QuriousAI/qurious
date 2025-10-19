@@ -7,7 +7,7 @@ import {
   useGetPaperReferencesQuery,
 } from "@/queries";
 import { constructGraphFromPaper } from "@/utils/paper-graph-view";
-import { AlertCircleIcon, Dot } from "@workspace/ui/src/iconography";
+import { AlertCircleIcon, Dot } from "@workspace/design-system/icons";
 
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
@@ -15,7 +15,7 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@workspace/ui/src/components/alert";
+} from "@workspace/design-system/components/alert";
 
 type Node = {
   id: string;

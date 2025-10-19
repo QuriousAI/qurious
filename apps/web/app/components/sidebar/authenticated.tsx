@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@workspace/ui/src/components/sidebar";
+} from "@workspace/design-system/components/sidebar";
 import {
   CreditCard,
   Folder,
@@ -25,7 +25,7 @@ import {
   Settings,
   Trash2,
   UserCog,
-} from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/icons";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -37,18 +37,18 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@workspace/ui/src/components/dropdown-menu";
+} from "@workspace/design-system/components/dropdown-menu";
 import { SignOutButton, useUser } from "@clerk/nextjs";
-import { Separator } from "@workspace/ui/src/components/separator";
+import { Separator } from "@workspace/design-system/components/separator";
 import Link from "next/link";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@workspace/ui/src/components/avatar";
+} from "@workspace/design-system/components/avatar";
 import { useTheme } from "next-themes";
-import { Label } from "@workspace/ui/src/components/label";
-import { Switch } from "@workspace/ui/src/components/switch";
+import { Label } from "@workspace/design-system/components/label";
+import { Switch } from "@workspace/design-system/components/switch";
 import {
   useAddSearchToFolderMutation,
   useGetCurrentUserSearchesQuery,
@@ -56,11 +56,11 @@ import {
 } from "@/queries";
 import { getRandomSidebarNoSearchPlaceholder } from "../../utils/placeholders/no-searches";
 import { DeleteSearchDialogContent } from "../dialogs/search/delete";
-import { Doc, Id } from "@workspace/backend/convex/_generated/dataModel";
-import { Dialog, DialogTrigger } from "@workspace/ui/src/components/dialog";
-import { Checkbox } from "@workspace/ui/src/components/checkbox";
-import { toast } from "@workspace/ui/src/components/sonner";
-import { playToastSound } from "@workspace/ui/src/lib/sound";
+import { Doc, Id } from "@workspace/backend/_generated/dataModel";
+import { Dialog, DialogTrigger } from "@workspace/design-system/components/dialog";
+import { Checkbox } from "@workspace/design-system/components/checkbox";
+import { toast } from "@workspace/design-system/components/sonner";
+import { playToastSound } from "@workspace/design-system/lib/sound";
 import { ReactNode } from "react";
 import { AddSearchToFolderDropdownMenu } from "../dropdowns/add-search-to-folder";
 

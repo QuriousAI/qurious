@@ -6,19 +6,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@workspace/ui/src/components/card";
+} from "@workspace/design-system/components/card";
 import { Paper } from "@workspace/semantic-scholar/src";
-import { Doc } from "@workspace/backend/convex/_generated/dataModel";
+import { Doc } from "@workspace/backend/_generated/dataModel";
 import Link from "next/link";
-import { File, FileText } from "@workspace/ui/src/iconography";
+import { File, FileText } from "@workspace/design-system/icons";
 
 import { AddPaperToFolderDropdownMenu } from "@/components/dropdowns/add-paper-to-folder";
 import { CiteThisPaperDialog } from "@/components/dialogs";
-import { Button } from "@workspace/ui/src/components/button";
+import { Button } from "@workspace/design-system/components/button";
 import { useGetPaperSnapshotQuery } from "@/queries";
 
 import { TableSnapshop } from "../paper-tabs/overview";
-import { Separator } from "@workspace/ui/src/components/separator";
+import { Separator } from "@workspace/design-system/components/separator";
 import { AskPaperDrawer } from "../drawers/ask-paper";
 import { Authenticated } from "convex/react";
 

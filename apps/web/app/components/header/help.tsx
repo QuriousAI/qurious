@@ -1,11 +1,11 @@
-import { Button } from "@workspace/ui/src/components/button";
+import { Button } from "@workspace/design-system/components/button";
 import Link from "next/link";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@workspace/ui/src/components/tooltip";
-import { CircleHelp } from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/components/tooltip";
+import { CircleHelp } from "@workspace/design-system/icons";
 
 export const Help = () => {
   return (

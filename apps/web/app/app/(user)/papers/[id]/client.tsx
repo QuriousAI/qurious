@@ -1,24 +1,24 @@
 "use client";
 
-import { Separator } from "@workspace/ui/src/components/separator";
+import { Separator } from "@workspace/design-system/components/separator";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@workspace/ui/src/components/tabs";
+} from "@workspace/design-system/components/tabs";
 import Link from "next/link";
 import { useGetPaperDetailsQuery, useGetPaperSnapshotQuery } from "@/queries";
 
 import type { Paper } from "@workspace/semantic-scholar/src";
-import { Skeleton } from "@workspace/ui/src/components/skeleton";
+import { Skeleton } from "@workspace/design-system/components/skeleton";
 
 import { ReferencesTabContent } from "@/components/paper-tabs/references";
 import { CitationsTabContent } from "@/components/paper-tabs/citations";
 import { GraphViewTabContent } from "@/components/paper-tabs/graph-view";
 import { RecommendedTabContent } from "@/components/paper-tabs/recommended";
 import { OverviewTabContent } from "@/components/paper-tabs/overview";
-import { Badge } from "@workspace/ui/src/components/badge";
+import { Badge } from "@workspace/design-system/components/badge";
 
 const PaperHero = (props: { paper: Paper }) => {
   if (!props.paper.authors) {

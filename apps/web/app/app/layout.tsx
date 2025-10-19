@@ -1,13 +1,13 @@
-import "@workspace/ui/src/styles/globals.css";
+import "@workspace/design-system/styles/globals.css";
 import type { Metadata } from "next";
-import { Font } from "@workspace/ui/src/font";
+import { Font } from "@workspace/design-system/font";
 
 // Providers
 import { ClerkProvider } from "@clerk/nextjs";
 import { ConvexWithClerkProvider } from "@/providers/convex-with-clerk";
-import { ThemeProvider } from "@workspace/ui/src/providers/theme-provider";
+import { ThemeProvider } from "@workspace/design-system/providers/theme-provider";
 
-import { APP_DESCRIPTION, APP_NAME } from "@workspace/ui/src/content";
+import { APP_DESCRIPTION, APP_NAME } from "@workspace/design-system/content";
 
 export const metadata: Metadata = {
   title: APP_NAME,

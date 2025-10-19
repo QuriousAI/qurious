@@ -8,8 +8,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@workspace/ui/src/components/card";
-import { Button } from "@workspace/ui/src/components/button";
+} from "@workspace/design-system/components/card";
+import { Button } from "@workspace/design-system/components/button";
 
 interface ShadcnDarkModeCardProps {
   step: Step;

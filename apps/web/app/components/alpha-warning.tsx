@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@workspace/ui/src/components/button";
-import { SquareArrowOutUpRight, XIcon } from "@workspace/ui/src/iconography";
+import { Button } from "@workspace/design-system/components/button";
+import { SquareArrowOutUpRight, XIcon } from "@workspace/design-system/icons";
 import Link from "next/link";
 import { useState } from "react";
 import { useLocalStorage } from "react-use";

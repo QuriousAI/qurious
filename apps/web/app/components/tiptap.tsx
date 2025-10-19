@@ -4,8 +4,8 @@
 import { useUpdateFolderContentMutation } from "@/queries";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Id } from "@workspace/backend/convex/_generated/dataModel";
-import { toast } from "@workspace/ui/src/components/sonner";
+import { Id } from "@workspace/backend/_generated/dataModel";
+import { toast } from "@workspace/design-system/components/sonner";
 import { useRef } from "react";
 import { Markdown } from "tiptap-markdown";
 

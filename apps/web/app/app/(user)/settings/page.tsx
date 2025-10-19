@@ -1,12 +1,12 @@
-import { Separator } from "@workspace/ui/src/components/separator";
+import { Separator } from "@workspace/design-system/components/separator";
 import { Heading } from "@/components/global-heading";
-import { Button } from "@workspace/ui/src/components/button";
+import { Button } from "@workspace/design-system/components/button";
 import {
   Settings,
   User,
   Palette,
   CreditCard,
-} from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/icons";
 import Link from "next/link";
 
 export const metadata = {

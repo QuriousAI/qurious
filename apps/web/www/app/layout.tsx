@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import "@workspace/ui/src/styles/globals.css";
+import "@workspace/design-system/styles/globals.css";
 
-import { Font } from "@workspace/ui/src/font";
+import { Font } from "@workspace/design-system/font";
 
 import { Header } from "@/components/header";
 
-import { ThemeProvider } from "@workspace/ui/src/providers/theme-provider";
-import { APP_DESCRIPTION, APP_NAME } from "@workspace/ui/src/content";
-import { Separator } from "@workspace/ui/src/components/separator";
+import { ThemeProvider } from "@workspace/design-system/providers/theme-provider";
+import { APP_DESCRIPTION, APP_NAME } from "@workspace/design-system/content";
+import { Separator } from "@workspace/design-system/components/separator";
 import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
@@ -17,6 +17,21 @@ export const metadata: Metadata = {
 };
 
 const BackgroundGridsAndBlob = () => {
+
+return <div className="min-h-screen w-full relative bg-black">
+    {/* Copper Forge Background with Top Glow */}
+    <div
+      className="absolute inset-0 z-0"
+      style={{
+        background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249, 115, 22, 0.25), transparent 70%), #000000",
+      }}
+    />
+  
+    {/* Your Content/Components */}
+  </div>
+}
+
+const BackgroundGridsAndBlob2 = () => {
   return (
     /* This is the background container that sits behind all content
         - fixed positioning keeps it in place while scrolling
@@ -38,11 +53,13 @@ const BackgroundGridsAndBlob = () => {
             - 1000px circular shape slightly offset from top
             - 80% opacity for subtle effect
             - Positioned absolutely over grid pattern */}
-        <div className="absolute top-[-10%] right-0 left-0 h-[1000px] w-[1000px] rounded-full bg-[radial-gradient(circle_400px_at_50%_300px,#fbfbfb36,#000)] opacity-80"></div>
+        <div className="absolute top-[-10%] right-0 left-0 h-[900px] w-[900px] rounded-full bg-[radial-gradient(circle_450px_at_50%_300px,#ffffff25,#000)] opacity-65 blur-3xl"></div>
       </div>
     </div>
   );
 };
+
+
 
 export default function RootLayout({
   children,
@@ -51,7 +68,7 @@ export default function RootLayout({
     <html lang="en" className={Font.className}>
       <body className="antialiased">
         <ThemeProvider>
-          <BackgroundGridsAndBlob />
+          <BackgroundGridsAndBlob2 />
           <div className="flex flex-col items-center justify-center">
             <Header />
             {children}

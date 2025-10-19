@@ -1,26 +1,26 @@
 import SearchBar from "@/components/search-bar";
-import { APP_NAME } from "@workspace/ui/src/content";
-import { Button } from "@workspace/ui/src/components/button";
+import { APP_NAME } from "@workspace/design-system/content";
+import { Button } from "@workspace/design-system/components/button";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@workspace/ui/src/components/card";
+} from "@workspace/design-system/components/card";
 import Link from "next/link";
-import { Spotlight } from "@workspace/ui/src/components/motion-primitives/spotlight";
+import { Spotlight } from "@workspace/design-system/components/motion-primitives/spotlight";
 import {
   FileText,
   Folders,
   Search,
   UserCog,
-} from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/icons";
 import { ReviewSlider } from "@/components/review-slider";
 import { questionGridList } from "@/utils/placeholders/questions";
 import { AnimatedBeamDemo } from "@/components/features-beam";
 import { CallToAction } from "@/components/call-to-action";
 import { TAILWIND_GRADIENT_TEXT } from "@/utils/tailwind-gradient";
-import { cn } from "@workspace/ui/src/lib/utils";
+import { cn } from "@workspace/design-system/lib/utils";
 import type { ReactNode } from "react";
 
 const FeatureCard = (props: {
@@ -31,7 +31,7 @@ const FeatureCard = (props: {
 }) => (
   <Card
     className={cn(
-      "relative p-[3px] bg-card/25 border-none col-span-3",
+      "relative p-[3px] bg-card/25 col-span-3",
       props.className
     )}
   >
@@ -167,6 +167,9 @@ const VideoBox = () => {
 export default function Home() {
   return (
     <div className="flex flex-col gap-40 max-w-7xl px-6 pb-40">
+      blah blah blah download desktop app, mobile app, browser extension
+      link to all web pages
+
       <div className="flex flex-col items-center justify-center gap-12 h-[80vh]">
         <HeroHeadings />
         <SearchBar />

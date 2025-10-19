@@ -5,7 +5,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@workspace/ui/src/components/breadcrumb";
+} from "@workspace/design-system/components/breadcrumb";
 import {
   SlashIcon,
   Home,
@@ -16,7 +16,7 @@ import {
   User,
   Palette,
   CreditCard,
-} from "@workspace/ui/src/iconography";
+} from "@workspace/design-system/icons";
 import { usePathname } from "next/navigation";
 import React from "react";
 

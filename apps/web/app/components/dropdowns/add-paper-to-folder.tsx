@@ -1,8 +1,8 @@
 "use client";
 
-import { Doc } from "@workspace/backend/convex/_generated/dataModel";
-import { Folder, FolderPlus } from "@workspace/ui/src/iconography";
-import { Button } from "@workspace/ui/src/components/button";
+import { Doc } from "@workspace/backend/_generated/dataModel";
+import { Folder, FolderPlus } from "@workspace/design-system/icons";
+import { Button } from "@workspace/design-system/components/button";
 import {
   DropdownMenuTrigger,
   DropdownMenu,
@@ -10,15 +10,15 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuLabel,
-} from "@workspace/ui/src/components/dropdown-menu";
-import { Checkbox } from "@workspace/ui/src/components/checkbox";
-import { toast } from "@workspace/ui/src/components/sonner";
+} from "@workspace/design-system/components/dropdown-menu";
+import { Checkbox } from "@workspace/design-system/components/checkbox";
+import { toast } from "@workspace/design-system/components/sonner";
 import {
   useAddPaperToFolderMutation,
   useGetCurrentUserFoldersQuery,
   useRemovePaperFromFolderMutation,
 } from "@/queries";
-import { playToastSound } from "@workspace/ui/src/lib/sound";
+import { playToastSound } from "@workspace/design-system/lib/sound";
 
 const FolderCheckbox = (props: { folder: Doc<"folders">; paperId: string }) => {
   const { mutateAsync: addPaperToFolderMutation } =

@@ -14,6 +14,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+
+
+      addd specllcheck shit jhere.
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
