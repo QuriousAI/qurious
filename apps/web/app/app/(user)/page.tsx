@@ -20,10 +20,11 @@ const Icon = () => (
 
 export default function Home() {
   const genericTopics = getRandomGroupedQuestions();
+  const hasOnboarded = 
 
   return (
     <div className="flex flex-col items-center gap-6">
-      {/* <Onboarder /> */}
+      <Onboarder />
 
       {/* <DownloadLogo /> */}
 

@@ -151,6 +151,9 @@ importers:
 
   apps/web/api:
     dependencies:
+      '@unkey/hono':
+        specifier: ^2.0.0
+        version: 2.0.0(hono@4.10.1)
       hono:
         specifier: ^4.10.1
         version: 4.10.1
@@ -3935,6 +3938,20 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+
+  '@unkey/api@2.0.6':
+    resolution: {integrity: sha512-vejZ9jtlntskIfyqkFxH+G3bXhtllDzmMti4ehyAPWHgUC2awzgsKeDHsbwJz+AxZA/Zrb9yyp8Uwd16s+NbZg==}
+    hasBin: true
+    peerDependencies:
+      '@modelcontextprotocol/sdk': '>=1.5.0 <1.10.0'
+    peerDependenciesMeta:
+      '@modelcontextprotocol/sdk':
+        optional: true
+
+  '@unkey/hono@2.0.0':
+    resolution: {integrity: sha512-yRXKZXxORej+mbOThOAbyn6voEXzeDTUqnqJ+Ok2neWFheiU9vQWPqZQoSvcfzQsseXnOn1GkheOWXBNiGGfsg==}
+    peerDependencies:
+      hono: ^4.6.3
 
   '@unrs/resolver-binding-android-arm-eabi@1.11.1':
     resolution: {integrity: sha512-ppLRUgHVaGRWUx0R0Ut06Mjo9gBaBkg3v/8AxusGLhsIotbBLuRk51rAzqLC8gq6NyyAojEXglNjzf6R948DNw==}
@@ -14080,6 +14097,17 @@ snapshots:
       eslint-visitor-keys: 4.2.1
 
   '@ungap/structured-clone@1.3.0': {}
+
+  '@unkey/api@2.0.6':
+    dependencies:
+      zod: 3.25.76
+
+  '@unkey/hono@2.0.0(hono@4.10.1)':
+    dependencies:
+      '@unkey/api': 2.0.6
+      hono: 4.10.1
+    transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
 
   '@unrs/resolver-binding-android-arm-eabi@1.11.1':
     optional: true

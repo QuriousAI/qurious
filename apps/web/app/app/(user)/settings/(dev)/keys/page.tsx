@@ -1,6 +1,12 @@
+const CreateKeyButton = () => {
+  throw new Error("Unimplemented")
+}
+
 export default function KeysSettingsPage() {
     throw new Error("Unimplemented");
 
-    return <></>;
+    return <div>
+      <CreateKeyButton />
+    </div>
   }
   

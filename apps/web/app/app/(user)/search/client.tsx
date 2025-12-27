@@ -181,7 +181,7 @@ export const SearchResult = (props: {
     <div className="flex flex-col gap-8 w-full">
       <div className="flex flex-col gap-2">
         <Heading
-          heading="Summary"
+          heading="Alfred's Summary"
           subHeading={`Showing summary of ${relevantPapers ? relevantPapers.length : 0} papers.`}
           tooltip="LLM generated summary based on user preferences."
           icon={<Text />}
