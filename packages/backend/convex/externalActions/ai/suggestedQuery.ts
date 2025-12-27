@@ -5,6 +5,7 @@ import { google } from "@ai-sdk/google";
 import { ActionCache } from "@convex-dev/action-cache";
 import { components, internal } from "../../_generated/api";
 import { z } from "zod";
+import { MODELS } from "./_models";
 
 const FOLLOW_UP_PROMPT = (
   query: string,
@@ -47,7 +48,7 @@ export const followUpInternal = internalAction({
   handler: async (_, args) => {
     const prompt = FOLLOW_UP_PROMPT(args.query, args.summary, args.userDetails);
     const result = await generateObject({
-      model: google("gemini-2.0-flash-exp"),
+      model: MODELS.SUGGESTED_QUERY,
       prompt,
       schema: z.array(z.string()),
     });

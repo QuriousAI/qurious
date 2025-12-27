@@ -6,6 +6,7 @@ import { generateObject, generateText } from "ai";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { STUDY_SNAPSHOT_CREDITS } from "../../credits";
+import { MODELS } from "./_models";
 
 const STUDY_SNAPSHOT_PROMPT = (abstract: string, fields: string[]) => `
 You're a tool for extracting specific details from research papers. You'll be given a paper abstract and asked to return the specified field. If you can't find a specific field in the abstract, return that field as null.
@@ -43,7 +44,7 @@ export const extractStudySnapshotInternal = internalAction({
 
     const prompt = STUDY_SNAPSHOT_PROMPT(args.abstract, args.fields);
     const result = await generateObject({
-      model: google("models/gemini-2.0-flash-exp"),
+      model: MODELS.STUDY_SNAPSHOT,
       prompt,
       schema: z.record(z.enum(zodFields), z.string().nullable()),
     });

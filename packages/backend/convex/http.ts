@@ -10,7 +10,7 @@
 import { httpRouter } from "convex/server";
 
 import { clerkHandler } from "./httpActions/clerk";
-import { dodoHandler } from "./httpActions/dodoPayments";
+// import { dodoHandler } from "./httpActions/dodoPayments";
 
 const http = httpRouter();
 
@@ -18,11 +18,11 @@ const http = httpRouter();
 
 
 // Payments Merchant-of-Records Provider
-http.route({
-  path: "/dodopayments-webhook",
-  method: "POST",
-  handler: dodoHandler,
-});
+// http.route({
+//   path: "/dodopayments-webhook",
+//   method: "POST",
+//   handler: dodoHandler,
+// });
 
 // Authentication Provider
 http.route({

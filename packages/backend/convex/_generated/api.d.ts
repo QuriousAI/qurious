@@ -10,6 +10,8 @@
 
 import type * as credits from "../credits.js";
 import type * as crons from "../crons.js";
+import type * as env from "../env.js";
+import type * as externalActions_ai__models from "../externalActions/ai/_models.js";
 import type * as externalActions_ai_paperSummary from "../externalActions/ai/paperSummary.js";
 import type * as externalActions_ai_studySnapshot from "../externalActions/ai/studySnapshot.js";
 import type * as externalActions_ai_suggestedQuery from "../externalActions/ai/suggestedQuery.js";
@@ -27,9 +29,6 @@ import type * as httpActions_clerk from "../httpActions/clerk.js";
 import type * as httpActions_dodoPayments from "../httpActions/dodoPayments.js";
 import type * as searches_mutations from "../searches/mutations.js";
 import type * as searches_queries from "../searches/queries.js";
-import type * as subscriptions_mutations from "../subscriptions/mutations.js";
-import type * as subscriptions_queries from "../subscriptions/queries.js";
-import type * as types_dodopayments from "../types/dodopayments.js";
 import type * as users_helpers from "../users/helpers.js";
 import type * as users_mutations from "../users/mutations.js";
 import type * as users_queries from "../users/queries.js";
@@ -51,6 +50,8 @@ import type {
 declare const fullApi: ApiFromModules<{
   credits: typeof credits;
   crons: typeof crons;
+  env: typeof env;
+  "externalActions/ai/_models": typeof externalActions_ai__models;
   "externalActions/ai/paperSummary": typeof externalActions_ai_paperSummary;
   "externalActions/ai/studySnapshot": typeof externalActions_ai_studySnapshot;
   "externalActions/ai/suggestedQuery": typeof externalActions_ai_suggestedQuery;
@@ -68,9 +69,6 @@ declare const fullApi: ApiFromModules<{
   "httpActions/dodoPayments": typeof httpActions_dodoPayments;
   "searches/mutations": typeof searches_mutations;
   "searches/queries": typeof searches_queries;
-  "subscriptions/mutations": typeof subscriptions_mutations;
-  "subscriptions/queries": typeof subscriptions_queries;
-  "types/dodopayments": typeof types_dodopayments;
   "users/helpers": typeof users_helpers;
   "users/mutations": typeof users_mutations;
   "users/queries": typeof users_queries;

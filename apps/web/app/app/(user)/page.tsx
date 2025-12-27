@@ -8,23 +8,13 @@ export const metadata = {
   title: "Home | Qurious",
 };
 
-const Icon = () => (
-  <div className="flex items-center justify-center">
-    <div className="size-40 bg-radial-[at_25%_25%] bg-gradient-to-br from-neutral-700 to-neutral-900 rounded-3xl shadow-2xl flex items-center justify-center">
-      <div className="bg-gradient-to-tl drop-shadow-blue-600 from-blue-400 to-blue-600 brightness-125 inline-block text-transparent bg-clip-text text-9xl font-bold drop-shadow-xl/10">
-        Q
-      </div>
-    </div>
-  </div>
-);
-
 export default function Home() {
   const genericTopics = getRandomGroupedQuestions();
-  const hasOnboarded = 
+  const hasOnboarded = false;
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <Onboarder />
+      {/* {!hasOnboarded && <Onboarder />} */}
 
       {/* <DownloadLogo /> */}
 

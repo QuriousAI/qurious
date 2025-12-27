@@ -111,17 +111,17 @@ export const resetAllCredits = internalMutation({
     const users = await ctx.db.query("users").collect();
     for (const user of users) {
       if (user.credits < 100) {
-        throw new Error("supposed to send notification here, but implementation not present")
+        // throw new Error("supposed to send notification here, but implementation not present")
         await ctx.db.patch(user._id, { credits: 100 });
-        await notifications.workflows.trigger('workflow-key', {
-          recipients: [{
-            id: user._id,
-            email: 'user-email',
-          }],
-          data: {
-            message: 'Your credits have been reset to 100.',
-          },
-        });
+        // await notifications.workflows.trigger('workflow-key', {
+        //   recipients: [{
+        //     id: user._id,
+        //     email: 'user-email',
+        //   }],
+        //   data: {
+        //     message: 'Your credits have been reset to 100.',
+        //   },
+        // });
       }
     }
   },

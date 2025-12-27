@@ -43,11 +43,11 @@ export const getPaperRecommendationsInternal = internalAction({
       paperId: args.paperId,
       fields: args.fields,
     });
-    client.capture({
-      distinctId: ctx.auth.getUserIdentity(),
-      event: "get_paper_recommendations",
-      properties: {...args}
-    });
+    // client.capture({
+    //   distinctId: ctx.auth.getUserIdentity(),
+    //   event: "get_paper_recommendations",
+    //   properties: {...args}
+    // });
     
 
     if (result.isErr()) throw new ConvexError(result.error);

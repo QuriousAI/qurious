@@ -28,10 +28,8 @@ export default function UserLayout({
         }
       >
         <TooltipProvider>
-          {/* <NextStepProvider> */}
           <AlphaWarning />
           <AppSidebar />
-          {/* <OnboardingSteps> */}
           <main className="h-screen flex flex-col pb-4 px-4 w-full">
             <Header />
             <SidebarInset className="shadow-2xl rounded-2xl border overflow-auto no-scrollbar">
@@ -41,8 +39,7 @@ export default function UserLayout({
               </div>
             </SidebarInset>
           </main>
-          {/* </OnboardingSteps> */}
-          {/* </NextStepProvider> */}
+
         </TooltipProvider>
       </SidebarProvider>
   );

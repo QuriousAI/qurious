@@ -2,20 +2,19 @@ import { v } from "convex/values";
 import { action, internalAction } from "../../_generated/server";
 import { ActionCache } from "@convex-dev/action-cache";
 import { api, components, internal } from "../../_generated/api";
-import { generateTextWithAnalytics } from "ai";
-import { google } from "@ai-sdk/google";
+import { generateText } from "ai";
+import { MODELS } from "./_models";
 import { PAPER_SUMMARY_CREDITS } from "../../credits";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/api-client";
 // Paper Summarization
 
 
-const generateTextWithAnalytics = () => {
-  send to posthog.
-  then external action to semantic SemanticScholarAPIClient.
-  add analytics on all vendors.
-
-  idiot
-}
+// const generateTextWithAnalytics = () => {
+//   send to posthog.
+//   then external action to semantic SemanticScholarAPIClient.
+//   add analytics on all vendors.
+//   idiot
+// }
 
 const SUMMARIZE_PAPER_PROMPT = (
   query: string,
@@ -66,7 +65,7 @@ export const summarizePaperInternal = internalAction({
     );
     
     const result = await generateText({
-      model: google("models/gemini-2.0-flash-exp"),
+      model: MODELS.PAPER_SUMMARY,
       prompt,
     });
 

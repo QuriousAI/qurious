@@ -4,6 +4,7 @@ import { ActionCache } from "@convex-dev/action-cache";
 import { components, internal } from "../../_generated/api";
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
+import { MODELS } from "./_models";
 
 const TRANSFORM_QUERY_PROMPT = (
   query: string
@@ -48,7 +49,7 @@ export const transformQueryInternal = internalAction({
   handler: async (_, args) => {
     const prompt = TRANSFORM_QUERY_PROMPT(args.query);
     const result = await generateText({
-      model: google("models/gemini-2.0-flash-exp"),
+      model: MODELS.TRANSFORM_QUERY,
       prompt,
     });
 
