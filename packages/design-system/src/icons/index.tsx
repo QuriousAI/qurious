@@ -6,6 +6,8 @@ export {
   CircleHelp,
   Clipboard,
   CreditCard,
+  Brush,
+  Key,
   Dot,
   Edit2,
   EllipsisVertical,
