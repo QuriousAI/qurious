@@ -1,0 +1,13 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "ignorePaths": [
+    "node_modules",
+    "dist",
+    "build",
+    ".git",
+    "pnpm-lock.yaml",
+    "**/*.svg"
+  ],
+  "words": ["qurious", "turborepo", "pnpm", "convex", "clerk"]
+}
