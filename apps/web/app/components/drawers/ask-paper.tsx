@@ -30,7 +30,7 @@ export const AskPaperDrawer = () => {
       <DrawerTrigger asChild>
         <Button variant="outline">
           <MessageCircleQuestion />
-          Ask Paper
+          <span className="hidden">Ask Paper</span>
         </Button>
       </DrawerTrigger>
       <DrawerContent>

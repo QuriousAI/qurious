@@ -26,13 +26,24 @@ const PaperHero = (props: { paper: Paper }) => {
   }
 
   return (
-    <div className="">
-      <div className="flex justify-between gap-2">
+      <div className="flex-col gap-6">
         {/* Left Side: Paper Details */}
         <div className="flex flex-col gap-2">
           <div className="text-2xl font-bold">{props.paper.title}</div>
           <div className="w-lg text-sm text-neutral-400">
-            {/* {getAuthorString(props.paper.authors)} */} Authors go here
+            {props.paper.authors && props.paper.authors.length > 0 ? (
+              <span>
+                {props.paper.authors
+                  .map((author, i) => (
+                    <span key={author.authorId || author.name}>
+                      {author.name}
+                      {i < props.paper.authors.length - 1 ? ", " : ""}
+                    </span>
+                  ))}
+              </span>
+            ) : (
+              <span>No authors listed</span>
+            )}
           </div>
           <div className="text-sm text-neutral-400">
             {props.paper.publicationDate
@@ -44,27 +55,33 @@ const PaperHero = (props: { paper: Paper }) => {
             <div className="text-sm">TLDR: {props.paper.tldr.text}</div>
           )}
 
+<div className="flex flex-wrap gap-2 text-sm">
+          <span className="">{props.paper.citationCount} Citations</span> {"|"}
+          <span className="text-yellow-500">{props.paper.influentialCitationCount} Influential Citations</span> {"|"}
+          <span className="">{props.paper.referenceCount} References</span>
+        </div>
+
           {props.paper.externalIds &&
             Object.keys(props.paper.externalIds).length > 0 && (
-              <div className="flex flex-col gap-1">
-                <div className="text-sm font-semibold">External IDs:</div>
+              <div className="flex flex-col gap-2">
+                {/* <div className="text-sm font-semibold">External IDs:</div> */}
                 <div className="flex items-center gap-1 text-xs">
-                  <span className="font-medium">Semantic Scholar:</span>
+                  {/* <span className="font-medium">Semantic Scholar:</span> */}
                   <Link
                     href={`https://www.semanticscholar.org/paper/${props.paper.paperId}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:text-blue-700 underline"
                   >
-                    View on Semantic Scholar
+                    View on Semantic Scholar ↗
                   </Link>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-wrap gap-2">
                   {Object.entries(props.paper.externalIds).map(
                     ([key, value]) => (
                       <div
                         key={key}
-                        className="flex items-center gap-1 text-xs"
+                        className="flex items-center gap-1 text-sm"
                       >
                         <span className="font-medium">{key}:</span>
                         <span className="text-muted-foreground">
@@ -78,20 +95,8 @@ const PaperHero = (props: { paper: Paper }) => {
             )}
         </div>
 
-        {/* Right Side: Citation Box */}
-        <div className="mt-4 flex h-fit flex-col items-start justify-center gap-2 border-2 border-t-6 px-4 py-6 text-nowrap">
-          <div className="text-lg font-bold">
-            {props.paper.citationCount} Citations
-          </div>
-          <div className="font-semibold text-yellow-500">
-            {props.paper.influentialCitationCount} Influential Citations
-          </div>
-          <div className="font-semibold">
-            {props.paper.referenceCount} References
-          </div>
-        </div>
+    
       </div>
-    </div>
   );
 };
 
@@ -105,9 +110,11 @@ const TabTriggers = [
 
 const PaperTabs = (props: { paper: Paper }) => {
   return (
-    <div className="mt-4">
-      <Tabs defaultValue="overview">
-        <TabsList className="gap-6 rounded-xs bg-transparent">
+    
+      <Tabs defaultValue="overview" className="">
+        
+        <div className="relative rounded-sm overflow-x-scroll h-10 bg-muted">
+        <TabsList className="gap-6 rounded-xs bg-transparent absolute flex flex-row justify-stretch w-full">
           {TabTriggers.map((tab) => (
             <TabsTrigger
               key={tab.id}
@@ -118,6 +125,8 @@ const PaperTabs = (props: { paper: Paper }) => {
             </TabsTrigger>
           ))}
         </TabsList>
+        </div>
+        
         <Separator />
         <TabsContent value="overview">
           <OverviewTabContent paper={props.paper} />
@@ -135,8 +144,8 @@ const PaperTabs = (props: { paper: Paper }) => {
           <RecommendedTabContent paperId={props.paper.paperId} />
         </TabsContent>
       </Tabs>
-    </div>
-  );
+
+);
 };
 
 export const PaperComponent = (props: { id: string }) => {
@@ -169,7 +178,7 @@ export const PaperComponent = (props: { id: string }) => {
   console.log(data);
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <PaperHero paper={data} />
       {/* <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 w-full">
         {props.auth ? (
@@ -192,6 +201,6 @@ export const PaperComponent = (props: { id: string }) => {
         <AskPaperDrawer />
       </div> */}
       <PaperTabs paper={data} />
-    </>
+    </ div>
   );
 };

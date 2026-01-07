@@ -59,7 +59,10 @@ export const ContentSettingsBox = () => {
     const userInfoPlaceholder = `e.g. PhD student in neuroscience, interested in cognitive bias and decision-making\ne.g. Clinical researcher focusing on oncology trials and drug efficacy\ne.g. Machine learning enthusiast with a background in economics\ne.g. Masters in sociology, looking for papers on behavioral trends`;
   
     return (
-      <div className="flex flex-col gap-8 rounded-md border bg-card p-4">
+        <div className="flex flex-col gap-8 rounded-md border bg-card p-4">
+          <div>What font do you want? Sans/Mono</div>
+        <div>What theme you want? Light/Dark</div>
+
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <Label>What do you do?</Label>

@@ -148,7 +148,7 @@ export function AppSidebar() {
         </AuthLoading>
       </SidebarContent>
 
-      <SidebarFooter className="px-0">
+      <SidebarFooter>
         <SidebarMenu className="gap-2">
           <SidebarMenuItem>
             <SidebarMenuButton

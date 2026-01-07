@@ -43,8 +43,8 @@ export const CopyToClipboardButton = (props: {
   const icon = props.buttonIcon === "share" ? <Share2 /> : <Clipboard />;
 
   return (
-    <Button variant="outline" size="icon" onClick={copyToClipboardOnClick}>
-      {icon}
+    <Button variant="outline" onClick={copyToClipboardOnClick}>
+      {icon} Copy
     </Button>
   );
 };
