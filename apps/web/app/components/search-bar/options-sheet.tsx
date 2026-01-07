@@ -241,8 +241,8 @@ export const SearchBarOptionsSheet = ({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="rounded-full">
-          <Filter className="" /> {buttonLabel}
+        <Button variant="outline">
+          <Filter className="" /> <span className="hidden">{buttonLabel}</span>
         </Button>
       </SheetTrigger>
       <OptionsSheetContent options={options} setOptions={setOptions} />

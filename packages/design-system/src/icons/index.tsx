@@ -52,6 +52,7 @@ export {
   AlertCircleIcon,
   Text,
   Files,
+  Bot
 } from "lucide-react";
 
 export { SiDiscord as Discord } from "@icons-pack/react-simple-icons";

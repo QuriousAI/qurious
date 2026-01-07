@@ -19,7 +19,7 @@ export const APP_CONTENT = {
       ];
       return messages[Math.floor(Math.random() * messages.length)];
     },
-    trySearchingAbout: "( ╹ o╹) Try searching about...",
+    trySearchingAbout: "(╹ o╹) Try searching about...",
   },
   unautheticatedSidebar: {
     title: "Join Qurious.",
