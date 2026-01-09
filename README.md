@@ -13,7 +13,8 @@
 <p align="center">
   <a href="https://app.getqurious.xyz"><b>Live Demo</b></a> •
   <a href="#features">Features</a> •
-  <a href="#architecture">Architecture</a>
+  <a href="#architecture">Architecture</a> •
+  <a href="#contributors">Contributors</a>
 </p>
 
 <p align="center">
@@ -79,7 +80,6 @@
 ---
 
 ### Installation
-
 ```bash
 pnpm install
 ```
@@ -87,7 +87,6 @@ pnpm install
 This installs all workspace dependencies and tooling.
 
 ### One-time setup (Convex)
-
 ```bash
 pnpm run convex:login
 ```
@@ -95,7 +94,6 @@ pnpm run convex:login
 ### Environment Configuration
 
 Create a .env.local file in apps/web:
-
 ```bash
 CONVEX_URL=your_convex_url_here
 ```
@@ -103,13 +101,11 @@ CONVEX_URL=your_convex_url_here
 ### Run locally
 
 Run all services:
-
 ```bash
 pnpm dev
 ```
 
 Run without browser or web API apps:
-
 ```bash
 pnpm dev:no-ui
 
@@ -119,29 +115,66 @@ pnpm dev --filter=!browser-app --filter=!web-api
 ```
 
 Run Convex backend only:
-
 ```bash
 pnpm convex:dev
 ```
 
 ### Testing
-
 ```bash
 pnpm test
 ```
 
-### Roadmap
+---
+
+## Contributors
+
+Thank you to all the amazing people who have contributed to Qurious! 🎉
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<a href="https://github.com/QuriousAI/qurious/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=QuriousAI/qurious" />
+</a>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+Made with [contrib.rocks](https://contrib.rocks).
+
+### How to Contribute
+
+We welcome contributions! Here's how you can help:
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add some amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting a PR.
+
+---
+
+## Roadmap
 
 To be added.
 
-### License
+---
+
+## License
 
 MIT License. See the [LICENSE](LICENSE) file for details.
 
-### Community & Links
+---
 
-Website: https://quriousai.xyz
+## Community & Links
 
-Twitter/X: https://x.com/QuriousAI
+**Website:** https://quriousai.xyz
 
-Discord: https://discord.gg/nQrrQThpBn
+**Twitter/X:** https://x.com/QuriousAI
+
+**Discord:** https://discord.gg/nQrrQThpBn
+
+---
+
+<p align="center">
+  Made with ❤️ by the Qurious community
+</p>
