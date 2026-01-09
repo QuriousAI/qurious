@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 // import { cn } from "@workspace/design-system/lib/utils";
+import {Separator} from "@workspace/design-system/components/separator"
 
 const settingsTabs = [
   { name: "Account", href: "/settings/account" },
@@ -12,32 +13,28 @@ const settingsTabs = [
   { name: "Webhooks", href: "/settings/webhooks" },
 ];
 
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarHeader,
+} from "@workspace/design-system/components/sidebar"
+
 export default function Page({ children }: { children?: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <div className="w-full flex md:flex-row gap-8">
-      <nav className="border-b mb-6 bg-background">
-        <ul className="flex md:flex-col gap-2">
-          {settingsTabs.map((tab) => (
-            <li key={tab.href}>
-              <Link
-                href={tab.href}
-                // className={cn(
-                //   "py-3 px-5 rounded-t-md font-medium text-sm transition-colors hover:text-primary",
-                //   pathname === tab.href
-                //     ? "bg-muted border-b-2 border-primary text-primary"
-                //     : "bg-transparent text-muted-foreground"
-                // )}
-                prefetch={false}
-              >
-                {tab.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div>{children}</div>
+    <div className="w-full flex flex-col md:flex-row gap-4 p-2 border-2 border-green-400">
+      <ul className="flex gap-4 overflow-x-auto md:flex-col border-2 border-red-400  shrink-0">
+        {settingsTabs.map((tab) => (
+          <li key={tab.href}>
+            <Link href={tab.href}>{tab.name}</Link>
+          </li>
+        ))}
+      </ul>
+      <div className="border-yellow-400 border-2 ">{children}</div>
     </div>
   );
 }

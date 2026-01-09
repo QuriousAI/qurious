@@ -22,6 +22,7 @@ import {
   Discord,
   Home,
   AppLogo,
+  Settings
 } from "@workspace/design-system/icons";
 import { SignUpButton } from "@clerk/nextjs";
 import { Button } from "@workspace/design-system/components/button";

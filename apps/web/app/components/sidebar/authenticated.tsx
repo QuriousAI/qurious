@@ -107,6 +107,7 @@ import {
   Trash2,
   UserCog,
 } from "@workspace/design-system/icons";
+import {Button} from "@workspace/design-system/components/button"
 
 
 
@@ -124,6 +125,9 @@ export const SidebarMenuItem_UserDropwn = () => {
         <div className="flex-col flex-1 text-left leading-tight">
           <div className="font-semibold">{user.fullName}</div>
         </div>
+        <Button variant="icon">
+          <Link href="/settings/account"><Settings/></Link>
+        </Button>
       </SidebarMenuButton>
     </SidebarMenuItem>
   );

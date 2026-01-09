@@ -15,6 +15,7 @@ export default function AccountSettingsPage() {
         subHeading="Manage your account profile and authentication settings."
         icon={<UserCog />}
       />
+
       <UserProfile />
     </div>
   );
