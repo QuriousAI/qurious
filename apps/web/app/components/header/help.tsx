@@ -16,7 +16,7 @@ export const Help = () => {
       id="tour-help-icon"
     >
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <Link target="_blank" href="http://localhost:3000">
             <CircleHelp className="size-5" />
           </Link>

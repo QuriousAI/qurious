@@ -26,8 +26,7 @@ import {
 import { SignUpButton } from "@clerk/nextjs";
 import { Button } from "@workspace/design-system/components/button";
 import { APP_CONTENT } from "@workspace/design-system/content";
-import { SidebarMenuItem_UserDropwn } from "./auth-header";
-import { SearchGroup } from "./authenticated";
+import { SearchGroup, SidebarMenuItem_UserDropwn } from "./authenticated";
 import { Skeleton } from "@workspace/design-system/components/skeleton";
 
 const SearchGroupSkeleton = () => {
@@ -114,7 +113,6 @@ export function AppSidebar() {
             <SidebarMenuItem>
               <SidebarMenuButton
                 className="rounded-sm px-4"
-                // variant="outline"
                 asChild
               >
                 <Link href="/folders" className="flex font-medium">

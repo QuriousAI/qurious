@@ -1,3 +1,33 @@
+import * as React from "react";
+
+import Link from "next/link";
+import { useTheme } from "next-themes";
+import { useQuery } from "convex/react";
+import { SignOutButton, useUser, UserProfile } from "@clerk/nextjs";
+
+import {
+  AddSearchToFolderDropdownMenu,
+} from "../dropdowns/add-search-to-folder";
+import { DeleteSearchDialogContent } from "../dialogs/search/delete";
+import { Heading } from "../global-heading";
+import { InformationTooltip } from "@/components/information-tooltip";
+import { ToastPromise } from "@/utils/toast";
+
+import { getRandomSidebarNoSearchPlaceholder } from "../../utils/placeholders/no-searches";
+
+import {
+  useAddSearchToFolderMutation,
+  useDeleteAllFoldersMutation,
+  useDeleteAllSearchesMutation,
+  useGetCurrentUserSearchesQuery,
+  useRemoveSearchFromFolderMutation,
+} from "@/queries";
+
+import { playToastSound } from "@workspace/design-system/lib/sound";
+import { toast } from "@workspace/design-system/components/sonner";
+import { Doc, Id } from "@workspace/backend/_generated/dataModel";
+import { api } from "@workspace/backend/_generated/api";
+
 import {
   Sidebar,
   SidebarContent,
@@ -12,20 +42,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@workspace/design-system/components/sidebar";
-import {
-  CreditCard,
-  Folder,
-  Folders,
-  LogOut,
-  MoreVertical,
-  MoveLeft,
-  MoveRight,
-  Plus,
-  Search,
-  Settings,
-  Trash2,
-  UserCog,
-} from "@workspace/design-system/icons";
+
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -38,31 +55,81 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@workspace/design-system/components/dropdown-menu";
-import { SignOutButton, useUser } from "@clerk/nextjs";
-import { Separator } from "@workspace/design-system/components/separator";
-import Link from "next/link";
+
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@workspace/design-system/components/avatar";
-import { useTheme } from "next-themes";
+import { Separator } from "@workspace/design-system/components/separator";
 import { Label } from "@workspace/design-system/components/label";
 import { Switch } from "@workspace/design-system/components/switch";
-import {
-  useAddSearchToFolderMutation,
-  useGetCurrentUserSearchesQuery,
-  useRemoveSearchFromFolderMutation,
-} from "@/queries";
-import { getRandomSidebarNoSearchPlaceholder } from "../../utils/placeholders/no-searches";
-import { DeleteSearchDialogContent } from "../dialogs/search/delete";
-import { Doc, Id } from "@workspace/backend/_generated/dataModel";
-import { Dialog, DialogTrigger } from "@workspace/design-system/components/dialog";
 import { Checkbox } from "@workspace/design-system/components/checkbox";
-import { toast } from "@workspace/design-system/components/sonner";
-import { playToastSound } from "@workspace/design-system/lib/sound";
-import { ReactNode } from "react";
-import { AddSearchToFolderDropdownMenu } from "../dropdowns/add-search-to-folder";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@workspace/design-system/components/dialog";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@workspace/design-system/components/tabs";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@workspace/design-system/components/card";
+import { Badge } from "@workspace/design-system/components/badge";
+import { Textarea } from "@workspace/design-system/components/textarea";
+
+import {
+  Brush,
+  ChevronDown,
+  CreditCard,
+  Folder,
+  Folders,
+  Key,
+  LogOut,
+  MoreVertical,
+  MoveLeft,
+  MoveRight,
+  Palette,
+  Plus,
+  Search,
+  Settings,
+  Settings2,
+  Share2,
+  Trash2,
+  UserCog,
+} from "@workspace/design-system/icons";
+
+
+
+/** This is the menu item for the user dropdown. Trigger = User Bar, Content = Dropdown For User Settings */
+export const SidebarMenuItem_UserDropwn = () => {
+  const { user } = useUser();
+
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton className="py-4" size={"lg"}>
+        <Avatar>
+          <AvatarImage src={user.imageUrl} />
+          <AvatarFallback>AV</AvatarFallback>
+        </Avatar>
+        <div className="flex-col flex-1 text-left leading-tight">
+          <div className="font-semibold">{user.fullName}</div>
+        </div>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  );
+};
+
+
 
 const SidebarMenuItem_Search = (props: { search: Doc<"searches"> }) => {
   return (
@@ -196,7 +263,7 @@ const SearchMenu = (props: { searches: Doc<"searches">[] }) => {
 };
 
 export function SearchGroup() {
-  let returnDiv: ReactNode;
+  let returnDiv: React.ReactNode;
 
   const {
     data: searches = [],
