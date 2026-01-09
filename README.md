@@ -36,7 +36,24 @@
   <!-- Discord Link -->
   <a href="https://discord.gg/FngNHpbcY7" target="_blank"><img src="https://img.shields.io/discord/1452750255937421344?logo=discord&labelColor=%20%235462eb&logoColor=%20%23f5f5f5&color=%20%235462eb" alt="chat on Discord"></a>
   <!-- Twitter Link -->
-  <a href="https://twitter.com/intent/follow?screen_name=QuriousAI_" target="_blank"> <img src="https://img.shields.io/twitter/follow/QuriousAI_?logo=X&color=%20%23f5f5f5" alt="follow on X(Twitter)"></a>
+  <a href="https://twitter.com/intent/follow?screen_name=QuriousAI_" target="_blank"> <img src="https://img.shields.io/twitter/follow/QuriousAI_?logo=X&color=%20%23f5f5f5" alt="follow on X(Twitter)">
+  </a>
+</p>
+
+<p align="center">
+
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=alert_status" />
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=bugs" />
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=code_smells" />
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=coverage" />
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=duplicated_lines_density" />
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=ncloc" />
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=reliability_rating" />
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=security_rating" />
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=sqale_index" />
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=sqale_rating" />  
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=vulnerabilities" />
+
 
 </p>
 
