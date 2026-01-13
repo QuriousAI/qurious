@@ -271,7 +271,7 @@ Once approved, a maintainer will merge your PR. Thank you for your contribution!
 If you need help or have questions:
 
 - **Discord**: Join our [Discord server](https://discord.gg/nQrrQThpBn)
-- **Twitter/X**: Follow us [@QuriousAI_](https://x.com/QuriousAI)
+- **Twitter/X**: Follow us [@QuriousAI_](https://x.com/QuriousAI_)
 - **GitHub Discussions**: Ask questions in our discussions forum
 - **Issues**: Create an issue with the "question" label
 
