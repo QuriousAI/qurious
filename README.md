@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://drive.google.com/thumbnail?id=1G9RrViccJTHWPf9Momk3qMf62VQg-hIy&sz=w1000" alt="Qurious Banner" />
+  <img src="https://drive.google.com/thumbnail?id=1G9RrViccJTHWPf9Momk3qMf62VQg-hIy&sz=w1000" alt="Qurious Banner" />
 </p>
 
 <h1 align="center">Qurious</h1>
@@ -11,38 +11,33 @@
 </p>
 
 <p align="center">
-  <a href="https://app.getqurious.xyz"><b>Live Demo</b></a> •
+  <a href="https://app.quriousai.xyz"><b>Live Demo</b></a> •
   <a href="#features">Features</a> •
-  <a href="#architecture">Architecture</a>
+  <a href="#architecture">Architecture</a> •
+  <a href="#contributors">Contributors</a>
 </p>
 
 <p align="center">
-  <!-- Product -->
-  <a href="https://app.getquriousai.xyz" target="_blank"><img alt="Static Badge" src="https://img.shields.io/badge/Product-F04438"></a>
-
-  <!-- Repo Stars -->
-  <img src="https://img.shields.io/github/stars/QuriousAI/qurious" />
-  <!-- Repo Forks -->
-  <img src="https://img.shields.io/github/forks/QuriousAI/qurious" />
-  <!-- Repo Issues -->
-  <img src="https://img.shields.io/github/issues/QuriousAI/qurious" />
-  <!-- Repo License -->
-  <img src="https://img.shields.io/github/license/QuriousAI/qurious" />
-  <!-- Repo Last Commit -->
-  <img src="https://img.shields.io/github/last-commit/QuriousAI/qurious" />
-  <!-- Commits Last Month -->
-  <a href="https://github.com/langgenius/dify/graphs/commit-activity" target="_blank"> <img alt="Commits last month" src="https://img.shields.io/github/commit-activity/m/QuriousAI/qurious?labelColor=%20%2332b583&color=%20%2312b76a"></a>
-
-  <!-- Discord Link -->
-  <a href="https://discord.gg/FngNHpbcY7" target="_blank"><img src="https://img.shields.io/discord/1452750255937421344?logo=discord&labelColor=%20%235462eb&logoColor=%20%23f5f5f5&color=%20%235462eb" alt="chat on Discord"></a>
-  <!-- Twitter Link -->
-  <a href="https://twitter.com/intent/follow?screen_name=QuriousAI_" target="_blank"> <img src="https://img.shields.io/twitter/follow/QuriousAI_?logo=X&color=%20%23f5f5f5" alt="follow on X(Twitter)">
+  <a href="https://app.quriousai.xyz" target="_blank">
+    <img alt="Product Badge" src="https://img.shields.io/badge/Product-F04438">
   </a>
-</p>
-
-<p align="center">
-
-  <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=alert_status" />
+  <img alt="Stars Badge" src="https://img.shields.io/github/stars/QuriousAI/qurious" />
+  <img alt="Forks Badge" src="https://img.shields.io/github/forks/QuriousAI/qurious" />
+  <img alt="Issues Badge" src="https://img.shields.io/github/issues/QuriousAI/qurious" />
+  <img alt="License Badge" src="https://img.shields.io/github/license/QuriousAI/qurious" />
+  <img alt="Last Commit Badge" src="https://img.shields.io/github/last-commit/QuriousAI/qurious" />
+  <img alt="Commit Activity Badge" src="https://img.shields.io/github/commit-activity/m/QuriousAI/qurious" />
+  <a href="https://discord.gg/nQrrQThpBn" target="_blank">
+    <img alt="Discord Badge" src="https://img.shields.io/discord/1452750255937421344?logo=discord" />
+  </a>
+  <a href="https://twitter.com/intent/follow?screen_name=QuriousAI_" target="_blank">
+    <img alt="Twitter Badge" src="https://img.shields.io/twitter/follow/QuriousAI_?logo=X" />
+  </a>
+  <a href="https://github.com/QuriousAI/qurious/pulls">
+    <img alt="PR Badge" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" />
+  </a>
+  
+   <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=alert_status" />
   <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=bugs" />
   <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=code_smells" />
   <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=coverage" />
@@ -53,60 +48,145 @@
   <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=sqale_index" />
   <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=sqale_rating" />  
   <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=vulnerabilities" />
-
-
 </p>
 
-## 🧠 What is Qurious?
-**Qurious** is an AI-powered research assistant designed to help researchers, students, and curious minds **find, understand, and organize scientific literature faster**.
+---
 
-## ✨ Features
-- 🔍 **Semantic Research Search** - Search across scientific papers using meaning, not just keywords. 
-- 💬 **Chat with Papers** - Ask questions directly to research papers and get grounded, contextual answers. 
-- 🧠 **AI Summaries & Insights** - Auto-generated summaries, key takeaways, and comparisons. 
-- 📁 **Lists & Research Folders** - Organize papers into collections with personal notes and ideas. 
-- 📝 **Personal Annotations** - Attach your own remarks and insights to each paper. 
+## What is Qurious?
+
+**Qurious** is an AI-powered research assistant that helps researchers, students, and curious minds **find, understand, and organize scientific literature faster**.
+
+---
+
+## Features
+
+- **Semantic Research Search** – Search papers by meaning, not keywords.
+- **Chat with Papers** – Ask questions and get grounded, contextual answers.
+- **AI Summaries & Insights** – Auto-generated summaries and key takeaways.
+- **Lists & Research Folders** – Organize papers into collections.
+- **Personal Annotations** – Add notes and insights per paper.
+
+---
 
 ## Architecture
+
 ### Tech Stack
-- **Tooling**: Turborepo, Git
-- **Frontend:** Next.js, React, Tailwind CSS, shadcn/ui  
-- **Backend:** Convex 
-- **AI:** Vercel AI SDK  
-- **Auth:** Clerk  
-- **Analytics & Monitoring:** PostHog
+
+- **Tooling:** Turborepo, Git
+- **Frontend:** Next.js, React, Tailwind CSS, shadcn/ui
+- **Backend:** Convex
+- **AI:** Vercel AI SDK
+- **Auth:** Clerk
+- **Analytics:** PostHog
 - **Deployment:** Vercel
 
-## 🚀 Getting Started
+---
+
+## Getting Started
+
 ### Prerequisites
-- Node.js
-- pnpm
-- Environment variables (see `.env.example`)
+
+- Node.js ≥ 18
+- pnpm (via Corepack)
+
+---
 
 ### Installation
-```
-git clone https://github.com/QuriousAI/qurious.git
-cd qurious
+```bash
 pnpm install
 ```
 
-### Run locally
+This installs all workspace dependencies and tooling.
+
+### One-time setup (Convex)
+```bash
+pnpm run convex:login
 ```
+
+### Environment Configuration
+
+Create a .env.local file in apps/web:
+```bash
+CONVEX_URL=your_convex_url_here
+```
+
+### Run locally
+
+Run all services:
+```bash
 pnpm dev
 ```
 
-## 🧪 Testing
+Run without browser or web API apps:
+```bash
+pnpm dev:no-ui
+
+or 
+
+pnpm dev --filter=!browser-app --filter=!web-api
 ```
+
+Run Convex backend only:
+```bash
+pnpm convex:dev
+```
+
+### Testing
+```bash
 pnpm test
 ```
 
-## 🧭 Roadmap
+---
+
+## Contributors
+
+Thank you to all the amazing people who have contributed to Qurious! 🎉
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<a href="https://github.com/QuriousAI/qurious/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=QuriousAI/qurious" />
+</a>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+Made with [contrib.rocks](https://contrib.rocks).
+
+### How to Contribute
+
+We welcome contributions! Here's how you can help:
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add some amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting a PR.
+
+---
+
+## Roadmap
+
 To be added.
 
-## 📜 License
-This project is licensed under the **MIT License**. See the `LICENSE` file for details.
+---
 
-## 🌍 Community & Links
-* 🌐 Website: https://quriousai.xyz
-* 🐦 Twitter/X: https://x.com/QuriousAI_
-* 💬 Discord: https://discord.gg/nQrrQThpBn
+## License
+
+MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Community & Links
+
+**Website:** [quriousai.xyz](https://quriousai.xyz)
+
+**Twitter/X:** [@QuriousAI_](https://x.com/QuriousAI_)
+
+**Discord:** [Join our server](https://discord.gg/nQrrQThpBn)
+
+---
+
+<p align="center">
+  Made with ❤️ by the Qurious community
+</p>
