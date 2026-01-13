@@ -5,36 +5,43 @@ import { usePathname } from "next/navigation";
 // import { cn } from "@workspace/design-system/lib/utils";
 import {Separator} from "@workspace/design-system/components/separator"
 
+import { Tooltip, TooltipTrigger, TooltipContent } from "@workspace/design-system/components/tooltip";
+import { Button } from "@workspace/design-system/components/button";
+
+
 const settingsTabs = [
   { name: "Account", href: "/settings/account" },
   { name: "Customization", href: "/settings/customization" },
-  { name: "Keys", href: "/settings/keys" },
   { name: "Subscription", href: "/settings/subscription" },
-  { name: "Webhooks", href: "/settings/webhooks" },
+  { name: "Keys", href: "/settings/keys", disabled:true },
+  { name: "Webhooks", href: "/settings/webhooks", disabled:true },
 ];
-
-import {
-  SidebarProvider,
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarHeader,
-} from "@workspace/design-system/components/sidebar"
 
 export default function Page({ children }: { children?: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <div className="w-full flex flex-col md:flex-row gap-4 p-2 border-2 border-green-400">
-      <ul className="flex gap-4 overflow-x-auto md:flex-col border-2 border-red-400  shrink-0">
+    <div className="w-full flex flex-col md:flex-row gap-4 p-2">
+      <ul className="flex gap-4 overflow-x-auto md:flex-col shrink-0">
         {settingsTabs.map((tab) => (
-          <li key={tab.href}>
+          <li key={tab.href} className="">
+            {tab.disabled ? 
+        
+            <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="cursor-not-allowed text-muted-foreground">{tab.name}</span>
+            </TooltipTrigger>
+            <TooltipContent>
+              Coming soon!
+            </TooltipContent>
+          </Tooltip>:
             <Link href={tab.href}>{tab.name}</Link>
+          }
           </li>
         ))}
       </ul>
-      <div className="border-yellow-400 border-2 ">{children}</div>
+      <div className="w-1 rounded bg-neutral-800"></div>
+      <div>{children}</div>
     </div>
   );
 }
