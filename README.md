@@ -19,22 +19,22 @@
 
 <p align="center">
   <a href="https://app.quriousai.xyz" target="_blank">
-    <img alt="Product" src="https://img.shields.io/badge/Product-F04438">
+    <img alt="Product Badge" src="https://img.shields.io/badge/Product-F04438">
   </a>
-  <img src="https://img.shields.io/github/stars/QuriousAI/qurious" />
-  <img src="https://img.shields.io/github/forks/QuriousAI/qurious" />
-  <img src="https://img.shields.io/github/issues/QuriousAI/qurious" />
-  <img src="https://img.shields.io/github/license/QuriousAI/qurious" />
-  <img src="https://img.shields.io/github/last-commit/QuriousAI/qurious" />
-  <img src="https://img.shields.io/github/commit-activity/m/QuriousAI/qurious" />
+  <img alt="Stars Badge" src="https://img.shields.io/github/stars/QuriousAI/qurious" />
+  <img alt="Forks Badge" src="https://img.shields.io/github/forks/QuriousAI/qurious" />
+  <img alt="Issues Badge" src="https://img.shields.io/github/issues/QuriousAI/qurious" />
+  <img alt="License Badge" src="https://img.shields.io/github/license/QuriousAI/qurious" />
+  <img alt="Last Commit Badge" src="https://img.shields.io/github/last-commit/QuriousAI/qurious" />
+  <img alt="Commit Activity Badge" src="https://img.shields.io/github/commit-activity/m/QuriousAI/qurious" />
   <a href="https://discord.gg/nQrrQThpBn" target="_blank">
-    <img src="https://img.shields.io/discord/1452750255937421344?logo=discord" />
+    <img alt="Discord Badge" src="https://img.shields.io/discord/1452750255937421344?logo=discord" />
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=QuriousAI_" target="_blank">
-    <img src="https://img.shields.io/twitter/follow/QuriousAI_?logo=X" />
+    <img alt="Twitter Badge" src="https://img.shields.io/twitter/follow/QuriousAI_?logo=X" />
   </a>
   <a href="https://github.com/QuriousAI/qurious/pulls">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" />
+    <img alt="PR Badge" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" />
   </a>
 </p>
 
@@ -167,11 +167,11 @@ MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Community & Links
 
-**Website:** https://quriousai.xyz
+**Website:** [quriousai.xyz](https://quriousai.xyz)
 
-**Twitter/X:** https://x.com/QuriousAI_
+**Twitter/X:** [@QuriousAI_](https://x.com/QuriousAI_)
 
-**Discord:** https://discord.gg/nQrrQThpBn
+**Discord:** [Join our server](https://discord.gg/nQrrQThpBn)
 
 ---
 
