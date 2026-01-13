@@ -11,14 +11,14 @@
 </p>
 
 <p align="center">
-  <a href="https://app.getqurious.xyz"><b>Live Demo</b></a> •
+  <a href="https://app.quriousai.xyz"><b>Live Demo</b></a> •
   <a href="#features">Features</a> •
   <a href="#architecture">Architecture</a> •
   <a href="#contributors">Contributors</a>
 </p>
 
 <p align="center">
-  <a href="https://app.getquriousai.xyz" target="_blank">
+  <a href="https://app.quriousai.xyz" target="_blank">
     <img alt="Product" src="https://img.shields.io/badge/Product-F04438">
   </a>
   <img src="https://img.shields.io/github/stars/QuriousAI/qurious" />
