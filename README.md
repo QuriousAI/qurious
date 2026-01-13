@@ -27,7 +27,7 @@
   <img src="https://img.shields.io/github/license/QuriousAI/qurious" />
   <img src="https://img.shields.io/github/last-commit/QuriousAI/qurious" />
   <img src="https://img.shields.io/github/commit-activity/m/QuriousAI/qurious" />
-  <a href="https://discord.gg/FngNHpbcY7" target="_blank">
+  <a href="https://discord.gg/nQrrQThpBn" target="_blank">
     <img src="https://img.shields.io/discord/1452750255937421344?logo=discord" />
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=QuriousAI_" target="_blank">
@@ -169,7 +169,7 @@ MIT License. See the [LICENSE](LICENSE) file for details.
 
 **Website:** https://quriousai.xyz
 
-**Twitter/X:** https://x.com/QuriousAI
+**Twitter/X:** https://x.com/QuriousAI_
 
 **Discord:** https://discord.gg/nQrrQThpBn
 
