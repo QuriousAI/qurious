@@ -181,7 +181,7 @@ export const SearchResult = (props: {
     <div className="flex flex-col gap-8 w-full">
       <div className="flex flex-col gap-2">
         <Heading
-          heading="Alfred's Summary"
+          heading="Summary"
           subHeading={`Showing summary of ${relevantPapers ? relevantPapers.length : 0} papers.`}
           tooltip="LLM generated summary based on user preferences."
           icon={<Text />}
@@ -265,8 +265,8 @@ export const SearchResult = (props: {
               {/* Download Button */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="icon">
-                    <Download />
+                  <Button variant="outline">
+                    <Download /> Download
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>

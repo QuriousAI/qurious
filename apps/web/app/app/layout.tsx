@@ -9,6 +9,8 @@ import { ThemeProvider } from "@workspace/design-system/providers/theme-provider
 
 import { APP_DESCRIPTION, APP_NAME } from "@workspace/design-system/content";
 
+import { Analytics } from '@vercel/analytics/next';
+
 export const metadata: Metadata = {
   title: APP_NAME,
   description: APP_DESCRIPTION,
@@ -27,6 +29,7 @@ export default function RootLayout({
             <ThemeProvider>{children}</ThemeProvider>
           </ConvexWithClerkProvider>
         </ClerkProvider>
+        <Analytics />
       </body>
     </html>
   );

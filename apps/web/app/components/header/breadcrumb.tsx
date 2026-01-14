@@ -30,12 +30,8 @@ const SlashBreadcrumbSeparator = () => {
 
 const SEGMENT_ICON_MAPPING = {
   folders: <Folders className="size-4" />,
-  settings: <Settings className="size-4" />,
   papers: <File className="size-4" />,
   search: <Search className="size-4" />,
-  account: <User className="size-4" />,
-  customization: <Palette className="size-4" />,
-  subscription: <CreditCard className="size-4" />,
 };
 
 export const HeaderBreadcrumb = (props: { className: string }) => {
@@ -78,7 +74,7 @@ export const HeaderBreadcrumb = (props: { className: string }) => {
     <Breadcrumb className={props.className}>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Qurious App</BreadcrumbLink>
+          <BreadcrumbLink href="/">Qurious</BreadcrumbLink>
         </BreadcrumbItem>
 
         {breadcrumbItems.map(

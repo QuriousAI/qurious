@@ -18,7 +18,7 @@ export default function Home() {
 
       {/* <DownloadLogo /> */}
 
-      <div className="flex w-full flex-col items-center justify-center gap-6 h-[50vh]">
+      <div className="flex w-full flex-col items-center justify-center gap-6 h-[75vh]">
         <div className="flex flex-col items-center gap-4">
           <div className="text-4xl font-medium">
             {/* <Authenticated>
@@ -34,14 +34,14 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col gap-4 items-center">
-        <div className="text-muted-foreground text-lg">
+        <div className="text-muted-foreground font-medium underline">
           {APP_CONTENT["/home"].trySearchingAbout}
         </div>
         {/* The generic topics */}
-        <div className="flex flex-col gap-12 w-19/20">
+        <div className="flex flex-col gap-12">
           {genericTopics.map((topic) => (
             <div className="flex flex-col gap-2">
-              <div className="font-medium pl-2">{topic.topic}</div>
+              <div className="font-semibold pl-2">{topic.topic}</div>
               <div className="flex flex-col gap-2">
                 {topic.questions.map((question, i) => (
                   <SearchCard

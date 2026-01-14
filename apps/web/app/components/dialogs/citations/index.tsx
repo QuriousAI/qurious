@@ -85,7 +85,7 @@ export const CiteThisPaperDialog = (props: { paper: Paper }) => {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">
-          <Quote /> Cite Paper
+          <Quote /> <span className="hidden">Cite Paper</span>
         </Button>
       </DialogTrigger>
       <DialogContent>

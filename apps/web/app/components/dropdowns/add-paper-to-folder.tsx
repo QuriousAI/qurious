@@ -97,7 +97,7 @@ export const AddPaperToFolderDropdownMenu = (props: { paperId: string }) => {
       <DropdownMenuTrigger asChild>
         <Button variant="outline">
           <FolderPlus />
-          Add to Folder
+          <span className="hidden">Add to Folder</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

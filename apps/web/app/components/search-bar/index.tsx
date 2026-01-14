@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "@workspace/design-system/components/button";
 import { Textarea } from "@workspace/design-system/components/textarea";
-import { ChevronRight, Search } from "@workspace/design-system/icons";
+import { ChevronRight, Search, Bot } from "@workspace/design-system/icons";
 import { useState } from "react";
 import { SearchBarOptionsSheet } from "./options-sheet";
 import {
@@ -23,13 +23,14 @@ import {
 } from "@workspace/design-system/components/card";
 import Link from "next/link";
 import { Separator } from "@workspace/design-system/components/separator";
+import {ButtonGroup} from "@workspace/design-system/components/button-group"
 
 export const FILTERS = {
   minimumCitations: 0,
   publishedSince: "",
   openAccess: false,
-  publicationTypes: [],
-  fieldsOfStudy: [],
+  publicationTypes: [] as string[],
+  fieldsOfStudy: [] as string[],
 };
 export const SORTING = [
   "relevance",
@@ -39,40 +40,13 @@ export const SORTING = [
 ] as const;
 
 const SearchToggleGroup = () => {
-  return (
-    // <ToggleGroup type="single" value="normal" variant="outline">
-    //   <ToggleGroupItem value="normal">Normal Search</ToggleGroupItem>
-
-    //   {/* ToggleGroupItem w/ ToolTip */}
-    //   <Tooltip>
-    //     <TooltipTrigger asChild>
-    //       <div className="">
-    //         <ToggleGroupItem
-    //           value="agentic"
-    //           disabled
-    //           className="first:rounded-none"
-    //         >
-    //           Agentic Search
-    //         </ToggleGroupItem>
-    //       </div>
-    //     </TooltipTrigger>
-    //     <TooltipContent>Coming soon; AI-Agent powered research!</TooltipContent>
-    //   </Tooltip>
-    // </ToggleGroup>
-    <div className="select-none rounded-lg flex border overflow-hidden items-center justify-center shadow-md text-sidebar-accent-foreground">
-      <div className="text-sm bg-sidebar-accent/50 border-accent border rounded-lg rounded-r-none h-full px-2 flex items-center">
-        Normal Search
-      </div>
-      <Separator orientation="vertical" className="bg-sidebar-accent" />
-      <Tooltip>
-        <TooltipTrigger className="text-sm px-2 text-sidebar-accent-foreground/50 cursor-not-allowed">Agentic Search</TooltipTrigger>
-        <TooltipContent>Coming soon; AI-Agent powered research!</TooltipContent>
-      </Tooltip>
-    </div>
-  );
+  return <ButtonGroup>
+<Button variant="outline"><Search/><span className="hidden">Normal</span></Button>
+<Button variant="outline" disabled><Bot/><span className="hidden">Agentic</span></Button>
+</ButtonGroup>
 };
 
-const changedOptions = (options: any) => {
+const changedOptions = (options: typeof FILTERS) => {
   let count = 0;
 
   if (options.minimumCitations !== 0) {
@@ -98,7 +72,7 @@ const changedOptions = (options: any) => {
   return count;
 };
 
-const createUrl = (search: string, options: any) => {
+const createUrl = (search: string, options: typeof FILTERS) => {
   const base = `/search?q=${encodeURIComponent(search)}`;
   const queryParams = [];
 
@@ -125,7 +99,7 @@ const createUrl = (search: string, options: any) => {
   return `${base}&${queryParams.join("&")}`;
 };
 
-export const SearchBar = (props: { q?: string; options?: any }) => {
+export const SearchBar = (props: { q?: string; options?: typeof FILTERS }) => {
   const [search, setSearch] = useState(props.q || "");
   const [options, setOptions] = useState(props.options || FILTERS);
   const router = useRouter();
@@ -154,10 +128,10 @@ export const SearchBar = (props: { q?: string; options?: any }) => {
 
   return (
     <Card
-      className="w-full focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px] transition-[color,box-shadow]"
+      className="w-full focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px] transition-[color,box-shadow] py-2"
       id="tour-search-bar"
     >
-      <CardContent className="flex flex-col gap-2">
+      <CardContent className="flex flex-col gap-2 px-2">
         <Textarea
           placeholder="Search papers..."
           className="min-h-fit resize-none placeholder:text-base md:text-base text-base border-none shadow-none focus-visible:ring-0 dark:bg-transparent"
@@ -166,7 +140,7 @@ export const SearchBar = (props: { q?: string; options?: any }) => {
           onKeyDown={handleKeyDown}
         />
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between px-2">
         {/* Left Side */}
         <div className="flex gap-2">
           <SearchBarOptionsSheet
@@ -183,9 +157,9 @@ export const SearchBar = (props: { q?: string; options?: any }) => {
 
         {/* Right Side */}
         <Button
-          variant="ghost"
           className="hover:cursor-pointer"
           onClick={handleButtonClick}
+        disabled={search.trim().length === 0}
         >
           <Link href={`/search?q=${search}`}>
             <ChevronRight />
