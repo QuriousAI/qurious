@@ -14,7 +14,12 @@
     "prettier",
     "husky",
     "eslint",
-    "cspell"
+    "cspell",
+    "qurious",
+    "turborepo",
+    "pnpm",
+    "convex",
+    "clerk"
   ],
   "ignorePaths": [
     "node_modules",
@@ -28,6 +33,9 @@
     "**/*.svg",
     "**/*.min.js",
     "**/*.map",
-    "coverage"
-  ]
+    "coverage",
+    ".git",
+    "pnpm-lock.yaml",
+    "**/*.svg"
+  ],
 }
