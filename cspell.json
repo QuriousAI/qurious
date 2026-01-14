@@ -1,13 +1,41 @@
 {
   "version": "0.2",
   "language": "en",
+  "words": [
+    "Qurious",
+    "pnpm",
+    "turbo",
+    "turborepo",
+    "vercel",
+    "nextjs",
+    "convex",
+    "zod",
+    "typescript",
+    "prettier",
+    "husky",
+    "eslint",
+    "cspell",
+    "qurious",
+    "turborepo",
+    "pnpm",
+    "convex",
+    "clerk"
+  ],
   "ignorePaths": [
     "node_modules",
     "dist",
     "build",
+    ".next",
+    ".git",
+    "pnpm-lock.yaml",
+    "*.lock",
+    ".env*",
+    "**/*.svg",
+    "**/*.min.js",
+    "**/*.map",
+    "coverage",
     ".git",
     "pnpm-lock.yaml",
     "**/*.svg"
   ],
-  "words": ["qurious", "turborepo", "pnpm", "convex", "clerk"]
 }
