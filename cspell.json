@@ -1,0 +1,16 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [],
+  "ignorePaths": [
+    "node_modules",
+    "dist",
+    "build",
+    ".next",
+    ".git",
+    "pnpm-lock.yaml",
+    "**/*.min.js",
+    "**/*.map",
+    "coverage"
+  ]
+}
