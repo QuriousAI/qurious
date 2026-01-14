@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://drive.google.com/thumbnail?id=1G9RrViccJTHWPf9Momk3qMf62VQg-hIy&sz=w1000" alt="Qurious Banner" />
-</p>
-
 <h1 align="center">Qurious</h1>
 
 <p align="center">
@@ -36,6 +32,8 @@
   <a href="https://github.com/QuriousAI/qurious/pulls">
     <img alt="PR Badge" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" />
   </a>
+  
+  <br>
   
    <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=alert_status" />
   <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=bugs" />
