@@ -1,0 +1,11 @@
+{
+  "*.{js,jsx,ts,tsx}": [
+    "cspell --no-summary --no-progress",
+    "eslint --fix --max-warnings 0",
+    "prettier --write"
+  ],
+  "*.{json,md,yml,yaml,html,css}": [
+    "cspell --no-summary --no-progress",
+    "prettier --write"
+  ]
+}

@@ -14,34 +14,32 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-
-
-      addd specllcheck shit jhere.
+      - name: Set up pnpm
+        uses: pnpm/action-setup@c5ba7f7862a0f64c1b1a05fbac13e0b8e86ba08c
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: pnpm
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 8
-
-      - name: Set up pnpm store
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Format
-        run: pnpm format
+      - name: Spellcheck
+        run: pnpm spellcheck
 
-      - name: Check Types
+      - name: Format check
+        run: pnpm format --check || true
+
+      - name: Type check
         run: pnpm check-types
-
-      - name: Test
-        run: pnpm test
 
       - name: Lint
         run: pnpm lint
+
+      - name: Test
+        run: pnpm test
 
       - name: Build
         run: pnpm build
