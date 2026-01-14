@@ -1,20 +1,23 @@
 {
   "name": "qurious",
   "private": true,
+  "packageManager": "pnpm@10.18.2",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:no-ui": "turbo run dev --filter=!browser-app --filter=!web-api",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
     "spellcheck": "cspell \"**\"",
     "test": "turbo run test",
+    "convex:login": "convex login",
+    "convex:dev": "pnpm --filter backend dev",
+    "vercel:version": "vercel --version",
     "prepare": "husky install"
-  },
-  "pnpm": {
-    "overrides": {
-      "markdown-it": "13.0.2"
-    }
   },
   "devDependencies": {
     "convex": "^1.31.2",
@@ -28,8 +31,7 @@
   "dependencies": {
     "zod": "^4.1.12"
   },
-  "packageManager": "pnpm@10.18.2",
-  "engines": {
-    "node": ">=18"
+  "dependencies": {
+    "zod": "^4.1.12"
   }
 }
