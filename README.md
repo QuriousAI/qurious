@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.png" alt="Qurious Banner" />
+</p>
+
 <h1 align="center">Qurious</h1>
 
 <p align="center">
@@ -34,6 +38,8 @@
   </a>
   
   <br>
+  <br>
+  
   
    <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=alert_status" />
   <img src="https://sonarcloud.io/api/project_badges/measure?project=QuriousAI_qurious&metric=bugs" />
