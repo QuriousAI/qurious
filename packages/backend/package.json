@@ -1,28 +1,29 @@
 {
-    "name": "@workspace/backend",
-    "scripts": {
-        "dev": "convex dev"
-    },
-    "exports": {
-        "./*": "./convex/*"
-    },
-    "dependencies": {
-        "@ai-sdk/google": "^1.2.18",
-        "@clerk/backend": "^1.33.1",
-        "@convex-dev/action-cache": "^0.2.7",
-        "@posthog/ai": "^6.4.3",
-        "@t3-oss/env-core": "^0.13.6",
-        "@workspace/semantic-scholar": "workspace:*",
-        "ai": "^4.3.16",
-        "convex": "^1.24.2",
-        "convex-helpers": "^0.1.89",
-        "dodopayments": "^1.32.0",
-        "posthog-node": "^5.10.0",
-        "standardwebhooks": "^1.0.0",
-        "svix": "^1.66.0",
-        "zod": "^3.25.32"
-    },
-    "devDependencies": {
-        "typescript": "^5.8.3"
-    }
+  "name": "@workspace/backend",
+  "scripts": {
+    "dev": "convex dev"
+  },
+  "exports": {
+    "./*": "./convex/*"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^1.2.18",
+    "@clerk/backend": "^1.33.1",
+    "@convex-dev/action-cache": "^0.2.7",
+    "@dodopayments/convex": "^0.2.8",
+    "@posthog/ai": "^6.4.3",
+    "@t3-oss/env-core": "^0.13.6",
+    "@workspace/semantic-scholar": "workspace:*",
+    "ai": "^4.3.16",
+    "convex": "^1.24.2",
+    "convex-helpers": "^0.1.89",
+    "dodopayments": "^1.32.0",
+    "posthog-node": "^5.10.0",
+    "standardwebhooks": "^1.0.0",
+    "svix": "^1.66.0",
+    "zod": "^3.25.32"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
 }
