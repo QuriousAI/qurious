@@ -41,9 +41,9 @@
   --sidebar-accent-foreground: hsl(224.4444 64.2857% 32.9412%);
   --sidebar-border: hsl(220 13.0435% 90.9804%);
   --sidebar-ring: hsl(217.2193 91.2195% 59.8039%);
-  --font-sans: Inter, sans-serif;
+  --font-sans: var(--font-geist-sans), sans-serif;
   --font-serif: Source Serif 4, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-mono: var(--font-geist-mono), monospace;
   --radius: 0.375rem;
   --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
@@ -113,9 +113,9 @@
   --sidebar-ring: var(--color-amber-800);
 
   /* Font */
-  --font-sans: Inter, sans-serif;
+  --font-sans: var(--font-geist-sans), sans-serif;
   --font-serif: Source Serif 4, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-mono: var(--font-geist-mono), monospace;
 
   /* App Radius */
   --radius: 0.5rem;

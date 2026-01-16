@@ -30,16 +30,14 @@ export function FontProvider({ children }: { children: React.ReactNode }) {
 
   const setFont = React.useCallback((newFont: FontPreference) => {
     setFontState(newFont);
-    localStorage.setItem("font-preference", newFont);
-    document.documentElement.classList.remove("font-sans", "font-mono");
-    document.documentElement.classList.add(`font-${newFont}`);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("font-preference", newFont);
+      document.documentElement.classList.remove("font-sans", "font-mono");
+      document.documentElement.classList.add(`font-${newFont}`);
+    }
   }, []);
 
-  // Prevent hydration mismatch
-  if (!mounted) {
-    return <>{children}</>;
-  }
-
+  // Always provide context, but use default values before mount to prevent hydration mismatch
   return (
     <FontContext.Provider value={{ font, setFont }}>
       {children}

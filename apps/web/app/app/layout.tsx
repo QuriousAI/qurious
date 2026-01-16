@@ -1,5 +1,6 @@
 import "@workspace/design-system/styles/globals.css";
 import type { Metadata } from "next";
+import { GeistSans, GeistMono } from "@workspace/design-system/font";
 
 // Providers
 import { ClerkProvider } from "@clerk/nextjs";
@@ -22,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="antialiased">
         <ClerkProvider>
           <ConvexWithClerkProvider>
