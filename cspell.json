@@ -19,7 +19,11 @@
     "turborepo",
     "pnpm",
     "convex",
-    "clerk"
+    "clerk",
+    "dodopayments",
+    "posthog",
+    "standardwebhooks",
+    "svix"
   ],
   "ignorePaths": [
     "node_modules",
@@ -37,5 +41,5 @@
     ".git",
     "pnpm-lock.yaml",
     "**/*.svg"
-  ],
+  ]
 }
