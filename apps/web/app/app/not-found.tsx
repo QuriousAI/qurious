@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@workspace/design-system/components/button";
-import { Home, Search } from "@workspace/design-system/icons";
+import { Home } from "@workspace/design-system/icons";
 
 export default function NotFound() {
   return (
@@ -19,21 +19,13 @@ export default function NotFound() {
           </p>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-          <Button asChild size="lg" variant="default" className="gap-2">
-            <Link href="/">
-              <Home className="size-4" />
-              Go Home
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="gap-2">
-            <Link href="/search">
-              <Search className="size-4" />
-              Search
-            </Link>
-          </Button>
-        </div>
+        {/* Action Button */}
+        <Button asChild size="lg" variant="default" className="gap-2">
+          <Link href="/">
+            <Home className="size-4" />
+            Go Home
+          </Link>
+        </Button>
       </div>
     </div>
   );
