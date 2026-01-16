@@ -1,5 +1,4 @@
-import { IBM_Plex_Mono } from "@next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 
-const Font = IBM_Plex_Mono({weight:"400"})
-
-export { Font };
+export { GeistSans, GeistMono };
