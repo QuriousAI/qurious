@@ -191,6 +191,28 @@
   body {
     @apply bg-background text-foreground selection:bg-orange-400/20 selection:text-orange-200 selection:rounded-full;
   }
+  
+  /* Font classes */
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+  
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+  
+  /* Make body inherit font from html element */
+  html {
+    font-family: var(--font-sans);
+  }
+  
+  html.font-sans {
+    font-family: var(--font-sans);
+  }
+  
+  html.font-mono {
+    font-family: var(--font-mono);
+  }
 }
 
 @layer utilities {

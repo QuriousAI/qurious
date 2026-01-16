@@ -1,11 +1,11 @@
 import "@workspace/design-system/styles/globals.css";
 import type { Metadata } from "next";
-import { Font } from "@workspace/design-system/font";
 
 // Providers
 import { ClerkProvider } from "@clerk/nextjs";
 import { ConvexWithClerkProvider } from "@/providers/convex-with-clerk";
 import { ThemeProvider } from "@workspace/design-system/providers/theme-provider";
+import { FontProvider } from "@workspace/design-system/providers/font-provider";
 
 import { APP_DESCRIPTION, APP_NAME } from "@workspace/design-system/content";
 
@@ -22,11 +22,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={Font.className}>
+    <html lang="en">
       <body className="antialiased">
         <ClerkProvider>
           <ConvexWithClerkProvider>
-            <ThemeProvider>{children}</ThemeProvider>
+            <ThemeProvider>
+              <FontProvider>{children}</FontProvider>
+            </ThemeProvider>
           </ConvexWithClerkProvider>
         </ClerkProvider>
         <Analytics />

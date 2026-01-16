@@ -4,6 +4,7 @@ import React from "react";
 import { SidebarTrigger } from "@workspace/design-system/components/sidebar";
 import { Cmdk } from "./cmdk";
 import { ModeToggle } from "./mode-toggle";
+import { FontToggle } from "./font-toggle";
 import { HeaderBreadcrumb } from "./breadcrumb";
 import { Help } from "./help";
 
@@ -15,6 +16,7 @@ export const Header = () => {
       <div className="flex items-center justify-center gap-4 hidden">
         <Cmdk />
         <Help />
+        <FontToggle />
         <ModeToggle />
       </div>
     </header>
