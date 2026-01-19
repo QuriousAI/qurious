@@ -86,7 +86,7 @@ body:
     id: logs
     attributes:
       label: Error Logs
-      description: Please copy and paste any relevant error logs or console output
+      description: Please copy and paste any relevant error logs or console output (redact tokens, emails, and other sensitive data)
       render: shell
     validations:
       required: false
