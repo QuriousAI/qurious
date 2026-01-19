@@ -23,7 +23,8 @@
     "Cmdk",
     "cmdk",
     "Agentic",
-    "nextstepjs"
+    "nextstepjs",
+    "turbopack"
   ],
   "ignorePaths": [
     "node_modules",
