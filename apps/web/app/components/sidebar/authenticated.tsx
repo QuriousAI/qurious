@@ -4,10 +4,9 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useQuery } from "convex/react";
 import { SignOutButton, useUser, UserProfile } from "@clerk/nextjs";
+import { motion } from "motion/react";
 
-import {
-  AddSearchToFolderDropdownMenu,
-} from "../dropdowns/add-search-to-folder";
+import { AddSearchToFolderDropdownMenu } from "../dropdowns/add-search-to-folder";
 import { DeleteSearchDialogContent } from "../dialogs/search/delete";
 import { Heading } from "../global-heading";
 import { InformationTooltip } from "@/components/information-tooltip";
@@ -107,12 +106,10 @@ import {
   Trash2,
   UserCog,
 } from "@workspace/design-system/icons";
-import {Button} from "@workspace/design-system/components/button"
-
-
+import { Button } from "@workspace/design-system/components/button";
 
 /** This is the menu item for the user dropdown. Trigger = User Bar, Content = Dropdown For User Settings */
-export const SidebarMenuItem_UserDropwn = () => {
+export const SidebarMenuItem_UserDropdown = () => {
   const { user } = useUser();
 
   return (
@@ -126,49 +123,62 @@ export const SidebarMenuItem_UserDropwn = () => {
           <div className="font-semibold">{user.fullName}</div>
         </div>
         <Button variant="icon">
-          <Link href="/settings/account"><Settings/></Link>
+          <Link href="/settings/account">
+            <Settings />
+          </Link>
         </Button>
       </SidebarMenuButton>
     </SidebarMenuItem>
   );
 };
 
-
-
-const SidebarMenuItem_Search = (props: { search: Doc<"searches"> }) => {
+const SidebarMenuItem_Search = (props: {
+  search: Doc<"searches">;
+  index: number;
+}) => {
   return (
-    <SidebarMenuItem>
-      <SidebarMenuButton asChild>
-        <Link href={`/search?q=${encodeURIComponent(props.search.query)}`}>
-          <span>{props.search.query}</span>
-        </Link>
-      </SidebarMenuButton>
+    <motion.div
+      initial={{ opacity: 0, x: -10 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{
+        duration: 0.2,
+        delay: props.index * 0.03,
+        ease: "easeOut",
+      }}
+    >
+      <SidebarMenuItem>
+        <SidebarMenuButton asChild>
+          <Link href={`/search?q=${encodeURIComponent(props.search.query)}`}>
+            <span>{props.search.query}</span>
+          </Link>
+        </SidebarMenuButton>
 
-      <Dialog>
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuAction>
-              <MoreVertical />
-            </SidebarMenuAction>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent side="right" align="start">
-            <AddSearchToFolderDropdownMenu searchId={props.search._id} />
+        <Dialog>
+          <DropdownMenu modal={false}>
+            <DropdownMenuTrigger asChild>
+              <SidebarMenuAction>
+                <MoreVertical />
+              </SidebarMenuAction>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="right" align="start">
+              <AddSearchToFolderDropdownMenu searchId={props.search._id} />
 
-            <DialogTrigger asChild>
-              <DropdownMenuItem variant="destructive">
-                <Trash2 />
-                <span>Delete</span>
-              </DropdownMenuItem>
-            </DialogTrigger>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              <DialogTrigger asChild>
+                <DropdownMenuItem variant="destructive">
+                  <Trash2 />
+                  <span>Delete</span>
+                </DropdownMenuItem>
+              </DialogTrigger>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
-        <DeleteSearchDialogContent
-          name={props.search.query}
-          searchId={props.search._id}
-        />
-      </Dialog>
-    </SidebarMenuItem>
+          <DeleteSearchDialogContent
+            name={props.search.query}
+            searchId={props.search._id}
+          />
+        </Dialog>
+      </SidebarMenuItem>
+    </motion.div>
   );
 };
 
@@ -207,7 +217,7 @@ const sortSearchesByDate = (searches: Doc<"searches">[]) => {
       last7Days: [] as Doc<"searches">[],
       last30Days: [] as Doc<"searches">[],
       older: [] as Doc<"searches">[],
-    }
+    },
   );
 
   return sortedSearches;
@@ -215,50 +225,101 @@ const sortSearchesByDate = (searches: Doc<"searches">[]) => {
 
 const SearchMenu = (props: { searches: Doc<"searches">[] }) => {
   const sortedSearches = sortSearchesByDate(props.searches);
+  let indexCounter = 0;
 
   return (
     <SidebarMenu>
       {sortedSearches.today.length > 0 && (
         <>
-          <SidebarGroupLabel className="font-light">Today</SidebarGroupLabel>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <SidebarGroupLabel className="font-light">Today</SidebarGroupLabel>
+          </motion.div>
           {sortedSearches.today.map((search, i) => (
-            <SidebarMenuItem_Search key={i} search={search} />
+            <SidebarMenuItem_Search
+              key={i}
+              search={search}
+              index={indexCounter++}
+            />
           ))}
         </>
       )}
 
       {sortedSearches.yesterday.length > 0 && (
         <>
-          <SidebarGroupLabel>Yesterday</SidebarGroupLabel>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <SidebarGroupLabel>Yesterday</SidebarGroupLabel>
+          </motion.div>
           {sortedSearches.yesterday.map((search, i) => (
-            <SidebarMenuItem_Search key={i} search={search} />
+            <SidebarMenuItem_Search
+              key={i}
+              search={search}
+              index={indexCounter++}
+            />
           ))}
         </>
       )}
 
       {sortedSearches.last7Days.length > 0 && (
         <>
-          <SidebarGroupLabel>Last 7 Days</SidebarGroupLabel>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <SidebarGroupLabel>Last 7 Days</SidebarGroupLabel>
+          </motion.div>
           {sortedSearches.last7Days.map((search, i) => (
-            <SidebarMenuItem_Search key={i} search={search} />
+            <SidebarMenuItem_Search
+              key={i}
+              search={search}
+              index={indexCounter++}
+            />
           ))}
         </>
       )}
 
       {sortedSearches.last30Days.length > 0 && (
         <>
-          <SidebarGroupLabel>Last 30 Days</SidebarGroupLabel>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <SidebarGroupLabel>Last 30 Days</SidebarGroupLabel>
+          </motion.div>
           {sortedSearches.last30Days.map((search, i) => (
-            <SidebarMenuItem_Search key={i} search={search} />
+            <SidebarMenuItem_Search
+              key={i}
+              search={search}
+              index={indexCounter++}
+            />
           ))}
         </>
       )}
 
       {sortedSearches.older.length > 0 && (
         <>
-          <SidebarGroupLabel>Older</SidebarGroupLabel>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            <SidebarGroupLabel>Older</SidebarGroupLabel>
+          </motion.div>
           {sortedSearches.older.map((search, i) => (
-            <SidebarMenuItem_Search key={i} search={search} />
+            <SidebarMenuItem_Search
+              key={i}
+              search={search}
+              index={indexCounter++}
+            />
           ))}
         </>
       )}

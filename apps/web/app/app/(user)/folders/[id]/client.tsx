@@ -21,6 +21,7 @@ import { Switch } from "@workspace/design-system/components/switch";
 import Tiptap from "../../../../components/tiptap";
 import { Heading } from "../../../../components/global-heading";
 import { Folder, NotebookPen, User } from "@workspace/design-system/icons";
+import { motion } from "motion/react";
 
 const PapersTab = (props) => {
   const {
@@ -73,11 +74,30 @@ const PapersTab = (props) => {
       {!papers || papers.length === 0 ? (
         <p className="text-muted-foreground">No papers in this folder yet.</p>
       ) : (
-        <div className="space-y-2">
+        <motion.div
+          className="space-y-2"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.08,
+              },
+            },
+          }}
+        >
           {papers.map((paper, i) => (
-            <PaperCard paper={paper} key={i} resultIndex={i + 1} />
+            <motion.div
+              key={i}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+            >
+              <PaperCard paper={paper} resultIndex={i + 1} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
     </div>
   );
@@ -116,17 +136,30 @@ const SearchesTab = (props) => {
       {!searches || searches.length === 0 ? (
         <p className="text-muted-foreground">No searches in this folder yet.</p>
       ) : (
-        <div className="space-y-2">
+        <motion.div
+          className="space-y-2"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.05,
+              },
+            },
+          }}
+        >
           {searches.map((search, index) => (
-            // <div key={search._id} className="p-3 border rounded-lg">
-            //   <p className="font-medium">Query: {search.query}</p>
-            //   <p className="text-sm text-muted-foreground">
-            //     Created: {new Date(search._creationTime).toLocaleDateString()}
-            //   </p>
-            // </div>
-            <SearchCard questionText={search.query} />
+            <motion.div
+              key={index}
+              variants={{
+                hidden: { opacity: 0, x: -10 },
+                visible: { opacity: 1, x: 0 },
+              }}
+            >
+              <SearchCard questionText={search.query} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
     </div>
   );
@@ -163,11 +196,21 @@ export function FolderClientComponent(props: { folderId: string }) {
   }
 
   return (
-    <div className="">
-      <div className="text-3xl font-bold flex items-center gap-4">
+    <motion.div
+      className=""
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
+      <motion.div
+        className="text-3xl font-bold flex items-center gap-4"
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
+      >
         <Folder className="text-muted-foreground size-10" />
         {folder.name}
-      </div>
+      </motion.div>
 
       <div className="flex items-center justify-between mt-4">
         <div className="flex items-center space-x-2">
@@ -220,6 +263,6 @@ export function FolderClientComponent(props: { folderId: string }) {
           <SearchesTab folder={folder} />
         </TabsContent>
       </Tabs>
-    </div>
+    </motion.div>
   );
 }

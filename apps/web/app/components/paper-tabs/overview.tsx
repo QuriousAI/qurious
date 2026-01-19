@@ -14,7 +14,7 @@ import {
 } from "@workspace/design-system/components/table";
 import { AlertCircle } from "@workspace/design-system/icons";
 
-export const TableSnapshop = (props: { data: any }) => {
+export const TableSnapshot = (props: { data: any }) => {
   return (
     <Table>
       <TableHeader>
@@ -75,7 +75,7 @@ export const PaperSnapShot = (props: { paper: Paper }) => {
 
   return (
     <div className="w-full">
-      <TableSnapshop data={data} />
+      <TableSnapshot data={data} />
     </div>
   );
 };
