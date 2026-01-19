@@ -23,7 +23,7 @@ import {
 } from "@workspace/design-system/components/card";
 import Link from "next/link";
 import { Separator } from "@workspace/design-system/components/separator";
-import {ButtonGroup} from "@workspace/design-system/components/button-group"
+import { ButtonGroup } from "@workspace/design-system/components/button-group";
 
 export const FILTERS = {
   minimumCitations: 0,
@@ -36,14 +36,22 @@ export const SORTING = [
   "relevance",
   "citationCount",
   "date",
-  "influencialCitationCount",
+  "influentialCitationCount",
 ] as const;
 
 const SearchToggleGroup = () => {
-  return <ButtonGroup>
-<Button variant="outline"><Search/><span className="hidden">Normal</span></Button>
-<Button variant="outline" disabled><Bot/><span className="hidden">Agentic</span></Button>
-</ButtonGroup>
+  return (
+    <ButtonGroup>
+      <Button variant="outline">
+        <Search />
+        <span className="hidden">Normal</span>
+      </Button>
+      <Button variant="outline" disabled>
+        <Bot />
+        <span className="hidden">Agentic</span>
+      </Button>
+    </ButtonGroup>
+  );
 };
 
 const changedOptions = (options: typeof FILTERS) => {
@@ -159,7 +167,7 @@ export const SearchBar = (props: { q?: string; options?: typeof FILTERS }) => {
         <Button
           className="hover:cursor-pointer"
           onClick={handleButtonClick}
-        disabled={search.trim().length === 0}
+          disabled={search.trim().length === 0}
         >
           <Link href={`/search?q=${search}`}>
             <ChevronRight />

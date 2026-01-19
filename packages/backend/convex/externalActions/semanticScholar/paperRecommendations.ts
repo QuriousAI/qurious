@@ -6,6 +6,7 @@ import { ActionCache } from "@convex-dev/action-cache";
 import { components, internal } from "../../_generated/api";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/api-client";
 import { Paper } from "@workspace/semantic-scholar/src/types/paper";
+import { captureEvent } from "../../lib/posthog";
 
 const getPaperRecommendationsCache = new ActionCache(components.actionCache, {
   action:
@@ -21,7 +22,7 @@ export const getPaperRecommendations = action({
   },
   handler: async (
     ctx,
-    args
+    args,
   ): Promise<{
     recommendedPapers: Paper[];
   }> => {
@@ -37,20 +38,34 @@ export const getPaperRecommendationsInternal = internalAction({
     paperId: v.string(),
     fields: v.array(v.string()),
   },
-  handler: async (_, args) => {
+  handler: async (ctx, args) => {
     const semanticScholar = new SemanticScholarAPIClient();
     const result = await semanticScholar.getRecommendedPapers({
       paperId: args.paperId,
       fields: args.fields,
     });
-    // client.capture({
-    //   distinctId: ctx.auth.getUserIdentity(),
-    //   event: "get_paper_recommendations",
-    //   properties: {...args}
-    // });
-    
 
-    if (result.isErr()) throw new ConvexError(result.error);
+    if (result.isErr()) {
+      await captureEvent(
+        ctx,
+        "semantic_scholar_action_get_paper_recommendations_internal_failed",
+        {
+          paperId: args.paperId,
+          error: result.error,
+        },
+      );
+      throw new ConvexError(result.error);
+    }
+
+    await captureEvent(
+      ctx,
+      "semantic_scholar_action_get_paper_recommendations_internal",
+      {
+        paperId: args.paperId,
+        fieldsCount: args.fields.length,
+        recommendationsCount: result.value.recommendedPapers.length,
+      },
+    );
 
     return result.value;
   },

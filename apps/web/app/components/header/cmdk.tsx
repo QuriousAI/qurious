@@ -36,6 +36,7 @@ import { SidebarTrigger } from "@workspace/design-system/components/sidebar";
 import Link from "next/link";
 
 import posthog from "posthog-js";
+import { env } from "@/env";
 
 const CommandTrigger = (props) => {
   return (
@@ -63,7 +64,9 @@ export function Cmdk() {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         setOpen((open) => !open);
-        posthog.capture("cmdk_opened_keyboard");
+        if (env.NEXT_PUBLIC_POSTHOG_KEY) {
+          posthog.capture("cmdk_opened_keyboard");
+        }
       }
     };
 

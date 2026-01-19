@@ -19,7 +19,7 @@ import {
   Text,
 } from "@workspace/design-system/icons";
 import Markdown from "react-markdown";
-import { extractFieldsfromPapers } from "@/utils/extractor";
+import { extractFieldsFromPapers } from "@/utils/extractor";
 import { Heading } from "../../../components/global-heading";
 import { Skeleton } from "@workspace/design-system/components/skeleton";
 import { GlobalErrorHandler } from "../../../components/global-error";
@@ -139,7 +139,7 @@ export const SearchResult = (props: {
     error: summaryError,
   } = useSummarizePaperQuery({
     query: props.q,
-    // extractedPapers: extractFieldsfromPapers(relevantPapers),
+    // extractedPapers: extractFieldsFromPapers(relevantPapers),
     papers: relevantPapers,
     enabled: !!relevantPapers,
     userSummarySettings: user?.summarySettings || "",
@@ -162,17 +162,17 @@ export const SearchResult = (props: {
     if (sortBy === "relevance") return relevantPapers;
     if (sortBy === "citationCount")
       return relevantPapers?.sort(
-        (a, b) => b?.citationCount - a?.citationCount
+        (a, b) => b?.citationCount - a?.citationCount,
       );
     if (sortBy === "date")
       return relevantPapers?.sort(
         (a, b) =>
           new Date(b.publicationDate).getTime() -
-          new Date(a.publicationDate).getTime()
+          new Date(a.publicationDate).getTime(),
       );
-    if (sortBy === "influencialCitationCount")
+    if (sortBy === "influentialCitationCount")
       return relevantPapers?.sort(
-        (a, b) => b?.influentialCitationCount - a?.influentialCitationCount
+        (a, b) => b?.influentialCitationCount - a?.influentialCitationCount,
       );
     return relevantPapers;
   }, [relevantPapers, sortBy]);
@@ -240,7 +240,7 @@ export const SearchResult = (props: {
 
       <PageSeparator />
 
-      <div className="flex flex-col gap-2" id="tour-relavant-papers">
+      <div className="flex flex-col gap-2" id="tour-relevant-papers">
         <Heading
           heading="Relevant Papers"
           icon={<Files />}

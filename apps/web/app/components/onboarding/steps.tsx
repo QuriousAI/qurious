@@ -23,7 +23,7 @@ const steps: Step[] = [
     icon: "🤖",
     title: "Search Result",
     content: "Your results",
-    selector: "#tour-relavant-papers",
+    selector: "#tour-relevant-papers",
     showControls: true,
     showSkip: true,
   },

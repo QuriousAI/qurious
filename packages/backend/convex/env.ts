@@ -3,6 +3,16 @@
 import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod";
 
+// PostHog environment variables
+// These are optional - PostHog will only be used if these are set
+export const posthogEnv = createEnv({
+  server: {
+    POSTHOG_API_KEY: z.string().optional(),
+    POSTHOG_HOST: z.string().url().optional(),
+  },
+  runtimeEnv: process.env,
+});
+
 // export const envVariables = createEnv({
 //   server: {
 //     // Convex
