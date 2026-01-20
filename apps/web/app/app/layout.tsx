@@ -7,10 +7,11 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { ConvexWithClerkProvider } from "@/providers/convex-with-clerk";
 import { ThemeProvider } from "@workspace/design-system/providers/theme-provider";
 import { FontProvider } from "@workspace/design-system/providers/font-provider";
+import { PostHogProvider } from "@/providers/posthog-provider";
 
 import { APP_DESCRIPTION, APP_NAME } from "@workspace/design-system/content";
 
-import { Analytics } from '@vercel/analytics/next';
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: APP_NAME,
@@ -26,11 +27,13 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="antialiased">
         <ClerkProvider>
-          <ConvexWithClerkProvider>
-            <ThemeProvider>
-              <FontProvider>{children}</FontProvider>
-            </ThemeProvider>
-          </ConvexWithClerkProvider>
+          <PostHogProvider>
+            <ConvexWithClerkProvider>
+              <ThemeProvider>
+                <FontProvider>{children}</FontProvider>
+              </ThemeProvider>
+            </ConvexWithClerkProvider>
+          </PostHogProvider>
         </ClerkProvider>
         <Analytics />
       </body>

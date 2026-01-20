@@ -6,11 +6,12 @@ import { ActionCache } from "@convex-dev/action-cache";
 import { components, internal } from "../../_generated/api";
 import { z } from "zod";
 import { MODELS } from "./_models";
+import { captureEvent } from "../../lib/posthog";
 
 const FOLLOW_UP_PROMPT = (
   query: string,
   summary: string,
-  userDetails: string
+  userDetails: string,
 ) =>
   `You are a helpful research assistant inside a research-focused app. A user just asked the following question:
 
@@ -30,7 +31,7 @@ Your job is to suggest 3 to 5 short, punchy follow-up questions that:
 - Are engaging and curiosity-provoking.
 - Encourage deeper research or exploration.
 - Use academic or topic-relevant wording.
-- Must be relavant to the user.
+- Must be relevant to the user.
 
 Think of each follow-up as a hook to keep the user exploring. Return only the follow-up questions, one per line.
 You must generate only 3 questions.`;
@@ -45,12 +46,18 @@ export const followUpInternal = internalAction({
     summary: v.string(),
     userDetails: v.string(),
   },
-  handler: async (_, args) => {
+  handler: async (ctx, args) => {
     const prompt = FOLLOW_UP_PROMPT(args.query, args.summary, args.userDetails);
     const result = await generateObject({
       model: MODELS.SUGGESTED_QUERY,
       prompt,
       schema: z.array(z.string()),
+    });
+    await captureEvent(ctx, "ai_action_suggested_query_internal", {
+      queryLength: args.query.length,
+      summaryLength: args.summary.length,
+      suggestionsCount: result.object.length,
+      model: MODELS.SUGGESTED_QUERY,
     });
     return result.object;
   },
@@ -63,10 +70,16 @@ export const followUp = action({
     userDetails: v.string(),
   },
   handler: async (ctx, args): Promise<string[]> => {
-    return await followUpCache.fetch(ctx, {
+    const result = await followUpCache.fetch(ctx, {
       query: args.query,
       summary: args.summary,
       userDetails: args.userDetails,
     });
+    await captureEvent(ctx, "ai_action_suggested_query", {
+      queryLength: args.query.length,
+      summaryLength: args.summary.length,
+      suggestionsCount: result.length,
+    });
+    return result;
   },
 });

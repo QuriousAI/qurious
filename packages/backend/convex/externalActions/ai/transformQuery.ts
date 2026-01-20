@@ -5,9 +5,10 @@ import { components, internal } from "../../_generated/api";
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
 import { MODELS } from "./_models";
+import { captureEvent } from "../../lib/posthog";
 
 const TRANSFORM_QUERY_PROMPT = (
-  query: string
+  query: string,
 ) => `You are a semantic search query optimizer for research databases like Semantic Scholar. Your task is to rephrase a natural language question or command into a concise, keyword-based academic search query.
 
 Guidelines:
@@ -36,9 +37,14 @@ export const transformQuery = action({
     query: v.string(),
   },
   handler: async (ctx, args): Promise<string> => {
-    return await transformQueryCache.fetch(ctx, {
+    const result = await transformQueryCache.fetch(ctx, {
       query: args.query,
     });
+    await captureEvent(ctx, "ai_action_transform_query", {
+      queryLength: args.query.length,
+      transformedQueryLength: result.length,
+    });
+    return result;
   },
 });
 
@@ -46,7 +52,7 @@ export const transformQueryInternal = internalAction({
   args: {
     query: v.string(),
   },
-  handler: async (_, args) => {
+  handler: async (ctx, args) => {
     const prompt = TRANSFORM_QUERY_PROMPT(args.query);
     const result = await generateText({
       model: MODELS.TRANSFORM_QUERY,
@@ -54,6 +60,12 @@ export const transformQueryInternal = internalAction({
     });
 
     const { text } = result;
+
+    await captureEvent(ctx, "ai_action_transform_query_internal", {
+      queryLength: args.query.length,
+      resultLength: text.length,
+      model: MODELS.TRANSFORM_QUERY,
+    });
 
     return text;
   },

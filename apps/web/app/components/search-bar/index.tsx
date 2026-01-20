@@ -154,6 +154,21 @@ export const SearchBar = (props: { q?: string; options?: typeof FILTERS }) => {
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={handleKeyDown}
           />
+          <SearchToggleGroup />
+        </div>
+
+        {/* Right Side */}
+        <Button
+          className="hover:cursor-pointer"
+          onClick={handleButtonClick}
+          disabled={search.trim().length === 0}
+        >
+          <Link href={`/search?q=${search}`}>
+            <ChevronRight />
+          </Link>
+        </Button>
+      </CardFooter>
+    </Card>
         </CardContent>
         <CardFooter className="flex justify-between px-2">
           {/* Left Side */}

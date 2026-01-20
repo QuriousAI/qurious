@@ -11,12 +11,13 @@ import {
   GetRelevantPapersReturnType,
 } from "@workspace/semantic-scholar/src/index";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/api-client";
+import { captureEvent } from "../../lib/posthog";
 
 const publicationTypeUnion = v.union(
-  ...publicationTypes.map((type) => v.literal(type))
+  ...publicationTypes.map((type) => v.literal(type)),
 );
 const fieldsOfStudyUnion = v.union(
-  ...fieldsOfStudy.map((type) => v.literal(type))
+  ...fieldsOfStudy.map((type) => v.literal(type)),
 );
 
 const getRelevantPapersCache = new ActionCache(components.actionCache, {
@@ -26,11 +27,7 @@ const getRelevantPapersCache = new ActionCache(components.actionCache, {
   name: "get-relevant-papers-cache",
 });
 
-
-// throw new Error("build recommendation engine. this is your chance. recommend new shit based on user liking and viwered and details.")
-
-
-
+// throw new Error("build recommendation engine. this is your chance. recommend new shit based on user liking and viewed and details.")
 
 export const getRelevantPapers = action({
   args: {
@@ -45,7 +42,7 @@ export const getRelevantPapers = action({
   },
   handler: async (ctx, args): Promise<GetRelevantPapersReturnType> => {
     // throw new Error("add trending papers")
-    // throw new Error("add more viwerd weekly paper.")
+    // throw new Error("add more viewed weekly paper.")
     return await getRelevantPapersCache.fetch(ctx, {
       query: args.query,
       limit: args.limit,
@@ -70,7 +67,7 @@ export const getRelevantPapersInternal = internalAction({
     offset: v.number(),
     fields: v.array(v.string()),
   },
-  handler: async (_, args) => {
+  handler: async (ctx, args) => {
     const semanticScholar = new SemanticScholarAPIClient();
     const result = await semanticScholar.getRelevantPapers({
       query: args.query,
@@ -83,14 +80,30 @@ export const getRelevantPapersInternal = internalAction({
       fields: args.fields,
     });
 
-    // client.capture({
-    //   distinctId: ctx.auth.getUserIdentity(),
-    //   event: "get_multiple_paper_details",
-    //   properties: {...args}
-    // });
-    
+    if (result.isErr()) {
+      await captureEvent(
+        ctx,
+        "semantic_scholar_action_get_relevant_papers_internal_failed",
+        {
+          query: args.query,
+          error: result.error,
+        },
+      );
+      throw new ConvexError(result.error);
+    }
 
-    if (result.isErr()) throw new ConvexError(result.error);
+    await captureEvent(
+      ctx,
+      "semantic_scholar_action_get_relevant_papers_internal",
+      {
+        query: args.query,
+        queryLength: args.query.length,
+        limit: args.limit,
+        offset: args.offset,
+        totalResults: result.value.total,
+        returnedResults: result.value.data.length,
+      },
+    );
 
     console.log("length", result.value.total);
 

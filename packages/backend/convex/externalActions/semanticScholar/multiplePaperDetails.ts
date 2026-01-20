@@ -7,8 +7,7 @@ import { components, internal } from "../../_generated/api";
 import type { Paper } from "@workspace/semantic-scholar/src";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/client";
 
-// import { PostHog } from 'posthog-node'
-
+import { captureEvent } from "../../lib/posthog";
 
 // Multiple Paper Details
 
@@ -45,26 +44,12 @@ export const getMultiplePaperDetailsInternal = internalAction({
 
     if (result.isErr()) throw new ConvexError(result.error);
 
+    // Track multiple paper details fetch event
+    await captureEvent(ctx, "get_multiple_paper_details", {
+      paperCount: args.paperIds.length,
+      fields: args.fields,
+    });
+
     return result.value;
   },
 });
-// const client = new PostHog(
-//   '<ph_project_api_key>',
-//   { host: 'https://us.i.posthog.com' }
-// )
-
-// client.capture({
-//   distinctId: ctx.auth.getUserIdentity(),
-//   event: "get_multiple_paper_details",
-//   properties: {...args}
-// });
-
-
-
-// await client.shutdown() 
-
-//     if (result.isErr()) throw new ConvexError(result.error);
-
-//     return result.value;
-//   },
-// });

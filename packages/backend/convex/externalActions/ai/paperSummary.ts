@@ -6,20 +6,13 @@ import { generateText } from "ai";
 import { MODELS } from "./_models";
 import { PAPER_SUMMARY_CREDITS } from "../../credits";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/api-client";
+import { captureEvent } from "../../lib/posthog";
 // Paper Summarization
-
-
-// const generateTextWithAnalytics = () => {
-//   send to posthog.
-//   then external action to semantic SemanticScholarAPIClient.
-//   add analytics on all vendors.
-//   idiot
-// }
 
 const SUMMARIZE_PAPER_PROMPT = (
   query: string,
   papers: string,
-  userSummarySettings: string
+  userSummarySettings: string,
 ) => `You are a paper summarizer. You are given a query and a list of papers. Summarize the papers in a way that answers the query. Make sure the answer is detailed and comprehensive.
   
   Query: ${query}
@@ -61,9 +54,9 @@ export const summarizePaperInternal = internalAction({
     const prompt = SUMMARIZE_PAPER_PROMPT(
       args.query,
       JSON.stringify(args.papers),
-      args.userSummarySettings
+      args.userSummarySettings,
     );
-    
+
     const result = await generateText({
       model: MODELS.PAPER_SUMMARY,
       prompt,
@@ -71,6 +64,13 @@ export const summarizePaperInternal = internalAction({
 
     await ctx.runMutation(internal.users.mutations.deductCredits, {
       amount: PAPER_SUMMARY_CREDITS,
+    });
+
+    // Track paper summarization event
+    await captureEvent(ctx, "paper_summarized", {
+      query: args.query,
+      paperCount: Array.isArray(args.papers) ? args.papers.length : 1,
+      creditsUsed: PAPER_SUMMARY_CREDITS,
     });
 
     const { text } = result;

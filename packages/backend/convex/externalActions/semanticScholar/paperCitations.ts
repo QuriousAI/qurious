@@ -6,6 +6,7 @@ import { ActionCache } from "@convex-dev/action-cache";
 import { components, internal } from "../../_generated/api";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/api-client";
 import { Paper } from "@workspace/semantic-scholar/src/types/paper";
+import { captureEvent } from "../../lib/posthog";
 
 const getPaperCitationsCache = new ActionCache(components.actionCache, {
   action:
@@ -21,16 +22,22 @@ export const getPaperCitations = action({
   },
   handler: async (
     ctx,
-    args
+    args,
   ): Promise<{
     data: {
       citingPaper: Paper;
     }[];
   }> => {
-    return await getPaperCitationsCache.fetch(ctx, {
+    const result = await getPaperCitationsCache.fetch(ctx, {
       paperId: args.paperId,
       fields: args.fields,
     });
+    await captureEvent(ctx, "semantic_scholar_action_get_paper_citations", {
+      paperId: args.paperId,
+      fieldsCount: args.fields.length,
+      citationsCount: result.data.length,
+    });
+    return result;
   },
 });
 
@@ -39,21 +46,34 @@ export const getPaperCitationsInternal = internalAction({
     paperId: v.string(),
     fields: v.array(v.string()),
   },
-  handler: async (_, args) => {
+  handler: async (ctx, args) => {
     const semanticScholar = new SemanticScholarAPIClient();
     const result = await semanticScholar.getPaperCitations({
       paperId: args.paperId,
       fields: args.fields,
     });
 
-    // client.capture({
-    //   distinctId: ctx.auth.getUserIdentity(),
-    //   event: "get_paper_citations",
-    //   properties: {...args}
-    // });
-    
+    if (result.isErr()) {
+      await captureEvent(
+        ctx,
+        "semantic_scholar_action_get_paper_citations_internal_failed",
+        {
+          paperId: args.paperId,
+          error: result.error,
+        },
+      );
+      throw new ConvexError(result.error);
+    }
 
-    if (result.isErr()) throw new ConvexError(result.error);
+    await captureEvent(
+      ctx,
+      "semantic_scholar_action_get_paper_citations_internal",
+      {
+        paperId: args.paperId,
+        fieldsCount: args.fields.length,
+        citationsCount: result.value.data.length,
+      },
+    );
 
     return result.value;
   },

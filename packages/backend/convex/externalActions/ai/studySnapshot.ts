@@ -7,6 +7,7 @@ import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { STUDY_SNAPSHOT_CREDITS } from "../../credits";
 import { MODELS } from "./_models";
+import { captureEvent } from "../../lib/posthog";
 
 const STUDY_SNAPSHOT_PROMPT = (abstract: string, fields: string[]) => `
 You're a tool for extracting specific details from research papers. You'll be given a paper abstract and asked to return the specified field. If you can't find a specific field in the abstract, return that field as null.
@@ -27,10 +28,17 @@ export const extractStudySnapshot = action({
     fields: v.array(v.string()),
   },
   handler: async (ctx, args): Promise<Record<string, string | null>> => {
-    return await studySnapshotCache.fetch(ctx, {
+    const result = await studySnapshotCache.fetch(ctx, {
       abstract: args.abstract,
       fields: args.fields,
     });
+    await captureEvent(ctx, "ai_action_extract_study_snapshot", {
+      abstractLength: args.abstract.length,
+      fieldsCount: args.fields.length,
+      fields: args.fields,
+      creditsUsed: STUDY_SNAPSHOT_CREDITS,
+    });
+    return result;
   },
 });
 
@@ -54,6 +62,15 @@ export const extractStudySnapshotInternal = internalAction({
     });
 
     const { object } = result;
+
+    await captureEvent(ctx, "ai_action_extract_study_snapshot_internal", {
+      abstractLength: args.abstract.length,
+      fieldsCount: args.fields.length,
+      fields: args.fields,
+      creditsUsed: STUDY_SNAPSHOT_CREDITS,
+      model: MODELS.STUDY_SNAPSHOT,
+    });
+
     return object;
   },
 });
