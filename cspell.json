@@ -32,6 +32,22 @@
     "svix",
     "nextstepjs",
     "Agentic"
+    "dodopayments",
+    "standardwebhooks",
+    "svix",
+    "Svix",
+    "whsec",
+    "Segoe",
+    "Neue"
+    "Cmdk",
+    "cmdk",
+    "Agentic",
+    "nextstepjs",
+    "turbopack"
+    "dodopayments",
+    "posthog",
+    "standardwebhooks",
+    "svix"
   ],
   "ignorePaths": [
     "node_modules",

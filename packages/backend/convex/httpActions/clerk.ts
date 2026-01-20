@@ -58,6 +58,22 @@ export const clerkHandler = httpAction(async (ctx, request) => {
       });
       // throw new Error("supposed to send welcome email here with resend")
 
+      // Send welcome email
+      const primaryEmail =
+        event.data.email_addresses?.find(
+          (email) => email.id === event.data.primary_email_address_id,
+        )?.email_address || event.data.email_addresses?.[0]?.email_address;
+
+      if (primaryEmail) {
+        const userName =
+          `${event.data.first_name || ""} ${event.data.last_name || ""}`.trim() ||
+          "there";
+        await ctx.runMutation(internal.emails.sendWelcomeEmail, {
+          email: primaryEmail,
+          name: userName,
+        });
+      }
+
       break;
 
     case "user.updated":

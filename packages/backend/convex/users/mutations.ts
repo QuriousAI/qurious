@@ -135,10 +135,69 @@ export const addCredits = internalMutation({
     });
 
     ctx.db.patch(user._id, {
+    await ctx.db.patch(user._id, {
       credits: user.credits + args.amount,
     });
 
     return true;
+  },
+});
+
+// Add credits by DodoPayments customer ID (for webhook handlers)
+export const addCreditsByDodoCustomerId = internalMutation({
+  args: {
+    dodoCustomerId: v.string(),
+    amount: v.number(),
+  },
+  async handler(ctx, args) {
+    // Find user by dodoCustomerId using index
+    const user = await ctx.db
+      .query("users")
+      .withIndex("byDodoCustomerId", (q) =>
+        q.eq("dodoCustomerId", args.dodoCustomerId),
+      )
+      .first();
+
+    if (!user) {
+      console.warn(`User not found for dodoCustomerId: ${args.dodoCustomerId}`);
+      return false;
+    }
+
+    await ctx.db.patch(user._id, {
+      credits: user.credits + args.amount,
+    });
+
+    return true;
+  },
+});
+
+// Update user's dodoCustomerId (for webhook handlers)
+export const updateDodoCustomerId = internalMutation({
+  args: {
+    dodoCustomerId: v.string(),
+    customerEmail: v.string(),
+  },
+  async handler(ctx, args) {
+    // Try to find user by dodoCustomerId first
+    let user = await ctx.db
+      .query("users")
+      .withIndex("byDodoCustomerId", (q) =>
+        q.eq("dodoCustomerId", args.dodoCustomerId),
+      )
+      .first();
+
+    // If not found, we need to match by email or other identifier
+    // Since we don't store email in users table, we'll need to rely on
+    // the payment record or other matching logic
+    // For now, if user already has dodoCustomerId, we're done
+    if (user) {
+      return user._id;
+    }
+
+    // Note: In a production app, you might want to match users by email
+    // stored in the identity or payment records. For now, we'll link
+    // the dodoCustomerId when we can match it through other means.
+    return null;
   },
 });
 

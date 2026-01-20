@@ -22,12 +22,12 @@ import {
   Discord,
   Home,
   AppLogo,
-  Settings
+  Settings,
 } from "@workspace/design-system/icons";
 import { SignUpButton } from "@clerk/nextjs";
 import { Button } from "@workspace/design-system/components/button";
 import { APP_CONTENT } from "@workspace/design-system/content";
-import { SearchGroup, SidebarMenuItem_UserDropwn } from "./authenticated";
+import { SearchGroup, SidebarMenuItem_UserDropdown } from "./authenticated";
 import { Skeleton } from "@workspace/design-system/components/skeleton";
 
 const SearchGroupSkeleton = () => {
@@ -63,7 +63,7 @@ const SearchGroupSkeleton = () => {
 const FeaturesList = () => {
   return (
     <div className="flex flex-col gap-2 text-sm">
-      {APP_CONTENT.unautheticatedSidebar.features.map((feature, i) => (
+      {APP_CONTENT.unauthenticatedSidebar.features.map((feature, i) => (
         <div key={i} className="flex items-center gap-2">
           <BadgeCheck className="shrink-0 text-green-400" />
           <div>{feature}</div>
@@ -77,17 +77,17 @@ const AdForQurious = () => (
   <div className="flex flex-col justify-center gap-6 px-6 h-full">
     <div className="flex flex-col gap-2 items-center">
       <div className="text-4xl leading-tight font-bold">
-        {APP_CONTENT.unautheticatedSidebar.title}
+        {APP_CONTENT.unauthenticatedSidebar.title}
       </div>
       <div className="text-2xl leading-tight font-semibold">
-        {APP_CONTENT.unautheticatedSidebar.lead}
+        {APP_CONTENT.unauthenticatedSidebar.lead}
       </div>
     </div>
     <FeaturesList />
 
     <SignUpButton>
       <Button className="">
-        {APP_CONTENT.unautheticatedSidebar.signUpButton} <LogIn />
+        {APP_CONTENT.unauthenticatedSidebar.signUpButton} <LogIn />
       </Button>
     </SignUpButton>
   </div>
@@ -99,7 +99,7 @@ export function AppSidebar() {
       <SidebarHeader>
         <Authenticated>
           <SidebarMenu>
-            <SidebarMenuItem_UserDropwn />
+            <SidebarMenuItem_UserDropdown />
             <SidebarMenuItem>
               <SidebarMenuButton
                 className="rounded-sm px-4"
@@ -112,10 +112,7 @@ export function AppSidebar() {
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton
-                className="rounded-sm px-4"
-                asChild
-              >
+              <SidebarMenuButton className="rounded-sm px-4" asChild>
                 <Link href="/folders" className="flex font-medium">
                   <Folders /> Folders
                 </Link>

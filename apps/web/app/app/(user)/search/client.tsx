@@ -47,6 +47,7 @@ import { Button } from "@workspace/design-system/components/button";
 import { SORTING } from "../../../components/search-bar";
 import { useGetCurrentUserQuery } from "@/queries/users";
 import { PaperCard, SearchCard } from "@/components/cards";
+import { motion } from "motion/react";
 
 const PageSeparator = () => {
   return <Separator className="max-w-1/3 bg-muted self-center" />;
@@ -230,11 +231,30 @@ export const SearchResult = (props: {
           //   }))}
           // />
 
-          <div className="flex flex-col gap-2">
-            {suggestedQuestions.map((question) => (
-              <SearchCard questionText={question} />
+          <motion.div
+            className="flex flex-col gap-2"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.05,
+                },
+              },
+            }}
+          >
+            {suggestedQuestions.map((question, index) => (
+              <motion.div
+                key={index}
+                variants={{
+                  hidden: { opacity: 0, x: -10 },
+                  visible: { opacity: 1, x: 0 },
+                }}
+              >
+                <SearchCard questionText={question} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
 
@@ -286,11 +306,30 @@ export const SearchResult = (props: {
         ) : relevantPapersError ? (
           <GlobalErrorHandler error={relevantPapersError} />
         ) : (
-          <div className="flex flex-col gap-6">
+          <motion.div
+            className="flex flex-col gap-6"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.08,
+                },
+              },
+            }}
+          >
             {relevantPapers.map((paper, i) => (
-              <PaperCard paper={paper} resultIndex={i + 1} key={i} />
+              <motion.div
+                key={i}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+              >
+                <PaperCard paper={paper} resultIndex={i + 1} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
 

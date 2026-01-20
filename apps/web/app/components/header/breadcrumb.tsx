@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,6 +21,7 @@ import {
 } from "@workspace/design-system/icons";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { motion } from "motion/react";
 
 const SlashBreadcrumbSeparator = () => {
   return (
@@ -73,18 +76,30 @@ export const HeaderBreadcrumb = (props: { className: string }) => {
   return (
     <Breadcrumb className={props.className}>
       <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/">Qurious</BreadcrumbLink>
-        </BreadcrumbItem>
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+        >
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Qurious</BreadcrumbLink>
+          </BreadcrumbItem>
+        </motion.span>
 
         {breadcrumbItems.map(
           (item, i) =>
             item && (
-              <React.Fragment key={i}>
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, x: -5 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.2, delay: i * 0.05 }}
+                style={{ display: "inline-flex", alignItems: "center" }}
+              >
                 <SlashBreadcrumbSeparator />
                 {item}
-              </React.Fragment>
-            )
+              </motion.span>
+            ),
         )}
       </BreadcrumbList>
     </Breadcrumb>

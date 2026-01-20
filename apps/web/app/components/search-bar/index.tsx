@@ -24,6 +24,7 @@ import {
 import Link from "next/link";
 import { Separator } from "@workspace/design-system/components/separator";
 import { ButtonGroup } from "@workspace/design-system/components/button-group";
+import { motion } from "motion/react";
 
 export const FILTERS = {
   minimumCitations: 0,
@@ -135,30 +136,23 @@ export const SearchBar = (props: { q?: string; options?: typeof FILTERS }) => {
   };
 
   return (
-    <Card
-      className="w-full focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px] transition-[color,box-shadow] py-2"
-      id="tour-search-bar"
+    <motion.div
+      initial={{ opacity: 0, y: 10, width: "50%" }}
+      animate={{ opacity: 1, y: 0, width: "100%" }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="w-full"
     >
-      <CardContent className="flex flex-col gap-2 px-2">
-        <Textarea
-          placeholder="Search papers..."
-          className="min-h-fit resize-none placeholder:text-base md:text-base text-base border-none shadow-none focus-visible:ring-0 dark:bg-transparent"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
-      </CardContent>
-      <CardFooter className="flex justify-between px-2">
-        {/* Left Side */}
-        <div className="flex gap-2">
-          <SearchBarOptionsSheet
-            options={options}
-            setOptions={setOptions}
-            buttonLabel={
-              changedOptions(options) > 0
-                ? `Options (${changedOptions(options)})`
-                : "Options"
-            }
+      <Card
+        className="w-full focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px] transition-[color,box-shadow] py-2"
+        id="tour-search-bar"
+      >
+        <CardContent className="flex flex-col gap-2 px-2">
+          <Textarea
+            placeholder="Ask anything..."
+            className="min-h-fit resize-none placeholder:text-base placeholder:text-muted-foreground/75 md:text-base text-base border-none shadow-none focus-visible:ring-0 dark:bg-transparent"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <SearchToggleGroup />
         </div>
@@ -175,6 +169,37 @@ export const SearchBar = (props: { q?: string; options?: typeof FILTERS }) => {
         </Button>
       </CardFooter>
     </Card>
+        </CardContent>
+        <CardFooter className="flex justify-between px-2">
+          {/* Left Side */}
+          <div className="flex gap-2">
+            <SearchBarOptionsSheet
+              options={options}
+              setOptions={setOptions}
+              buttonLabel={
+                changedOptions(options) > 0
+                  ? `Options (${changedOptions(options)})`
+                  : "Options"
+              }
+            />
+            <SearchToggleGroup />
+          </div>
+
+          {/* Right Side */}
+          <motion.div whileHover={{ scale: 1.025 }} whileTap={{ scale: 0.95 }}>
+            <Button
+              className="hover:cursor-pointer"
+              onClick={handleButtonClick}
+              disabled={search.trim().length === 0}
+            >
+              <Link href={`/search?q=${search}`}>
+                <ChevronRight />
+              </Link>
+            </Button>
+          </motion.div>
+        </CardFooter>
+      </Card>
+    </motion.div>
   );
 };
 
