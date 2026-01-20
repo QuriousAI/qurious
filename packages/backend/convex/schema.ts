@@ -12,7 +12,11 @@ export default defineSchema({
     summarySettings: v.string(),
     clerkId: v.string(),
     credits: v.number(),
-  }).index("byClerkId", ["clerkId"]),
+    /** Dodo Payments customer ID */
+    dodoCustomerId: v.optional(v.string()),
+  })
+    .index("byClerkId", ["clerkId"])
+    .index("byDodoCustomerId", ["dodoCustomerId"]),
   folders: defineTable({
     name: v.string(),
     description: v.string(),
@@ -22,7 +26,7 @@ export default defineSchema({
     public: v.boolean(),
     type: v.union(
       v.literal("SYSTEM_CREATED_BOOKMARKS_FOLDER"),
-      v.literal("USER_CREATED_CUSTOM_FOLDER")
+      v.literal("USER_CREATED_CUSTOM_FOLDER"),
     ),
     userId: v.id("users"),
   }).index("byUserId", ["userId"]),
