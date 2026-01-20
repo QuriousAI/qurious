@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Discord Community
+    url: https://discord.gg/nQrrQThpBn
+    about: Join our Discord server for general questions and community discussions
+  - name: Twitter/X
+    url: https://twitter.com/QuriousAI_
+    about: Follow us on Twitter for updates and announcements
+  - name: Contributing Guide
+    url: https://github.com/QuriousAI/qurious/blob/main/CONTRIBUTING.md
+    about: Read our contributing guidelines before submitting issues or PRs
+  - name: Website
+    url: https://quriousai.xyz
+    about: Visit our official website

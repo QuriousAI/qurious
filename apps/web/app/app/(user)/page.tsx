@@ -1,12 +1,11 @@
+"use client";
+
 import { getRandomGroupedQuestions } from "@/utils/questions";
 import { SearchBar } from "@/components/search-bar";
 import { APP_CONTENT, APP_NAME } from "@workspace/design-system/content";
 // import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
 import { SearchCard } from "@/components/cards";
-
-export const metadata = {
-  title: "Home | Qurious",
-};
+import { motion } from "motion/react";
 
 export default function Home() {
   const genericTopics = getRandomGroupedQuestions();
@@ -14,46 +13,93 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center gap-6">
-      {/* {!hasOnboarded && <Onboarder />} */}
-
-      {/* <DownloadLogo /> */}
-
       <div className="flex w-full flex-col items-center justify-center gap-6 h-[75vh]">
-        <div className="flex flex-col items-center gap-4">
-          <div className="text-4xl font-medium">
+        <motion.div
+          className="flex flex-col items-center gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+          <motion.div
+            className="text-4xl font-medium"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
             {/* <Authenticated>
               {APP_CONTENT["/home"].lead(user.user?.firstName)}
             </Authenticated> */}
             {/* <Unauthenticated>{APP_CONTENT["/home"].lead()}</Unauthenticated>
             <AuthLoading>{APP_CONTENT["/home"].lead()}</AuthLoading> */}
             Welcome.
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         <SearchBar />
       </div>
 
       <div className="flex flex-col gap-4 items-center">
-        <div className="text-muted-foreground font-medium underline">
+        <motion.div
+          className="text-muted-foreground font-medium underline"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+        >
           {APP_CONTENT["/home"].trySearchingAbout}
-        </div>
+        </motion.div>
         {/* The generic topics */}
-        <div className="flex flex-col gap-12">
-          {genericTopics.map((topic) => (
-            <div className="flex flex-col gap-2">
+        <motion.div
+          className="flex flex-col gap-12"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.1,
+              },
+            },
+          }}
+        >
+          {genericTopics.map((topic, topicIndex) => (
+            <motion.div
+              key={topicIndex}
+              className="flex flex-col gap-2"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+            >
               <div className="font-semibold pl-2">{topic.topic}</div>
-              <div className="flex flex-col gap-2">
+              <motion.div
+                className="flex flex-col gap-2"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: {
+                    transition: {
+                      staggerChildren: 0.05,
+                    },
+                  },
+                }}
+              >
                 {topic.questions.map((question, i) => (
-                  <SearchCard
+                  <motion.div
                     key={i}
-                    questionEmoji={question.emoji}
-                    questionText={question.question}
-                  />
+                    variants={{
+                      hidden: { opacity: 0, x: -10 },
+                      visible: { opacity: 1, x: 0 },
+                    }}
+                  >
+                    <SearchCard
+                      questionEmoji={question.emoji}
+                      questionText={question.question}
+                    />
+                  </motion.div>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ import {
   AlertDescription,
   AlertTitle,
 } from "@workspace/design-system/components/alert";
+import { motion } from "motion/react";
 
 export const FoldersList = () => {
   const { data, isPending, error } = useGetCurrentUserFoldersQuery();
@@ -40,11 +41,30 @@ export const FoldersList = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <motion.div
+      className="flex flex-col gap-4 w-full"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        visible: {
+          transition: {
+            staggerChildren: 0.08,
+          },
+        },
+      }}
+    >
       {data.map((folder, i) => (
-        <FolderCard folder={folder} key={i} />
+        <motion.div
+          key={i}
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0 },
+          }}
+        >
+          <FolderCard folder={folder} />
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 

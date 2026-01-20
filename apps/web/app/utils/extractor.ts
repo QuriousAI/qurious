@@ -1,6 +1,6 @@
 import type { Paper } from "@workspace/semantic-scholar/src";
 
-export const extractFieldsfromPapers = (papers: Paper[] | undefined) => {
+export const extractFieldsFromPapers = (papers: Paper[] | undefined) => {
   console.log(papers);
 
   if (!papers) return;
@@ -29,6 +29,6 @@ export const extractFieldsfromPapers = (papers: Paper[] | undefined) => {
 
       return acc;
     },
-    [] as { abstract: string; tldr: string; title: string }[]
+    [] as { abstract: string; tldr: string; title: string }[],
   );
 };

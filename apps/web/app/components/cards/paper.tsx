@@ -17,10 +17,11 @@ import { CiteThisPaperDialog } from "@/components/dialogs";
 import { Button } from "@workspace/design-system/components/button";
 import { useGetPaperSnapshotQuery } from "@/queries";
 
-import { TableSnapshop } from "../paper-tabs/overview";
+import { TableSnapshot } from "../paper-tabs/overview";
 import { Separator } from "@workspace/design-system/components/separator";
 import { AskPaperDrawer } from "../drawers/ask-paper";
 import { Authenticated } from "convex/react";
+import { motion } from "motion/react";
 
 const FileIndexIcon = (props: { resultIndex: number }) => (
   <div className="relative flex items-center justify-center text-muted-foreground">
@@ -87,7 +88,11 @@ const PaperInformationFooter = ({ paper }: { paper: Paper }) => {
     ) {
       return (
         <Badge variant="secondary">
-          Fields: {paper.s2FieldsOfStudy.map((f) => f.category).filter(Boolean).join(", ")}
+          Fields:{" "}
+          {paper.s2FieldsOfStudy
+            .map((f) => f.category)
+            .filter(Boolean)
+            .join(", ")}
         </Badge>
       );
     }
@@ -96,23 +101,13 @@ const PaperInformationFooter = ({ paper }: { paper: Paper }) => {
 
   const renderPublicationVenue = () => {
     if (paper.venue) {
-      return (
-        <Badge variant="outline">
-          Venue: {paper.venue}
-        </Badge>
-      );
+      return <Badge variant="outline">Venue: {paper.venue}</Badge>;
     } else if (paper.publicationVenue && paper.publicationVenue.name) {
       return (
-        <Badge variant="outline">
-          Venue: {paper.publicationVenue.name}
-        </Badge>
+        <Badge variant="outline">Venue: {paper.publicationVenue.name}</Badge>
       );
     } else if (paper.journal && paper.journal.name) {
-      return (
-        <Badge variant="outline">
-          Journal: {paper.journal.name}
-        </Badge>
-      );
+      return <Badge variant="outline">Journal: {paper.journal.name}</Badge>;
     }
     return null;
   };
@@ -132,7 +127,9 @@ const PaperInformationFooter = ({ paper }: { paper: Paper }) => {
       return (
         <Badge variant="outline" title={authorNames}>
           Authors: {show}
-          {paper.authors.length > 3 ? `, +${paper.authors.length - 3} more` : ""}
+          {paper.authors.length > 3
+            ? `, +${paper.authors.length - 3} more`
+            : ""}
         </Badge>
       );
     }
@@ -147,11 +144,7 @@ const PaperInformationFooter = ({ paper }: { paper: Paper }) => {
         </Badge>
       );
     } else if (typeof paper.year === "number") {
-      return (
-        <Badge variant="ghost">
-          Year: {paper.year}
-        </Badge>
-      );
+      return <Badge variant="ghost">Year: {paper.year}</Badge>;
     }
     return null;
   };
@@ -168,18 +161,16 @@ const PaperInformationFooter = ({ paper }: { paper: Paper }) => {
     const influential =
       typeof paper.influentialCitationCount === "number" &&
       paper.influentialCitationCount > 0 ? (
-        <Badge variant="secondary">Influential: {paper.influentialCitationCount}</Badge>
+        <Badge variant="secondary">
+          Influential: {paper.influentialCitationCount}
+        </Badge>
       ) : null;
     return [citation, reference, influential].filter(Boolean);
   };
 
   const renderOpenAccess = () => {
     if (paper.isOpenAccess) {
-      return (
-        <Badge variant="success">
-          Open Access
-        </Badge>
-      );
+      return <Badge variant="success">Open Access</Badge>;
     }
     return null;
   };
@@ -245,17 +236,24 @@ const PaperCardFooter = (props: { paper: Paper }) => {
         <AskPaperDrawer />
       </div>
 
-      {paperSnapshot && <TableSnapshop data={paperSnapshot} />}
+      {paperSnapshot && <TableSnapshot data={paperSnapshot} />}
     </CardFooter>
   );
 };
 
 export const PaperCard = (props: { paper: Paper; resultIndex: number }) => {
   return (
-    <Card className="gap-2 py-2">
-      <PaperCardHeader resultIndex={props.resultIndex} paper={props.paper} />
-      <PaperCardContent paper={props.paper} />
-      <PaperCardFooter paper={props.paper} />
-    </Card>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      whileHover={{ y: -2 }}
+    >
+      <Card className="gap-2 py-2 transition-shadow hover:shadow-lg">
+        <PaperCardHeader resultIndex={props.resultIndex} paper={props.paper} />
+        <PaperCardContent paper={props.paper} />
+        <PaperCardFooter paper={props.paper} />
+      </Card>
+    </motion.div>
   );
 };
