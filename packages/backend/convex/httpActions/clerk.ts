@@ -5,7 +5,9 @@ import { internal } from "../_generated/api";
 // import { envVariables } from "../env";
 
 async function validateClerkWebhookRequest(req: Request) {
-  const clerkSvixWebhook = new SvixWebhook(process.env.CLERK_WEBHOOK_SECRET || "");
+  const clerkSvixWebhook = new SvixWebhook(
+    process.env.CLERK_WEBHOOK_SECRET || "",
+  );
 
   const payloadString = await req.text();
   const svixHeaders = {
@@ -19,7 +21,7 @@ async function validateClerkWebhookRequest(req: Request) {
   try {
     event = clerkSvixWebhook.verify(
       payloadString,
-      svixHeaders
+      svixHeaders,
     ) as ClerkWebhookEvent;
   } catch (error) {
     console.error("Error verifying clerk webhook event", error);
@@ -41,8 +43,23 @@ export const clerkHandler = httpAction(async (ctx, request) => {
       await ctx.runMutation(internal.users.mutations.createFromClerk, {
         data: event.data,
       });
-      // throw new Error("supposed to send welcome email here with resend")
-      
+
+      // Send welcome email
+      const primaryEmail =
+        event.data.email_addresses?.find(
+          (email) => email.id === event.data.primary_email_address_id,
+        )?.email_address || event.data.email_addresses?.[0]?.email_address;
+
+      if (primaryEmail) {
+        const userName =
+          `${event.data.first_name || ""} ${event.data.last_name || ""}`.trim() ||
+          "there";
+        await ctx.runMutation(internal.emails.sendWelcomeEmail, {
+          email: primaryEmail,
+          name: userName,
+        });
+      }
+
       break;
 
     case "user.updated":
