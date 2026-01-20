@@ -556,6 +556,9 @@ importers:
       "@convex-dev/action-cache":
         specifier: ^0.2.7
         version: 0.2.11(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))
+      "@dodopayments/convex":
+        specifier: ^0.2.8
+        version: 0.2.8(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(zod@3.25.76)
       "@posthog/ai":
         specifier: ^6.4.3
         version: 6.4.3(@opentelemetry/api@1.9.0)(posthog-node@5.10.0)(ws@8.18.3)
@@ -2383,6 +2386,23 @@ packages:
       }
     engines: { node: ">= 0.10.4" }
     hasBin: true
+
+  "@dodopayments/convex@0.2.8":
+    resolution:
+      {
+        integrity: sha512-zolKt8U45/De6WxdKpaG7TaIX/8YUdlJDcMcg0WoXgG9I++oQN8X0i9DB5IcV7fVJ/6iFM/MpMOrSPylk23Gtw==,
+      }
+    peerDependencies:
+      convex: ^1.26.0
+      zod: ^3.25.0 || ^4.0.0
+
+  "@dodopayments/core@0.3.8":
+    resolution:
+      {
+        integrity: sha512-Klynu56uAwDNv8vSMxtSnDby+pBjK9W6860d0pWY8kkYdq9SyBJiW64vf/3kVRmd5RZoaHe8x0dS5QEyFMgdLw==,
+      }
+    peerDependencies:
+      zod: ^3.25.0 || ^4.0.0
 
   "@edge-runtime/format@2.2.1":
     resolution:
@@ -6962,6 +6982,32 @@ packages:
       }
     hasBin: true
     peerDependencies:
+  "@vercel/backends@0.0.22":
+    resolution:
+      {
+        integrity: sha512-O+HmKvFkvWbTG7ESN8vOfzBMzjfKdg8qP7/qqqsCK0IqtuihlVOkLRM9Smb5pAgk/QrlTfsBM6fjhneBNcHXtQ==,
+      }
+
+  "@vercel/blob@1.0.2":
+    resolution:
+      {
+        integrity: sha512-Im/KeFH4oPx7UsM+QiteimnE07bIUD7JK6CBafI9Z0jRFogaialTBMiZj8EKk/30ctUYsrpIIyP9iIY1YxWnUQ==,
+      }
+    engines: { node: ">=16.14" }
+
+  "@vercel/build-utils@13.2.10":
+    resolution:
+      {
+        integrity: sha512-f0MlQO0OBxeRLiPaAfn6vLNKLLiCDQcIj6yZ03YafDhLhUWkhwSd0Q/ovYwoft14cALlyYLkqwOYzOiyeQu9tg==,
+      }
+
+  "@vercel/cervel@0.0.9":
+    resolution:
+      {
+        integrity: sha512-dlZZA/fCaz2cz7aOa8+g8b2T2QbLyxXEfqXvPBabR8YRDDL2AMVUfSeGqm5lFd90QpojqZSdtC7qw3vZuSfINQ==,
+      }
+    hasBin: true
+    peerDependencies:
       typescript: ^4.0.0 || ^5.0.0
 
   "@vercel/detect-agent@1.0.0":
@@ -7009,6 +7055,56 @@ packages:
       }
 
   "@vercel/gatsby-plugin-vercel-builder@2.0.121":
+    resolution:
+      {
+        integrity: sha512-DD6+LCgfZl362i3YrUNeqESKH9m9lt0hOV25pzIYHH9TTIA9iXp/1rGJyLXYzpjzEv+70wMYrr0Rms6W8pKGEg==,
+      }
+
+  "@vercel/go@3.3.1":
+    resolution:
+      {
+        integrity: sha512-vRFeVsaNKJaf0tgferWz6ULMsI950hDkw69WQg0x3MxuQMRQo1wMOO38TayMeU76ZEgHTchxWhbaPmguslZgZA==,
+      }
+
+  "@vercel/h3@0.1.30":
+    resolution:
+      {
+        integrity: sha512-UcWy1OguM8tSx3F607hfEJ+LhP6ww89NgXxNlWbuU+zG0b9j+u2ZDmw2+vrLfZqV/WcltRhoAlnefy6u5vw/Bg==,
+      }
+
+  "@vercel/hono@0.2.24":
+    resolution:
+      {
+        integrity: sha512-lFBWS2oa/nlVm0ha4qKAyXxKt5vwjPOQD3calL7CsYndB6a9TYb2cCYobXkbIyYcvAfuD3cVKeDXufpWq2AaFQ==,
+      }
+
+  "@vercel/hydrogen@1.3.5":
+    resolution:
+      {
+        integrity: sha512-7EE6yVKcCnjMb1io9y069GkLyGyIzRbW3Krm3Q7EEfJ3P46h9xe9v/O5UhBoPrwtqDUHxmDngZp9YyfgY8IITA==,
+      }
+
+  "@vercel/introspection@0.0.9":
+    resolution:
+      {
+        integrity: sha512-JWaKUpnDwOKEZldQK82HRufo1o+XYK/RIUoOZSzWWFCYnyx6Ve5wR2BkZzRx6aJPx+MGNEx2HWDu+JI5X2BTKQ==,
+      }
+
+  "@vercel/koa@0.1.4":
+    resolution:
+      {
+        integrity: sha512-5bMAPoeTB2G73fv2HO0WMykylYkKEGzKwbMuhbt6jv7Rkmzjk1Hf6AtQ0zchb2WuhcvlxI51MHu5SHUI12nFoQ==,
+      }
+
+  "@vercel/nestjs@0.2.25":
+    resolution:
+      {
+        integrity: sha512-o5Cu8GFvcGLpEJDXeJ7KSdNjxca3KHGGafHft3UkoLPMrIpY/RAynr7OJtyJkNQWy/WGJCfnF2r+ppwtSdoTTQ==,
+      }
+
+  "@vercel/next@4.15.15":
+    resolution:
+      {
     resolution:
       {
         integrity: sha512-DD6+LCgfZl362i3YrUNeqESKH9m9lt0hOV25pzIYHH9TTIA9iXp/1rGJyLXYzpjzEv+70wMYrr0Rms6W8pKGEg==,
@@ -9473,6 +9569,13 @@ packages:
       {
         integrity: sha512-ATRqZUvbJ9JnJd0GPdy9+fy3K3Hg+19pnnmVGgIiiNiHUIYkh0N1/68HlKsA7c7cx1uGr879moZgCaRd9RISpw==,
       }
+
+  dodopayments@2.14.3:
+    resolution:
+      {
+        integrity: sha512-WJ0bpTgoNLeMIwysc2hpKE+Gs723AMVt8SGVy9/UC2auhvHB0l4cXCYcPjfhplPugQQUcwrwu2EwtpiK4/9x2Q==,
+      }
+    hasBin: true
 
   dom-accessibility-api@0.5.16:
     resolution:
@@ -19772,6 +19875,18 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  "@dodopayments/convex@0.2.8(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(zod@3.25.76)":
+    dependencies:
+      "@dodopayments/core": 0.3.8(zod@3.25.76)
+      convex: 1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+      zod: 3.25.76
+
+  "@dodopayments/core@0.3.8(zod@3.25.76)":
+    dependencies:
+      dodopayments: 2.14.3
+      standardwebhooks: 1.0.0
+      zod: 3.25.76
+
   "@edge-runtime/format@2.2.1": {}
 
   "@edge-runtime/node-utils@2.3.0": {}
@@ -21961,6 +22076,40 @@ snapshots:
   "@remirror/core-constants@3.0.0": {}
 
   "@rolldown/binding-android-arm64@1.0.0-beta.59":
+    optional: true
+
+  "@rolldown/binding-darwin-arm64@1.0.0-beta.59":
+    optional: true
+
+  "@rolldown/binding-darwin-x64@1.0.0-beta.59":
+    optional: true
+
+  "@rolldown/binding-freebsd-x64@1.0.0-beta.59":
+    optional: true
+
+  "@rolldown/binding-linux-arm-gnueabihf@1.0.0-beta.59":
+    optional: true
+
+  "@rolldown/binding-linux-arm64-gnu@1.0.0-beta.59":
+    optional: true
+
+  "@rolldown/binding-linux-arm64-musl@1.0.0-beta.59":
+    optional: true
+
+  "@rolldown/binding-linux-x64-gnu@1.0.0-beta.59":
+    optional: true
+
+  "@rolldown/binding-linux-x64-musl@1.0.0-beta.59":
+    optional: true
+
+  "@rolldown/binding-openharmony-arm64@1.0.0-beta.59":
+    optional: true
+
+  "@rolldown/binding-wasm32-wasi@1.0.0-beta.59":
+    dependencies:
+      "@napi-rs/wasm-runtime": 1.1.1
+    optional: true
+
     optional: true
 
   "@rolldown/binding-darwin-arm64@1.0.0-beta.59":
@@ -24753,6 +24902,10 @@ snapshots:
       node-fetch: 2.7.0
     transitivePeerDependencies:
       - encoding
+
+  dodopayments@2.14.3:
+    dependencies:
+      standardwebhooks: 1.0.0
 
   dom-accessibility-api@0.5.16: {}
 

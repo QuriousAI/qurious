@@ -25,6 +25,10 @@
     "Agentic",
     "nextstepjs",
     "turbopack"
+    "dodopayments",
+    "posthog",
+    "standardwebhooks",
+    "svix"
   ],
   "ignorePaths": [
     "node_modules",
