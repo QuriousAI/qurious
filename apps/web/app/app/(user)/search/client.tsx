@@ -19,7 +19,7 @@ import {
   Text,
 } from "@workspace/design-system/icons";
 import Markdown from "react-markdown";
-import { extractFieldsfromPapers } from "@/utils/extractor";
+import { extractFieldsFromPapers } from "@/utils/extractor";
 import { Heading } from "../../../components/global-heading";
 import { Skeleton } from "@workspace/design-system/components/skeleton";
 import { GlobalErrorHandler } from "../../../components/global-error";
@@ -47,6 +47,7 @@ import { Button } from "@workspace/design-system/components/button";
 import { SORTING } from "../../../components/search-bar";
 import { useGetCurrentUserQuery } from "@/queries/users";
 import { PaperCard, SearchCard } from "@/components/cards";
+import { motion } from "motion/react";
 
 const PageSeparator = () => {
   return <Separator className="max-w-1/3 bg-muted self-center" />;
@@ -139,7 +140,7 @@ export const SearchResult = (props: {
     error: summaryError,
   } = useSummarizePaperQuery({
     query: props.q,
-    // extractedPapers: extractFieldsfromPapers(relevantPapers),
+    // extractedPapers: extractFieldsFromPapers(relevantPapers),
     papers: relevantPapers,
     enabled: !!relevantPapers,
     userSummarySettings: user?.summarySettings || "",
@@ -162,17 +163,17 @@ export const SearchResult = (props: {
     if (sortBy === "relevance") return relevantPapers;
     if (sortBy === "citationCount")
       return relevantPapers?.sort(
-        (a, b) => b?.citationCount - a?.citationCount
+        (a, b) => b?.citationCount - a?.citationCount,
       );
     if (sortBy === "date")
       return relevantPapers?.sort(
         (a, b) =>
           new Date(b.publicationDate).getTime() -
-          new Date(a.publicationDate).getTime()
+          new Date(a.publicationDate).getTime(),
       );
-    if (sortBy === "influencialCitationCount")
+    if (sortBy === "influentialCitationCount")
       return relevantPapers?.sort(
-        (a, b) => b?.influentialCitationCount - a?.influentialCitationCount
+        (a, b) => b?.influentialCitationCount - a?.influentialCitationCount,
       );
     return relevantPapers;
   }, [relevantPapers, sortBy]);
@@ -230,17 +231,36 @@ export const SearchResult = (props: {
           //   }))}
           // />
 
-          <div className="flex flex-col gap-2">
-            {suggestedQuestions.map((question) => (
-              <SearchCard questionText={question} />
+          <motion.div
+            className="flex flex-col gap-2"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.05,
+                },
+              },
+            }}
+          >
+            {suggestedQuestions.map((question, index) => (
+              <motion.div
+                key={index}
+                variants={{
+                  hidden: { opacity: 0, x: -10 },
+                  visible: { opacity: 1, x: 0 },
+                }}
+              >
+                <SearchCard questionText={question} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
 
       <PageSeparator />
 
-      <div className="flex flex-col gap-2" id="tour-relavant-papers">
+      <div className="flex flex-col gap-2" id="tour-relevant-papers">
         <Heading
           heading="Relevant Papers"
           icon={<Files />}
@@ -286,11 +306,30 @@ export const SearchResult = (props: {
         ) : relevantPapersError ? (
           <GlobalErrorHandler error={relevantPapersError} />
         ) : (
-          <div className="flex flex-col gap-6">
+          <motion.div
+            className="flex flex-col gap-6"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.08,
+                },
+              },
+            }}
+          >
             {relevantPapers.map((paper, i) => (
-              <PaperCard paper={paper} resultIndex={i + 1} key={i} />
+              <motion.div
+                key={i}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+              >
+                <PaperCard paper={paper} resultIndex={i + 1} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
 

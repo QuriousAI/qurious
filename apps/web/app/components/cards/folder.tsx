@@ -9,7 +9,10 @@ import {
   CardContent,
   CardFooter,
 } from "@workspace/design-system/components/card";
-import { Dialog, DialogTrigger } from "@workspace/design-system/components/dialog";
+import {
+  Dialog,
+  DialogTrigger,
+} from "@workspace/design-system/components/dialog";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -30,6 +33,7 @@ import { Doc } from "@workspace/backend/_generated/dataModel";
 import { EditFolderDialogContent } from "@/components/dialogs/folder/edit";
 import { Separator } from "@workspace/design-system/components/separator";
 import { InformationTooltip } from "@/components/information-tooltip";
+import { motion } from "motion/react";
 
 {
   /*
@@ -40,7 +44,7 @@ import { InformationTooltip } from "@/components/information-tooltip";
     because that's what the fuck the shadcn/ui docs recommend.
 
     basically you need to put the dialog as the parent, then the dropdown menu inside the dialog in order to render the dialog where the dropdown menu button is clicked.
-    then programatically set the content of the dialog based on the selected option.
+    then programmatically set the content of the dialog based on the selected option.
     
     man, i sure i wished there was a bullet in my head at this point!
     
@@ -109,40 +113,47 @@ const OptionsDialogWithDropDown = (props: { folder: Doc<"folders"> }) => {
 
 export const FolderCard = (props: { folder: Doc<"folders"> }) => {
   return (
-    <Card className="gap-2 py-4">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-3 font-semibold">
-          <Folder className="text-muted-foreground size-5" />
-          <div className="flex text-xl items-center gap-2">
-            <Link
-              className="underline-offset-4 hover:underline"
-              href={`/folders/${props.folder._id}`}
-            >
-              {props.folder.name}
-            </Link>
-            {props.folder.type === "SYSTEM_CREATED_BOOKMARKS_FOLDER" && (
-              <InformationTooltip content="This is a system created folder for your bookmarks. You're free to edit or delete it." />
-            )}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      whileHover={{ y: -2 }}
+    >
+      <Card className="gap-2 py-4 transition-shadow hover:shadow-lg">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-3 font-semibold">
+            <Folder className="text-muted-foreground size-5" />
+            <div className="flex text-xl items-center gap-2">
+              <Link
+                className="underline-offset-4 hover:underline"
+                href={`/folders/${props.folder._id}`}
+              >
+                {props.folder.name}
+              </Link>
+              {props.folder.type === "SYSTEM_CREATED_BOOKMARKS_FOLDER" && (
+                <InformationTooltip content="This is a system created folder for your bookmarks. You're free to edit or delete it." />
+              )}
+            </div>
+          </CardTitle>
+        </CardHeader>
+
+        <CardContent className="relative">
+          <div className="bg-neutral-800 w-fit border-l-2 pl-2 pr-2">
+            {props.folder.description}
           </div>
-        </CardTitle>
-      </CardHeader>
+          <OptionsDialogWithDropDown folder={props.folder} />
+        </CardContent>
 
-      <CardContent className="relative">
-        <div className="bg-neutral-800 w-fit border-l-2 pl-2 pr-2">
-          {props.folder.description}
-        </div>
-        <OptionsDialogWithDropDown folder={props.folder} />
-      </CardContent>
-
-      <CardFooter>
-        <div className="">
-          Privacy: {props.folder.public ? "Public" : "Private"}
-        </div>
-        <Dot className="text-muted-foreground" />
-        <div className="">{props.folder.paperExternalIds.length} papers</div>
-        <Dot className="text-muted-foreground" />
-        <div className="">{props.folder.searchIds.length} searches</div>
-      </CardFooter>
-    </Card>
+        <CardFooter>
+          <div className="">
+            Privacy: {props.folder.public ? "Public" : "Private"}
+          </div>
+          <Dot className="text-muted-foreground" />
+          <div className="">{props.folder.paperExternalIds.length} papers</div>
+          <Dot className="text-muted-foreground" />
+          <div className="">{props.folder.searchIds.length} searches</div>
+        </CardFooter>
+      </Card>
+    </motion.div>
   );
 };

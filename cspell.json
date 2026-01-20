@@ -20,6 +20,11 @@
     "pnpm",
     "convex",
     "clerk",
+    "Cmdk",
+    "cmdk",
+    "Agentic",
+    "nextstepjs",
+    "turbopack"
     "dodopayments",
     "posthog",
     "standardwebhooks",

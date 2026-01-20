@@ -21,7 +21,7 @@ export const APP_CONTENT = {
     },
     trySearchingAbout: "(╹ o╹) Try searching about...",
   },
-  unautheticatedSidebar: {
+  unauthenticatedSidebar: {
     title: "Join Qurious.",
     lead: "Supercharge your research workflow.",
     features: [
