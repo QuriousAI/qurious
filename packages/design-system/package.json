@@ -7,13 +7,22 @@
     "lint": "eslint ."
   },
   "exports": {
-    "./*": {
-      "types": "./src/*.tsx",
-      "default": "./src/*"
-    }
+    "./content": "./src/content/index.tsx",
+    "./font": "./src/font/index.tsx",
+    "./icons": "./src/icons/index.tsx",
+    "./*": "./src/*"
   },
   "typesVersions": {
     "*": {
+      "content": [
+        "./src/content/index.tsx"
+      ],
+      "font": [
+        "./src/font/index.tsx"
+      ],
+      "icons": [
+        "./src/icons/index.tsx"
+      ],
       "*": [
         "./src/*"
       ]
