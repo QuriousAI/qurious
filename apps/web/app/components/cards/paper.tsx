@@ -17,7 +17,7 @@ import { CiteThisPaperDialog } from "@/components/dialogs";
 import { Button } from "@workspace/design-system/components/button";
 import { useGetPaperSnapshotQuery } from "@/queries";
 
-import { TableSnapshot } from "../paper-tabs/overview";
+import { TableSnapshot } from "@/app/(user)/papers/[id]/client";
 import { Separator } from "@workspace/design-system/components/separator";
 import { AskPaperDrawer } from "../drawers/ask-paper";
 import { Authenticated } from "convex/react";
