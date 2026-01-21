@@ -52,7 +52,15 @@ export {
   AlertCircleIcon,
   Text,
   Files,
-  Bot
+  Bot,
+  Camera,
+  Coins,
+  ExternalLink,
+  MessageSquare,
+  Monitor,
+  Sparkles,
+  Type,
+  Webhook,
 } from "lucide-react";
 
 export { SiDiscord as Discord } from "@icons-pack/react-simple-icons";
