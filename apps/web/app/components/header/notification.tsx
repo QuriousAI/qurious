@@ -7,12 +7,9 @@ import {
 } from "@workspace/design-system/components/tooltip";
 import { CircleHelp } from "@workspace/design-system/icons";
 
-export const Notifcation = () => {
-    throw new Error("notifcation module not initialised")
-
-
-
-    
+// TODO: Implement notification functionality
+// Note: This component is currently a placeholder for future notification features
+export const Notification = () => {
   return (
     <Button
       size="icon"
@@ -22,7 +19,7 @@ export const Notifcation = () => {
     >
       <Tooltip>
         <TooltipTrigger>
-          <Link target="_blank" href="http://localhost:3000">
+          <Link target="_blank" href="/help">
             <CircleHelp className="size-5" />
           </Link>
         </TooltipTrigger>

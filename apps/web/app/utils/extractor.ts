@@ -1,8 +1,6 @@
 import type { Paper } from "@workspace/semantic-scholar/src";
 
 export const extractFieldsFromPapers = (papers: Paper[] | undefined) => {
-  console.log(papers);
-
   if (!papers) return;
 
   return papers.reduce(
@@ -13,10 +11,8 @@ export const extractFieldsFromPapers = (papers: Paper[] | undefined) => {
         obj["abstract"] = paper.abstract;
       }
 
-      if (paper.tldr) {
-        if (paper.tldr.text) {
-          obj["tldr"] = paper.tldr.text;
-        }
+      if (paper.tldr?.text) {
+        obj["tldr"] = paper.tldr.text;
       }
 
       if (obj.abstract || obj.tldr) {

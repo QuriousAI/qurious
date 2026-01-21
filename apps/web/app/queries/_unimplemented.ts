@@ -1,17 +1,15 @@
-import { api } from "@workspace/backend/_generated/api";
-import { useQuery } from "@tanstack/react-query";
-import { convexAction, convexQuery } from "@convex-dev/react-query";
-
 // Queries not yet implemented properly on the backend.
+// These are placeholders for future functionality.
 
 // Payment Stuff
-
-export const useGetSubscriptionQuery = () =>
-  useQuery({
-    ...convexQuery(api.subscriptions.queries.getSubscription, {}),
-  });
+// TODO: Implement subscription queries once backend is ready
+// export const useGetSubscriptionQuery = () =>
+//   useQuery({
+//     ...convexQuery(api.subscriptions.queries.getSubscription, {}),
+//   });
 
 // Parse PDF
+// TODO: Implement PDF parsing once backend is ready
 // export const useParsePDFQuery = (pdfUrl: string) =>
 //   useQuery({
 //     ...convexAction(api.myActions.downloadPDF.parsePDF, { pdfUrl }),

@@ -14,7 +14,9 @@ import {
 } from "@workspace/design-system/components/table";
 import { AlertCircle } from "@workspace/design-system/icons";
 
-export const TableSnapshot = (props: { data: any }) => {
+export const TableSnapshot = (props: {
+  data: Record<string, string | null | undefined>;
+}) => {
   return (
     <Table>
       <TableHeader>
@@ -35,7 +37,7 @@ export const TableSnapshot = (props: { data: any }) => {
               <TableCell className="font-medium">{label}</TableCell>
               <TableCell>
                 {value ? (
-                  <div className="text-wrap">{value as string}</div>
+                  <div className="text-wrap">{String(value)}</div>
                 ) : (
                   <div className="text-destructive border rounded-md bg-card w-fit px-2 flex items-center gap-1">
                     <AlertCircle className="size-4" /> Couldn't Extract

@@ -32,14 +32,13 @@ export async function generateMetadata(props: Props) {
           "referenceCount",
           "externalIds",
         ],
-      }
+      },
     );
 
     return {
       title: `${paper.title} | Paper | Qurious`,
     };
-  } catch (e) {
-    console.error({ e });
+  } catch {
     return { title: "Paper | Qurious" };
   }
 }

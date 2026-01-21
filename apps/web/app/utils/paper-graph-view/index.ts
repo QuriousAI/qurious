@@ -1,14 +1,14 @@
 import { Paper } from "@workspace/semantic-scholar/src";
 
 const sortPapersByCitationCount = (papers: Paper[]) =>
-  papers.sort((a, b) => (b.citationCount || 0) - (a.citationCount || 0));
+  [...papers].sort((a, b) => (b.citationCount || 0) - (a.citationCount || 0));
 
 const addNodesAndCreateLinks = (
   nodes: Node[],
   links: Link[],
   papers: Paper[],
   sourcePaperId: string,
-  category: string
+  category: string,
 ) => {
   for (const paper of papers) {
     nodes.push({
@@ -41,15 +41,15 @@ type Link = {
 export const constructGraphFromPaper = (
   paper: Paper,
   referenceCount: number,
-  citationCount: number
+  citationCount: number,
 ) => {
   const references = sortPapersByCitationCount(paper.references || []).slice(
     0,
-    referenceCount
+    referenceCount,
   );
   const citations = sortPapersByCitationCount(paper.citations || []).slice(
     0,
-    citationCount
+    citationCount,
   );
 
   const nodes: Node[] = [];
@@ -66,8 +66,6 @@ export const constructGraphFromPaper = (
   addNodesAndCreateLinks(nodes, links, citations, paper.paperId, "Citations");
 
   const graph = { nodes, links };
-
-  console.log({ graph });
 
   return graph;
 };

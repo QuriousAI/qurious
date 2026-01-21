@@ -19,7 +19,6 @@ import {
   Text,
 } from "@workspace/design-system/icons";
 import Markdown from "react-markdown";
-import { extractFieldsFromPapers } from "@/utils/extractor";
 import { Heading } from "../../../components/global-heading";
 import { Skeleton } from "@workspace/design-system/components/skeleton";
 import { GlobalErrorHandler } from "../../../components/global-error";
@@ -130,17 +129,12 @@ export const SearchResult = (props: {
 
   const { data: user, isPending } = useGetCurrentUserQuery();
 
-  if (isPending) {
-    let msg = "Getting user details...";
-  }
-
   const {
     data: summaryData,
     isPending: summaryIsPending,
     error: summaryError,
   } = useSummarizePaperQuery({
     query: props.q,
-    // extractedPapers: extractFieldsFromPapers(relevantPapers),
     papers: relevantPapers,
     enabled: !!relevantPapers,
     userSummarySettings: user?.summarySettings || "",
@@ -160,22 +154,29 @@ export const SearchResult = (props: {
   const [sortBy, setSortBy] = useState<(typeof SORTING)[number]>("relevance");
 
   const sortedPapers = useMemo(() => {
-    if (sortBy === "relevance") return relevantPapers;
+    if (!relevantPapers) return relevantPapers;
+
+    // Create a copy to avoid mutating the original array
+    const papers = [...relevantPapers];
+
+    if (sortBy === "relevance") return papers;
     if (sortBy === "citationCount")
-      return relevantPapers?.sort(
-        (a, b) => b?.citationCount - a?.citationCount,
+      return papers.sort(
+        (a, b) => (b?.citationCount || 0) - (a?.citationCount || 0),
       );
     if (sortBy === "date")
-      return relevantPapers?.sort(
+      return papers.sort(
         (a, b) =>
-          new Date(b.publicationDate).getTime() -
-          new Date(a.publicationDate).getTime(),
+          new Date(b.publicationDate || 0).getTime() -
+          new Date(a.publicationDate || 0).getTime(),
       );
     if (sortBy === "influentialCitationCount")
-      return relevantPapers?.sort(
-        (a, b) => b?.influentialCitationCount - a?.influentialCitationCount,
+      return papers.sort(
+        (a, b) =>
+          (b?.influentialCitationCount || 0) -
+          (a?.influentialCitationCount || 0),
       );
-    return relevantPapers;
+    return papers;
   }, [relevantPapers, sortBy]);
 
   return (
@@ -269,7 +270,10 @@ export const SearchResult = (props: {
           actions={
             <div className="flex items-center gap-2">
               {/* Sorting Button */}
-              <Select value={sortBy}>
+              <Select
+                value={sortBy}
+                onValueChange={(value) => setSortBy(value as typeof sortBy)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Sort By" />
                 </SelectTrigger>
@@ -318,9 +322,9 @@ export const SearchResult = (props: {
               },
             }}
           >
-            {relevantPapers.map((paper, i) => (
+            {sortedPapers?.map((paper, i) => (
               <motion.div
-                key={i}
+                key={paper.paperId || i}
                 variants={{
                   hidden: { opacity: 0, y: 20 },
                   visible: { opacity: 1, y: 0 },

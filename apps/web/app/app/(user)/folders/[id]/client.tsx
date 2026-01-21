@@ -22,30 +22,34 @@ import Tiptap from "../../../../components/tiptap";
 import { Heading } from "../../../../components/global-heading";
 import { Folder, NotebookPen, User } from "@workspace/design-system/icons";
 import { motion } from "motion/react";
+import { Doc } from "@workspace/backend/_generated/dataModel";
 
-const PapersTab = (props) => {
+/** Common paper fields used across multiple components */
+const PAPER_LIST_FIELDS = [
+  "paperId",
+  "title",
+  "authors",
+  "abstract",
+  "tldr",
+  "year",
+  "publicationDate",
+  "citationCount",
+  "isOpenAccess",
+  "openAccessPdf",
+  "journal",
+  "fieldsOfStudy",
+  "influentialCitationCount",
+  "publicationTypes",
+] as const;
+
+const PapersTab = (props: { folder: Doc<"folders"> }) => {
   const {
     data: papers,
     isPending,
     error,
   } = useGetMultiplePapersDetailsQuery({
     paperIds: props.folder.paperExternalIds,
-    fields: [
-      "paperId",
-      "title",
-      "authors",
-      "abstract",
-      "tldr",
-      "year",
-      "publicationDate",
-      "citationCount",
-      "isOpenAccess",
-      "openAccessPdf",
-      "journal",
-      "fieldsOfStudy",
-      "influentialCitationCount",
-      "publicationTypes",
-    ],
+    fields: [...PAPER_LIST_FIELDS],
   });
 
   if (isPending) {
@@ -88,7 +92,7 @@ const PapersTab = (props) => {
         >
           {papers.map((paper, i) => (
             <motion.div
-              key={i}
+              key={paper.paperId || i}
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0 },
@@ -103,7 +107,7 @@ const PapersTab = (props) => {
   );
 };
 
-const SearchesTab = (props) => {
+const SearchesTab = (props: { folder: Doc<"folders"> }) => {
   const {
     data: searches,
     isPending,
@@ -150,7 +154,7 @@ const SearchesTab = (props) => {
         >
           {searches.map((search, index) => (
             <motion.div
-              key={index}
+              key={search._id || index}
               variants={{
                 hidden: { opacity: 0, x: -10 },
                 visible: { opacity: 1, x: 0 },
@@ -179,7 +183,6 @@ export function FolderClientComponent(props: { folderId: string }) {
   }
 
   if (error) {
-    console.log({ error });
     if (error.message === "Folder not found") {
       return <div>Folder not found</div>;
     }

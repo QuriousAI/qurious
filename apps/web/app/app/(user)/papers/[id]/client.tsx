@@ -26,77 +26,72 @@ const PaperHero = (props: { paper: Paper }) => {
   }
 
   return (
-      <div className="flex-col gap-6">
-        {/* Left Side: Paper Details */}
-        <div className="flex flex-col gap-2">
-          <div className="text-2xl font-bold">{props.paper.title}</div>
-          <div className="w-lg text-sm text-neutral-400">
-            {props.paper.authors && props.paper.authors.length > 0 ? (
-              <span>
-                {props.paper.authors
-                  .map((author, i) => (
-                    <span key={author.authorId || author.name}>
-                      {author.name}
-                      {i < props.paper.authors.length - 1 ? ", " : ""}
-                    </span>
-                  ))}
-              </span>
-            ) : (
-              <span>No authors listed</span>
-            )}
-          </div>
-          <div className="text-sm text-neutral-400">
-            {props.paper.publicationDate
-              ? `Published on ${props.paper.publicationDate}`
-              : `Published in ${props.paper.year}`}
-          </div>
-
-          {props.paper.tldr?.text && (
-            <div className="text-sm">TLDR: {props.paper.tldr.text}</div>
+    <div className="flex-col gap-6">
+      {/* Left Side: Paper Details */}
+      <div className="flex flex-col gap-2">
+        <div className="text-2xl font-bold">{props.paper.title}</div>
+        <div className="w-lg text-sm text-neutral-400">
+          {props.paper.authors && props.paper.authors.length > 0 ? (
+            <span>
+              {props.paper.authors.map((author, i) => (
+                <span key={author.authorId || author.name}>
+                  {author.name}
+                  {i < props.paper.authors.length - 1 ? ", " : ""}
+                </span>
+              ))}
+            </span>
+          ) : (
+            <span>No authors listed</span>
           )}
+        </div>
+        <div className="text-sm text-neutral-400">
+          {props.paper.publicationDate
+            ? `Published on ${props.paper.publicationDate}`
+            : `Published in ${props.paper.year}`}
+        </div>
 
-<div className="flex flex-wrap gap-2 text-sm">
+        {props.paper.tldr?.text && (
+          <div className="text-sm">TLDR: {props.paper.tldr.text}</div>
+        )}
+
+        <div className="flex flex-wrap gap-2 text-sm">
           <span className="">{props.paper.citationCount} Citations</span> {"|"}
-          <span className="text-yellow-500">{props.paper.influentialCitationCount} Influential Citations</span> {"|"}
+          <span className="text-yellow-500">
+            {props.paper.influentialCitationCount} Influential Citations
+          </span>{" "}
+          {"|"}
           <span className="">{props.paper.referenceCount} References</span>
         </div>
 
-          {props.paper.externalIds &&
-            Object.keys(props.paper.externalIds).length > 0 && (
-              <div className="flex flex-col gap-2">
-                {/* <div className="text-sm font-semibold">External IDs:</div> */}
-                <div className="flex items-center gap-1 text-xs">
-                  {/* <span className="font-medium">Semantic Scholar:</span> */}
-                  <Link
-                    href={`https://www.semanticscholar.org/paper/${props.paper.paperId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:text-blue-700 underline"
-                  >
-                    View on Semantic Scholar ↗
-                  </Link>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {Object.entries(props.paper.externalIds).map(
-                    ([key, value]) => (
-                      <div
-                        key={key}
-                        className="flex items-center gap-1 text-sm"
-                      >
-                        <span className="font-medium">{key}:</span>
-                        <span className="text-muted-foreground">
-                          {value as string}
-                        </span>
-                      </div>
-                    )
-                  )}
-                </div>
+        {props.paper.externalIds &&
+          Object.keys(props.paper.externalIds).length > 0 && (
+            <div className="flex flex-col gap-2">
+              {/* <div className="text-sm font-semibold">External IDs:</div> */}
+              <div className="flex items-center gap-1 text-xs">
+                {/* <span className="font-medium">Semantic Scholar:</span> */}
+                <Link
+                  href={`https://www.semanticscholar.org/paper/${props.paper.paperId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:text-blue-700 underline"
+                >
+                  View on Semantic Scholar ↗
+                </Link>
               </div>
-            )}
-        </div>
-
-    
+              <div className="flex flex-wrap gap-2">
+                {Object.entries(props.paper.externalIds).map(([key, value]) => (
+                  <div key={key} className="flex items-center gap-1 text-sm">
+                    <span className="font-medium">{key}:</span>
+                    <span className="text-muted-foreground">
+                      {value as string}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
       </div>
+    </div>
   );
 };
 
@@ -110,10 +105,8 @@ const TabTriggers = [
 
 const PaperTabs = (props: { paper: Paper }) => {
   return (
-    
-      <Tabs defaultValue="overview" className="">
-        
-        <div className="relative rounded-sm overflow-x-scroll h-10 bg-muted">
+    <Tabs defaultValue="overview" className="">
+      <div className="relative rounded-sm overflow-x-scroll h-10 bg-muted">
         <TabsList className="gap-6 rounded-xs bg-transparent absolute flex flex-row justify-stretch w-full">
           {TabTriggers.map((tab) => (
             <TabsTrigger
@@ -125,27 +118,26 @@ const PaperTabs = (props: { paper: Paper }) => {
             </TabsTrigger>
           ))}
         </TabsList>
-        </div>
-        
-        <Separator />
-        <TabsContent value="overview">
-          <OverviewTabContent paper={props.paper} />
-        </TabsContent>
-        <TabsContent value="references">
-          <ReferencesTabContent paperId={props.paper.paperId} />
-        </TabsContent>
-        <TabsContent value="citations">
-          <CitationsTabContent paperId={props.paper.paperId} />
-        </TabsContent>
-        <TabsContent value="graph-view">
-          <GraphViewTabContent paperId={props.paper.paperId} />
-        </TabsContent>
-        <TabsContent value="recommended">
-          <RecommendedTabContent paperId={props.paper.paperId} />
-        </TabsContent>
-      </Tabs>
+      </div>
 
-);
+      <Separator />
+      <TabsContent value="overview">
+        <OverviewTabContent paper={props.paper} />
+      </TabsContent>
+      <TabsContent value="references">
+        <ReferencesTabContent paperId={props.paper.paperId} />
+      </TabsContent>
+      <TabsContent value="citations">
+        <CitationsTabContent paperId={props.paper.paperId} />
+      </TabsContent>
+      <TabsContent value="graph-view">
+        <GraphViewTabContent paperId={props.paper.paperId} />
+      </TabsContent>
+      <TabsContent value="recommended">
+        <RecommendedTabContent paperId={props.paper.paperId} />
+      </TabsContent>
+    </Tabs>
+  );
 };
 
 export const PaperComponent = (props: { id: string }) => {
@@ -162,7 +154,6 @@ export const PaperComponent = (props: { id: string }) => {
       "influentialCitationCount",
       "referenceCount",
       "paperId",
-      "referenceCount",
       "externalIds",
     ],
   });
@@ -175,7 +166,9 @@ export const PaperComponent = (props: { id: string }) => {
     return <div>Error: {error.message}</div>;
   }
 
-  console.log(data);
+  if (!data) {
+    return <div>Paper not found.</div>;
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -201,6 +194,6 @@ export const PaperComponent = (props: { id: string }) => {
         <AskPaperDrawer />
       </div> */}
       <PaperTabs paper={data} />
-    </ div>
+    </div>
   );
 };

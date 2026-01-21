@@ -105,8 +105,6 @@ export const getRelevantPapersInternal = internalAction({
       },
     );
 
-    console.log("length", result.value.total);
-
     return result.value;
   },
 });

@@ -39,7 +39,7 @@ export const RecommendedTabContent = (props: { paperId: string }) => {
   return (
     <div className="flex flex-col gap-4">
       {recommendations.recommendedPapers.map((paper, i) => (
-        <PaperCard paper={paper} resultIndex={i + 1} key={i} />
+        <PaperCard paper={paper} resultIndex={i + 1} key={paper.paperId || i} />
       ))}
     </div>
   );

@@ -1,13 +1,12 @@
 "use client";
 
-import ReactECharts from "echarts-for-react";
 import {
   useGetPaperCitationsQuery,
   useGetPaperDetailsQuery,
   useGetPaperReferencesQuery,
 } from "@/queries";
 import { constructGraphFromPaper } from "@/utils/paper-graph-view";
-import { AlertCircleIcon, Dot } from "@workspace/design-system/icons";
+import { AlertCircleIcon } from "@workspace/design-system/icons";
 
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
@@ -66,7 +65,7 @@ export default function GraphView({
         d3
           .forceLink(links)
           .id((d: any) => d.id)
-          .distance(100)
+          .distance(100),
       )
       .force("charge", d3.forceManyBody().strength(-1000))
       .force("center", d3.forceCenter(width / 2, height / 2));
@@ -104,7 +103,7 @@ export default function GraphView({
       .text((d) =>
         d.label.length > MAX_LABEL_LENGTH
           ? d.label.slice(0, MAX_LABEL_LENGTH) + "…"
-          : d.label
+          : d.label,
       )
       .attr("font-size", 10)
       .attr("dx", 0)
@@ -173,18 +172,18 @@ export const GraphViewTabContent = (props: { paperId: string }) => {
 
   const {
     data: citations,
-    isLoading: isCitsLoading,
-    error: citsError,
+    isLoading: isCitationsLoading,
+    error: citationsError,
   } = useGetPaperCitationsQuery({
     paperId: props.paperId,
     fields: ["title", "paperId", "citationCount"],
   });
 
-  if (isPaperLoading || isRefsLoading || isCitsLoading) {
+  if (isPaperLoading || isRefsLoading || isCitationsLoading) {
     return <div>Loading graph...</div>;
   }
 
-  const error = paperError || refsError || citsError;
+  const error = paperError || refsError || citationsError;
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -199,13 +198,15 @@ export const GraphViewTabContent = (props: { paperId: string }) => {
     citations: citations.data.map((e) => e.citingPaper),
   };
 
-  console.log(paper);
-
-  const referenceCount = 10;
-  const citationCount = 10;
+  const DEFAULT_REFERENCE_COUNT = 10;
+  const DEFAULT_CITATION_COUNT = 10;
 
   // Combine the paper with its references and citations
-  const graph = constructGraphFromPaper(paper, referenceCount, citationCount);
+  const graph = constructGraphFromPaper(
+    paper,
+    DEFAULT_REFERENCE_COUNT,
+    DEFAULT_CITATION_COUNT,
+  );
 
   return (
     <div className="flex flex-col gap-4">
