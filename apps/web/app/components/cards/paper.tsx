@@ -233,7 +233,7 @@ const PaperCardFooter = (props: { paper: Paper }) => {
           <FileText /> <span className="hidden">Extract Snapshot</span>
         </Button>
 
-        <AskPaperDrawer />
+        <AskPaperDrawer paper={props.paper} />
       </div>
 
       {paperSnapshot && <TableSnapshot data={paperSnapshot} />}
