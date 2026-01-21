@@ -21,6 +21,7 @@ import { Switch } from "@workspace/design-system/components/switch";
 import Tiptap from "../../../../components/tiptap";
 import { Heading } from "../../../../components/global-heading";
 import { Folder, NotebookPen, User } from "@workspace/design-system/icons";
+import { GlobalErrorHandler } from "../../../../components/global-error";
 import { motion } from "motion/react";
 import { Doc } from "@workspace/backend/_generated/dataModel";
 
@@ -65,9 +66,7 @@ const PapersTab = (props: { folder: Doc<"folders"> }) => {
     return (
       <div className="space-y-4">
         <h3 className="text-lg font-semibold">Papers in this folder</h3>
-        <div className="text-red-500">
-          Error loading papers: {error.message}
-        </div>
+        <GlobalErrorHandler error={error} />
       </div>
     );
   }
@@ -127,9 +126,7 @@ const SearchesTab = (props: { folder: Doc<"folders"> }) => {
     return (
       <div className="space-y-4">
         <h3 className="text-lg font-semibold">Searches in this folder</h3>
-        <div className="text-red-500">
-          Error loading searches: {error.message}
-        </div>
+        <GlobalErrorHandler error={error} />
       </div>
     );
   }
@@ -195,7 +192,7 @@ export function FolderClientComponent(props: { folderId: string }) {
       );
     }
 
-    return <div>Error: {error.message}</div>;
+    return <GlobalErrorHandler error={error} />;
   }
 
   return (

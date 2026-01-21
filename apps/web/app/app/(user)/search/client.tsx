@@ -224,7 +224,7 @@ export const SearchResult = (props: {
         {suggestedQuestionsIsPending ? (
           <Skeleton className="w-full h-12" />
         ) : suggestedQuestionsError ? (
-          <div>Error: {suggestedQuestionsError.message}</div>
+          <GlobalErrorHandler error={suggestedQuestionsError} />
         ) : (
           // <SearchCardList
           //   questions={suggestedQuestions.map((question) => ({

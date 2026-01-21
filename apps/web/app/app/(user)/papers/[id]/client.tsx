@@ -19,6 +19,7 @@ import { GraphViewTabContent } from "@/components/paper-tabs/graph-view";
 import { RecommendedTabContent } from "@/components/paper-tabs/recommended";
 import { OverviewTabContent } from "@/components/paper-tabs/overview";
 import { Badge } from "@workspace/design-system/components/badge";
+import { GlobalErrorHandler } from "@/components/global-error";
 
 const PaperHero = (props: { paper: Paper }) => {
   if (!props.paper.authors) {
@@ -163,7 +164,7 @@ export const PaperComponent = (props: { id: string }) => {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <GlobalErrorHandler error={error} />;
   }
 
   if (!data) {
