@@ -47,7 +47,8 @@
     "dodopayments",
     "posthog",
     "standardwebhooks",
-    "svix"
+    "svix",
+    "magicui"
   ],
   "ignorePaths": [
     "node_modules",

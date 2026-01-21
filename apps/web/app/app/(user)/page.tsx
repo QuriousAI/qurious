@@ -2,8 +2,6 @@
 
 import { getRandomGroupedQuestions } from "@/utils/questions";
 import { SearchBar } from "@/components/search-bar";
-import { APP_CONTENT, APP_NAME } from "@workspace/design-system/content";
-// import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
 import { SearchCard } from "@/components/cards";
 import { motion } from "motion/react";
 
@@ -14,25 +12,34 @@ export default function Home() {
   function getRandomGreeting() {
     const greetings = [
       "Ready to help. What's on your mind?",
-      "How can I assist you today?",
-      "Ask me anything. I'm here to help!",
+      "How can Qurious assist you today?",
+      "Ask anything. Help is ready!",
       "What would you like to explore today?",
-      "Your curiosity is my command.",
+      "Your curiosity drives discovery here.",
       "Looking for answers? Let's dive in.",
-      "How can I make your search easier?",
+      "How can your search be made easier?",
       "Hi! Need info or inspiration?",
       "Ready when you are. What's your question?",
-      "Here to assist—just type your query.",
-      "What knowledge can I unlock for you today?",
+      "What knowledge can be unlocked for you today?",
       "Let's find what you're looking for.",
-      "How can I support your research?",
-      "What topic intrigues you today?",
+      "How can research be supported today?",
+      "What topic is intriguing today?",
       "Need a hand? Ask away!",
-      "Your personal research assistant is here.",
-      "Curious? So am I. Let's explore.",
+      "A helpful research assistant at your service.",
+      "Feeling curious? Time to explore.",
       "What's the next question?",
-      "Hit me with your biggest wonder.",
-      "I'm listening. How can I help?",
+      "Share your biggest wonder.",
+      "Listening for your next question. How can help be provided?",
+      `What's on your mind today?`,
+      `A good place to begin.`,
+      `Where would you like to start?`,
+      `Take a moment to think.`,
+      `Just start typing.`,
+      `Start anywhere.`,
+      `Capture the thought.`,
+      `Something worth exploring?`,
+      `What feels important right now?`,
+      `Type to begin.`,
     ];
     return greetings[Math.floor(Math.random() * greetings.length)];
   }
@@ -66,7 +73,7 @@ export default function Home() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.3 }}
         >
-          {APP_CONTENT["/home"].trySearchingAbout}
+          (╹ o╹) Try searching about...
         </motion.div>
         {/* The generic topics */}
         <motion.div

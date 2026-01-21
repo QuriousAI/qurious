@@ -12,21 +12,16 @@ import {
   SidebarSeparator,
 } from "@workspace/design-system/components/sidebar";
 import Link from "next/link";
-import { APP_NAME } from "@workspace/design-system/content";
 import {
   Folders,
-  Search,
   BadgeCheck,
   LogIn,
   SquareArrowOutUpRight,
   Discord,
   Home,
-  AppLogo,
-  Settings,
 } from "@workspace/design-system/icons";
 import { SignUpButton } from "@clerk/nextjs";
 import { Button } from "@workspace/design-system/components/button";
-import { APP_CONTENT } from "@workspace/design-system/content";
 import { SearchGroup, SidebarMenuItem_UserDropdown } from "./authenticated";
 import { Skeleton } from "@workspace/design-system/components/skeleton";
 
@@ -61,9 +56,17 @@ const SearchGroupSkeleton = () => {
 };
 
 const FeaturesList = () => {
+  const features = [
+    "Chat with papers, get instant insights.",
+    "225M+ research papers.",
+    "AI-powered search engine.",
+    "Save, annotate, and organize papers into folders.",
+    "Tons more features added ",
+  ];
+
   return (
     <div className="flex flex-col gap-2 text-sm">
-      {APP_CONTENT.unauthenticatedSidebar.features.map((feature, i) => (
+      {features.map((feature, i) => (
         <div key={i} className="flex items-center gap-2">
           <BadgeCheck className="shrink-0 text-green-400" />
           <div>{feature}</div>
@@ -76,18 +79,16 @@ const FeaturesList = () => {
 const AdForQurious = () => (
   <div className="flex flex-col justify-center gap-6 px-6 h-full">
     <div className="flex flex-col gap-2 items-center">
-      <div className="text-4xl leading-tight font-bold">
-        {APP_CONTENT.unauthenticatedSidebar.title}
-      </div>
+      <div className="text-4xl leading-tight font-bold">Join Qurious.</div>
       <div className="text-2xl leading-tight font-semibold">
-        {APP_CONTENT.unauthenticatedSidebar.lead}
+        Supercharge your research workflow.
       </div>
     </div>
     <FeaturesList />
 
     <SignUpButton>
       <Button className="">
-        {APP_CONTENT.unauthenticatedSidebar.signUpButton} <LogIn />
+        Get Started <LogIn />
       </Button>
     </SignUpButton>
   </div>
@@ -101,11 +102,7 @@ export function AppSidebar() {
           <SidebarMenu>
             <SidebarMenuItem_UserDropdown />
             <SidebarMenuItem>
-              <SidebarMenuButton
-                className="rounded-sm px-4"
-                asChild
-                // variant="outline"
-              >
+              <SidebarMenuButton className="rounded-sm px-4" asChild>
                 <Link href="/" className="flex font-medium">
                   <Home /> Home
                 </Link>

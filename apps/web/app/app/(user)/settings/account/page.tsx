@@ -1,5 +1,5 @@
-import { Separator } from "@workspace/design-system/components/separator";
-import { UserProfile } from "@clerk/nextjs";
+import { Button } from "@workspace/design-system/components/button";
+import { UserProfile, SignOutButton } from "@clerk/nextjs";
 import { Heading } from "@/components/global-heading";
 import { UserCog } from "@workspace/design-system/icons";
 
@@ -17,6 +17,12 @@ export default function AccountSettingsPage() {
       />
 
       <UserProfile />
+
+      <div className="mt-6">
+        <SignOutButton>
+          <Button variant="destructive">Log Out</Button>
+        </SignOutButton>
+      </div>
     </div>
   );
 }
