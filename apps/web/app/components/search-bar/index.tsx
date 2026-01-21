@@ -154,21 +154,7 @@ export const SearchBar = (props: { q?: string; options?: typeof FILTERS }) => {
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-          <SearchToggleGroup />
-        </div>
-
-        {/* Right Side */}
-        <Button
-          className="hover:cursor-pointer"
-          onClick={handleButtonClick}
-          disabled={search.trim().length === 0}
-        >
-          <Link href={`/search?q=${search}`}>
-            <ChevronRight />
-          </Link>
-        </Button>
-      </CardFooter>
-    </Card>
+          {/* <SearchToggleGroup /> */}
         </CardContent>
         <CardFooter className="flex justify-between px-2">
           {/* Left Side */}
@@ -184,7 +170,6 @@ export const SearchBar = (props: { q?: string; options?: typeof FILTERS }) => {
             />
             <SearchToggleGroup />
           </div>
-
           {/* Right Side */}
           <motion.div whileHover={{ scale: 1.025 }} whileTap={{ scale: 0.95 }}>
             <Button
@@ -202,5 +187,3 @@ export const SearchBar = (props: { q?: string; options?: typeof FILTERS }) => {
     </motion.div>
   );
 };
-
-// ----

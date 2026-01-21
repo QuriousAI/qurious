@@ -9,14 +9,13 @@ export function FolderList() {
     // Query is still loading
     return <div>Loading folders...</div>;
   }
-  if (folders === null) {
-    // Query errored or returned nothing
+  if (folders === null || folders.length === 0) {
     return <div>No folders found.</div>;
   }
 
   return (
     <ul className="font-bold text-3xl">
-      {folders.map((folder: any) => (
+      {folders.map((folder) => (
         <li key={folder._id}>{folder.name}</li>
       ))}
     </ul>

@@ -106,6 +106,8 @@ function OptionsForm({
                   <SelectItem value="2022">2022</SelectItem>
                   <SelectItem value="2023">2023</SelectItem>
                   <SelectItem value="2024">2024</SelectItem>
+                  <SelectItem value="2025">2025</SelectItem>
+                  <SelectItem value="2026">2026</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -229,13 +231,21 @@ function OptionsForm({
   );
 }
 
+type SearchOptions = {
+  minimumCitations?: number;
+  publishedSince?: string;
+  openAccess?: boolean;
+  publicationTypes?: string[];
+  fieldsOfStudy?: string[];
+};
+
 export const SearchBarOptionsSheet = ({
   options,
   setOptions,
   buttonLabel,
 }: {
-  options: any;
-  setOptions: any;
+  options: SearchOptions;
+  setOptions: (options: SearchOptions) => void;
   buttonLabel: string;
 }) => {
   return (
@@ -254,8 +264,8 @@ function OptionsSheetContent({
   options,
   setOptions,
 }: {
-  options: any;
-  setOptions: any;
+  options: SearchOptions;
+  setOptions: (options: SearchOptions) => void;
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -270,9 +280,19 @@ function OptionsSheetContent({
 
   const handleApply = () => {
     const values = form.getValues();
-    toast(JSON.stringify(values));
-
     setOptions(values);
+    toast.success("Search options applied");
+  };
+
+  const handleReset = () => {
+    form.reset({
+      minimumCitations: undefined,
+      publishedSince: undefined,
+      openAccess: false,
+      publicationTypes: [],
+      fieldsOfStudy: [],
+    });
+    toast.info("Search options reset");
   };
 
   return (
@@ -289,7 +309,7 @@ function OptionsSheetContent({
       <SheetFooter>
         <Separator />
         <div className="flex gap-2">
-          <Button variant="secondary" className="w-1/2">
+          <Button variant="secondary" className="w-1/2" onClick={handleReset}>
             Reset
           </Button>
           <Button type="submit" onClick={handleApply} className="w-1/2">

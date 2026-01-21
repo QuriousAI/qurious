@@ -31,23 +31,24 @@
     "Svix",
     "svix",
     "nextstepjs",
-    "Agentic"
+    "Agentic",
     "dodopayments",
     "standardwebhooks",
     "svix",
     "Svix",
     "whsec",
     "Segoe",
-    "Neue"
+    "Neue",
     "Cmdk",
     "cmdk",
     "Agentic",
     "nextstepjs",
-    "turbopack"
+    "turbopack",
     "dodopayments",
     "posthog",
     "standardwebhooks",
-    "svix"
+    "svix",
+    "magicui"
   ],
   "ignorePaths": [
     "node_modules",

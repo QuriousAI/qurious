@@ -113,11 +113,11 @@ export function Cmdk() {
 
             <CommandItem
               onSelect={() => {
-                router.push("/subscription");
+                router.push("/credits");
                 setOpen(false);
               }}
             >
-              <CreditCard /> Subscription
+              <CreditCard /> Credits
             </CommandItem>
           </CommandGroup>
         </CommandList>
