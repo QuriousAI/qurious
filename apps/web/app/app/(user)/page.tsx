@@ -11,6 +11,32 @@ export default function Home() {
   const genericTopics = getRandomGroupedQuestions();
   const hasOnboarded = false;
 
+  function getRandomGreeting() {
+    const greetings = [
+      "Ready to help. What's on your mind?",
+      "How can I assist you today?",
+      "Ask me anything. I'm here to help!",
+      "What would you like to explore today?",
+      "Your curiosity is my command.",
+      "Looking for answers? Let's dive in.",
+      "How can I make your search easier?",
+      "Hi! Need info or inspiration?",
+      "Ready when you are. What's your question?",
+      "Here to assist—just type your query.",
+      "What knowledge can I unlock for you today?",
+      "Let's find what you're looking for.",
+      "How can I support your research?",
+      "What topic intrigues you today?",
+      "Need a hand? Ask away!",
+      "Your personal research assistant is here.",
+      "Curious? So am I. Let's explore.",
+      "What's the next question?",
+      "Hit me with your biggest wonder.",
+      "I'm listening. How can I help?",
+    ];
+    return greetings[Math.floor(Math.random() * greetings.length)];
+  }
+
   return (
     <div className="flex flex-col items-center gap-6">
       <div className="flex w-full flex-col items-center justify-center gap-6 h-[75vh]">
@@ -26,12 +52,7 @@ export default function Home() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            {/* <Authenticated>
-              {APP_CONTENT["/home"].lead(user.user?.firstName)}
-            </Authenticated> */}
-            {/* <Unauthenticated>{APP_CONTENT["/home"].lead()}</Unauthenticated>
-            <AuthLoading>{APP_CONTENT["/home"].lead()}</AuthLoading> */}
-            Welcome.
+            {getRandomGreeting()}
           </motion.div>
         </motion.div>
 
