@@ -6,26 +6,30 @@ import { useNextStep } from "nextstepjs";
 import { useEffect } from "react";
 
 // ShadCN Dialog Animations - Use Motions
-const steps = [{
-Welcome to Qurious,
-I'm Alfred, your assitant. Let me give you a short onboarding.
-},
-{
-  Search pages,
-  Explain pricicing,
-},
-{
-  Folder pages,
-  Paper pages,
-  Settings pages,
-},
- Developer Settings
- Webhooks API Keys Public APIS 
-{
-  Visit the help center, Visit the blog post for updates, Visit the status uptime montirng, Join the discord
-  
-},
-] Give Option To Quit Tour, or Close Button at Top
+// TODO: Implement onboarding steps
+// const steps = [
+//   {
+//     title: "Welcome to Qurious",
+//     content: "I'm Alfred, your assistant. Let me give you a short onboarding."
+//   },
+//   {
+//     title: "Search pages",
+//     content: "Explain pricing"
+//   },
+//   {
+//     title: "Navigation",
+//     content: "Folder pages, Paper pages, Settings pages"
+//   },
+//   {
+//     title: "Developer Settings",
+//     content: "Webhooks API Keys Public APIS"
+//   },
+//   {
+//     title: "Resources",
+//     content: "Visit the help center, Visit the blog post for updates, Visit the status uptime monitoring, Join the discord"
+//   }
+// ];
+// Give Option To Quit Tour, or Close Button at Top
 
 export const Onboarder = () => {
   const searchParams = useSearchParams();
@@ -37,5 +41,5 @@ export const Onboarder = () => {
     }
   }, [searchParams, startNextStep]);
 
-  return <Dialog></Dialog>;
+  return <></>;
 };

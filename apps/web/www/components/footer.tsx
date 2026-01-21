@@ -8,8 +8,6 @@ const GreenPing = () => (
   </span>
 );
 
-
-
 export const Footer = () => {
   const FooterMap = [
     {
@@ -48,7 +46,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <Link href="dsicord">
+        <Link href="discord">
           <Discord className="text-neutral-400" />
         </Link>
 
@@ -69,7 +67,7 @@ export const Footer = () => {
               {section.children.map((item) => (
                 <Link
                   key={item.name}
-                  href={item.link?? ""}
+                  href={item.link ?? ""}
                   target={item.link?.startsWith("http") ? "_blank" : undefined}
                   className="text-sm text-neutral-500 hover:text-neutral-300 transition-colors"
                 >

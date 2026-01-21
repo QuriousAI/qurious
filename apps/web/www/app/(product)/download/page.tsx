@@ -1,4 +1,4 @@
-function DownloadMobileApp() {
+function DownloadBrowserExtension() {
   return (
     <div className="p-4 border rounded-lg">
       <h2 className="text-lg font-semibold">Browser Extension</h2>

@@ -1,12 +1,11 @@
-import { Webhook as StandwardWebhook } from "standardwebhooks";
+import { Webhook as StandardWebhook } from "standardwebhooks";
 import { httpAction } from "../_generated/server";
 import { internal } from "../_generated/api";
 // import type { WebhookEvent as DodoPaymentsWebhookEvent } from "../types/dodopayments";
 // import { envVariables } from "../env";
 
-
 // async function validateDodoPaymentsWebhookRequest(req: Request) {
-//   const dodoPaymentsStandardWebhook = new StandwardWebhook(
+//   const dodoPaymentsStandardWebhook = new StandardWebhook(
 //     envVariables.DODO_PAYMENTS_WEBHOOK_SECRET
 //   );
 
@@ -49,14 +48,11 @@ import { internal } from "../_generated/api";
 //       );
 //       break;
 //     default:
-//       console.warn(`⚠️ Ignored Dodo Payments webhoob event: ${event.type}`);
+//       console.warn(`⚠️ Ignored Dodo Payments webhook event: ${event.type}`);
 //   }
 
 //   return new Response("OK", { status: 200 });
 // });
-
-
-
 
 // http.route({
 //   path: "/dodopayments-webhook",
@@ -77,7 +73,7 @@ import { internal } from "../_generated/api";
 //       });
 
 //       await ctx.runMutation(internal.users.mutations.addCredits, {
-        
+
 //       })
 //     },
 
