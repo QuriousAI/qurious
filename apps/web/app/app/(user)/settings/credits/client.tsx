@@ -22,7 +22,7 @@ import {
 } from "@workspace/design-system/icons";
 import Link from "next/link";
 
-export function SubscriptionClient() {
+export function CreditsClient() {
   const userData = useQuery(api.users.queries.getCurrentUser);
 
   if (!userData) {

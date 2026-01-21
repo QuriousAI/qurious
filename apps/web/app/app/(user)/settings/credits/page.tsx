@@ -1,20 +1,20 @@
 import { Heading } from "@/components/global-heading";
-import { SubscriptionClient } from "./client";
+import { CreditsClient } from "./client";
 import { CreditCard } from "@workspace/design-system/icons";
 
 export const metadata = {
-  title: "Subscription Settings | Qurious",
+  title: "Credits | Qurious",
 };
 
-export default function SubscriptionSettingsPage() {
+export default function CreditsSettingsPage() {
   return (
     <div className="space-y-6 max-w-4xl">
       <Heading
-        heading="Subscription"
+        heading="Credits"
         subHeading="Manage your credits and billing preferences."
         icon={<CreditCard />}
       />
-      <SubscriptionClient />
+      <CreditsClient />
     </div>
   );
 }

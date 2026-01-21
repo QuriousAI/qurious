@@ -14,11 +14,13 @@ export const CallToAction = () => (
     </div>
     <div className="flex gap-4">
       <Button variant="default" className="text-xl py-6" size="lg">
-        <Link href="http://localhost:3001/sign-up">Get Started</Link>
+        <Link href={`${process.env.NEXT_PUBLIC_WEB_APP_URL}/sign-up`}>
+          Get Started
+        </Link>
         {/* <MoveRight strokeWidth={2.75} className="size-6" /> */}
       </Button>
       <Button variant="secondary" className="text-xl py-6" size="lg">
-        <Link href="http://localhost:3001/sign-up">View Pricing</Link>
+        <Link href="/pricing">View Pricing</Link>
         {/* <MoveRight strokeWidth={2.75} className="size-6" /> */}
       </Button>
     </div>

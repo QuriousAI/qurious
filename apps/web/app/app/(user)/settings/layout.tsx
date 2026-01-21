@@ -20,7 +20,7 @@ import {
 const settingsTabs = [
   { name: "Account", href: "/settings/account", icon: UserCog },
   { name: "Customization", href: "/settings/customization", icon: Palette },
-  { name: "Subscription", href: "/settings/subscription", icon: CreditCard },
+  { name: "Credits", href: "/settings/credits", icon: CreditCard },
   { name: "Keys", href: "/settings/keys", icon: Key, disabled: true },
   {
     name: "Webhooks",

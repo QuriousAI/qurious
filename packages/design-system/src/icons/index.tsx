@@ -61,8 +61,13 @@ export {
   Sparkles,
   Type,
   Webhook,
+  RotateCcw,
+  AlertTriangle,
 } from "lucide-react";
 
-export { SiDiscord as Discord } from "@icons-pack/react-simple-icons";
+export {
+  SiDiscord as Discord,
+  SiGithub as Github,
+} from "@icons-pack/react-simple-icons";
 
 export { AppLogo } from "./app-icon";
