@@ -9,6 +9,7 @@ import { Folders } from "@workspace/design-system/icons";
 import { FolderCard } from "@/components/cards/folder";
 import { useGetCurrentUserFoldersQuery } from "@/queries";
 import { SearchX } from "@workspace/design-system/icons";
+import { GlobalErrorHandler } from "../../../components/global-error";
 
 import {
   Alert,
@@ -25,7 +26,7 @@ export const FoldersList = () => {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <GlobalErrorHandler error={error} />;
   }
 
   if (data.length === 0) {

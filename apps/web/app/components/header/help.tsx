@@ -17,7 +17,10 @@ export const Help = () => {
     >
       <Tooltip>
         <TooltipTrigger asChild>
-          <Link target="_blank" href="http://localhost:3000">
+          <Link
+            target="_blank"
+            href={process.env.NEXT_PUBLIC_WEB_HELP_URL ?? ""}
+          >
             <CircleHelp className="size-5" />
           </Link>
         </TooltipTrigger>

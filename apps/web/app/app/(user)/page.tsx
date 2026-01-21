@@ -2,14 +2,47 @@
 
 import { getRandomGroupedQuestions } from "@/utils/questions";
 import { SearchBar } from "@/components/search-bar";
-import { APP_CONTENT, APP_NAME } from "@workspace/design-system/content";
-// import { Authenticated, AuthLoading, Unauthenticated } from "convex/react";
 import { SearchCard } from "@/components/cards";
 import { motion } from "motion/react";
 
 export default function Home() {
   const genericTopics = getRandomGroupedQuestions();
   const hasOnboarded = false;
+
+  function getRandomGreeting() {
+    const greetings = [
+      "Ready to help. What's on your mind?",
+      "How can Qurious assist you today?",
+      "Ask anything. Help is ready!",
+      "What would you like to explore today?",
+      "Your curiosity drives discovery here.",
+      "Looking for answers? Let's dive in.",
+      "How can your search be made easier?",
+      "Hi! Need info or inspiration?",
+      "Ready when you are. What's your question?",
+      "What knowledge can be unlocked for you today?",
+      "Let's find what you're looking for.",
+      "How can research be supported today?",
+      "What topic is intriguing today?",
+      "Need a hand? Ask away!",
+      "A helpful research assistant at your service.",
+      "Feeling curious? Time to explore.",
+      "What's the next question?",
+      "Share your biggest wonder.",
+      "Listening for your next question. How can help be provided?",
+      `What's on your mind today?`,
+      `A good place to begin.`,
+      `Where would you like to start?`,
+      `Take a moment to think.`,
+      `Just start typing.`,
+      `Start anywhere.`,
+      `Capture the thought.`,
+      `Something worth exploring?`,
+      `What feels important right now?`,
+      `Type to begin.`,
+    ];
+    return greetings[Math.floor(Math.random() * greetings.length)];
+  }
 
   return (
     <div className="flex flex-col items-center gap-6">
@@ -26,12 +59,7 @@ export default function Home() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            {/* <Authenticated>
-              {APP_CONTENT["/home"].lead(user.user?.firstName)}
-            </Authenticated> */}
-            {/* <Unauthenticated>{APP_CONTENT["/home"].lead()}</Unauthenticated>
-            <AuthLoading>{APP_CONTENT["/home"].lead()}</AuthLoading> */}
-            Welcome.
+            {getRandomGreeting()}
           </motion.div>
         </motion.div>
 
@@ -45,7 +73,7 @@ export default function Home() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.3 }}
         >
-          {APP_CONTENT["/home"].trySearchingAbout}
+          (╹ o╹) Try searching about...
         </motion.div>
         {/* The generic topics */}
         <motion.div

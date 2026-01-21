@@ -1,26 +1,35 @@
-function DownloadBrowserExtension() {
-  // throw new Error("Not Implemented");
-
-  return <></>;
+function DownloadMobileApp() {
+  return (
+    <div className="p-4 border rounded-lg">
+      <h2 className="text-lg font-semibold">Browser Extension</h2>
+      <p className="text-muted-foreground">Coming soon</p>
+    </div>
+  );
 }
 
 function DownloadDesktopApp() {
-  // throw new Error("Not Implemented");
-
-  return <></>;
+  return (
+    <div className="p-4 border rounded-lg">
+      <h2 className="text-lg font-semibold">Desktop App</h2>
+      <p className="text-muted-foreground">Coming soon</p>
+    </div>
+  );
 }
 
 function DownloadMobileApp() {
-  // throw new Error("Not Implemented");
-
-  return <></>;
+  return (
+    <div className="p-4 border rounded-lg">
+      <h2 className="text-lg font-semibold">Mobile App</h2>
+      <p className="text-muted-foreground">Coming soon</p>
+    </div>
+  );
 }
 
 export default function DownloadPage() {
   return (
-    <main>
-      <h1>Download Page</h1>
-      <p>Welcome to the download page!</p>
+    <main className="container mx-auto py-8">
+      <h1 className="text-3xl font-bold mb-4">Download</h1>
+      <p className="mb-8">Get Qurious on all your devices.</p>
       <div className="flex flex-col gap-4">
         <DownloadDesktopApp />
         <DownloadMobileApp />

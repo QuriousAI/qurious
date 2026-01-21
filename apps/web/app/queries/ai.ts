@@ -2,6 +2,7 @@ import { api } from "@workspace/backend/_generated/api";
 import { useQuery } from "@tanstack/react-query";
 import { convexAction } from "@convex-dev/react-query";
 import { ConvexError } from "convex/values";
+import type { Paper } from "@workspace/semantic-scholar/src";
 
 export const useTransformQueryQuery = ({ query }: { query: string }) =>
   useQuery({
@@ -41,7 +42,7 @@ export const useSummarizePaperQuery = ({
   userSummarySettings,
 }: {
   query: string;
-  papers: any[];
+  papers: Paper[] | undefined;
   enabled: boolean;
   userSummarySettings: string;
 }) =>
@@ -53,7 +54,6 @@ export const useSummarizePaperQuery = ({
     }),
     enabled: enabled,
     retry(failureCount, error) {
-      console.log({ error });
       if (
         error instanceof ConvexError &&
         error.data == "insufficient credits"

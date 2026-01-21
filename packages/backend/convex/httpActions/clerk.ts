@@ -32,8 +32,6 @@ async function validateClerkWebhookRequest(req: Request) {
 }
 
 export const clerkHandler = httpAction(async (ctx, request) => {
-  console.log("Received event!");
-
   const event = await validateClerkWebhookRequest(request);
   if (event === null) {
     await captureEvent(ctx, "http_action_clerk_webhook_validation_failed", {
