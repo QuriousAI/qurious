@@ -7,7 +7,17 @@
     "lint": "eslint ."
   },
   "exports": {
-    "./*": "./src/*"
+    "./*": {
+      "types": "./src/*.tsx",
+      "default": "./src/*"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./src/*"
+      ]
+    }
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^13.0.0",

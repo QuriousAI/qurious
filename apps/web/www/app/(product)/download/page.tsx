@@ -1,17 +1,17 @@
 function DownloadBrowserExtension() {
-  throw new Error("Not Implemented");
+  // throw new Error("Not Implemented");
 
   return <></>;
 }
 
 function DownloadDesktopApp() {
-  throw new Error("Not Implemented");
+  // throw new Error("Not Implemented");
 
   return <></>;
 }
 
 function DownloadMobileApp() {
-  throw new Error("Not Implemented");
+  // throw new Error("Not Implemented");
 
   return <></>;
 }

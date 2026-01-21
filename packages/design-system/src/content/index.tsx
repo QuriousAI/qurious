@@ -1,6 +1,13 @@
 export const APP_NAME = "Qurious";
 export const APP_DESCRIPTION = "A research tool for the AI age.";
 
+// Legal page constants
+export const LEGAL_CONFIG = {
+  lastUpdated: "January 21, 2026",
+  contactEmail: "admin@quriousai.xyz",
+  privacyEmail: "admin@quriousai.xyz",
+} as const;
+
 export const APP_CONTENT = {
   "/home": {
     lead(user?: string) {
