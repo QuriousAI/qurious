@@ -10,6 +10,7 @@
     "@ai-sdk/google": "^1.2.18",
     "@clerk/backend": "^1.33.1",
     "@convex-dev/action-cache": "^0.2.7",
+    "@convex-dev/persistent-text-streaming": "^0.3.0",
     "@convex-dev/resend": "^0.1.0",
     "@dodopayments/convex": "^0.2.8",
     "@posthog/ai": "^6.4.3",

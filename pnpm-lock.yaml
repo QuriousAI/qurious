@@ -556,6 +556,12 @@ importers:
       "@convex-dev/action-cache":
         specifier: ^0.2.7
         version: 0.2.11(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))
+      "@convex-dev/persistent-text-streaming":
+        specifier: ^0.3.0
+        version: 0.3.0(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      "@convex-dev/resend":
+        specifier: ^0.1.0
+        version: 0.1.13(convex-helpers@0.1.104(@standard-schema/spec@1.0.0)(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(hono@4.10.1)(react@19.2.0)(typescript@5.9.3)(zod@3.25.76))(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(react@19.2.0)
       "@dodopayments/convex":
         specifier: ^0.2.8
         version: 0.2.8(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(zod@3.25.76)
@@ -1868,6 +1874,28 @@ packages:
     peerDependencies:
       convex: ~1.16.5 || >=1.17.0 <1.35.0
 
+  "@convex-dev/persistent-text-streaming@0.3.0":
+    resolution:
+      {
+        integrity: sha512-y7CteewFHrBKhVSoLxTMEwWPEmc/3J+BTJ+x+8pvh5DCUlwN80eWmfojpmGOQr7xSc6UC/c7DxlZXQPN7dVlKg==,
+      }
+    peerDependencies:
+      convex: ^1.24.8
+      react: ~18.3.1 || ^19.0.0
+      react-dom: ~18.3.1 || ^19.0.0
+
+  "@convex-dev/rate-limiter@0.2.14":
+    resolution:
+      {
+        integrity: sha512-6dQ2ceHFcU8HVXT0QdcgWXCahasMcjne/bWvLZ6qyyk5gZDP4JtjZyidy9HflAOCo1Nc428pgrROnbQBM0QPCQ==,
+      }
+    peerDependencies:
+      convex: ">=1.17.0 <1.35.0"
+      react: ^18.2.0 || ^19.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+
   "@convex-dev/react-query@0.0.0-alpha.8":
     resolution:
       {
@@ -1876,6 +1904,24 @@ packages:
     peerDependencies:
       "@tanstack/react-query": ^5.0.0
       convex: ^1.17.0
+
+  "@convex-dev/resend@0.1.13":
+    resolution:
+      {
+        integrity: sha512-caVvN3o1XgLti7ieo2fAlfgR7oK+WEVag/FS3P5tf5l4+u7ewxd414u+PftxbsUMb3liY4fdsH0QNgbTr8o9DA==,
+      }
+    peerDependencies:
+      convex: ^1.23.0
+      convex-helpers: ^0.1.99
+
+  "@convex-dev/workpool@0.2.19":
+    resolution:
+      {
+        integrity: sha512-U2KwYnsKILyxW1baWEhDv+ZtnL5FZbYFxBT5owQ0Lw/kseiudMZraA4clH+/6gowHSahWpkq4wndhcOfpfhuOA==,
+      }
+    peerDependencies:
+      convex: ">=1.25.0 <1.35.0"
+      convex-helpers: ^0.1.94
 
   "@cspell/cspell-bundled-dicts@9.6.0":
     resolution:
@@ -6982,32 +7028,6 @@ packages:
       }
     hasBin: true
     peerDependencies:
-  "@vercel/backends@0.0.22":
-    resolution:
-      {
-        integrity: sha512-O+HmKvFkvWbTG7ESN8vOfzBMzjfKdg8qP7/qqqsCK0IqtuihlVOkLRM9Smb5pAgk/QrlTfsBM6fjhneBNcHXtQ==,
-      }
-
-  "@vercel/blob@1.0.2":
-    resolution:
-      {
-        integrity: sha512-Im/KeFH4oPx7UsM+QiteimnE07bIUD7JK6CBafI9Z0jRFogaialTBMiZj8EKk/30ctUYsrpIIyP9iIY1YxWnUQ==,
-      }
-    engines: { node: ">=16.14" }
-
-  "@vercel/build-utils@13.2.10":
-    resolution:
-      {
-        integrity: sha512-f0MlQO0OBxeRLiPaAfn6vLNKLLiCDQcIj6yZ03YafDhLhUWkhwSd0Q/ovYwoft14cALlyYLkqwOYzOiyeQu9tg==,
-      }
-
-  "@vercel/cervel@0.0.9":
-    resolution:
-      {
-        integrity: sha512-dlZZA/fCaz2cz7aOa8+g8b2T2QbLyxXEfqXvPBabR8YRDDL2AMVUfSeGqm5lFd90QpojqZSdtC7qw3vZuSfINQ==,
-      }
-    hasBin: true
-    peerDependencies:
       typescript: ^4.0.0 || ^5.0.0
 
   "@vercel/detect-agent@1.0.0":
@@ -7055,56 +7075,6 @@ packages:
       }
 
   "@vercel/gatsby-plugin-vercel-builder@2.0.121":
-    resolution:
-      {
-        integrity: sha512-DD6+LCgfZl362i3YrUNeqESKH9m9lt0hOV25pzIYHH9TTIA9iXp/1rGJyLXYzpjzEv+70wMYrr0Rms6W8pKGEg==,
-      }
-
-  "@vercel/go@3.3.1":
-    resolution:
-      {
-        integrity: sha512-vRFeVsaNKJaf0tgferWz6ULMsI950hDkw69WQg0x3MxuQMRQo1wMOO38TayMeU76ZEgHTchxWhbaPmguslZgZA==,
-      }
-
-  "@vercel/h3@0.1.30":
-    resolution:
-      {
-        integrity: sha512-UcWy1OguM8tSx3F607hfEJ+LhP6ww89NgXxNlWbuU+zG0b9j+u2ZDmw2+vrLfZqV/WcltRhoAlnefy6u5vw/Bg==,
-      }
-
-  "@vercel/hono@0.2.24":
-    resolution:
-      {
-        integrity: sha512-lFBWS2oa/nlVm0ha4qKAyXxKt5vwjPOQD3calL7CsYndB6a9TYb2cCYobXkbIyYcvAfuD3cVKeDXufpWq2AaFQ==,
-      }
-
-  "@vercel/hydrogen@1.3.5":
-    resolution:
-      {
-        integrity: sha512-7EE6yVKcCnjMb1io9y069GkLyGyIzRbW3Krm3Q7EEfJ3P46h9xe9v/O5UhBoPrwtqDUHxmDngZp9YyfgY8IITA==,
-      }
-
-  "@vercel/introspection@0.0.9":
-    resolution:
-      {
-        integrity: sha512-JWaKUpnDwOKEZldQK82HRufo1o+XYK/RIUoOZSzWWFCYnyx6Ve5wR2BkZzRx6aJPx+MGNEx2HWDu+JI5X2BTKQ==,
-      }
-
-  "@vercel/koa@0.1.4":
-    resolution:
-      {
-        integrity: sha512-5bMAPoeTB2G73fv2HO0WMykylYkKEGzKwbMuhbt6jv7Rkmzjk1Hf6AtQ0zchb2WuhcvlxI51MHu5SHUI12nFoQ==,
-      }
-
-  "@vercel/nestjs@0.2.25":
-    resolution:
-      {
-        integrity: sha512-o5Cu8GFvcGLpEJDXeJ7KSdNjxca3KHGGafHft3UkoLPMrIpY/RAynr7OJtyJkNQWy/WGJCfnF2r+ppwtSdoTTQ==,
-      }
-
-  "@vercel/next@4.15.15":
-    resolution:
-      {
     resolution:
       {
         integrity: sha512-DD6+LCgfZl362i3YrUNeqESKH9m9lt0hOV25pzIYHH9TTIA9iXp/1rGJyLXYzpjzEv+70wMYrr0Rms6W8pKGEg==,
@@ -9570,10 +9540,10 @@ packages:
         integrity: sha512-ATRqZUvbJ9JnJd0GPdy9+fy3K3Hg+19pnnmVGgIiiNiHUIYkh0N1/68HlKsA7c7cx1uGr879moZgCaRd9RISpw==,
       }
 
-  dodopayments@2.14.3:
+  dodopayments@2.16.0:
     resolution:
       {
-        integrity: sha512-WJ0bpTgoNLeMIwysc2hpKE+Gs723AMVt8SGVy9/UC2auhvHB0l4cXCYcPjfhplPugQQUcwrwu2EwtpiK4/9x2Q==,
+        integrity: sha512-Vlo3jt4cqsqiSCAXI3BS7fGzO5CFId34+/a8ii6TYpEtJtIsMNn+jEHEkQSNLfYrzpWhE07oAAImGCaQi0GC+Q==,
       }
     hasBin: true
 
@@ -15916,6 +15886,12 @@ packages:
         integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==,
       }
 
+  remeda@2.33.4:
+    resolution:
+      {
+        integrity: sha512-ygHswjlc/opg2VrtiYvUOPLjxjtdKvjGz1/plDhkG66hjNjFr1xmfrs2ClNFo/E6TyUFiwYNh53bKV26oBoMGQ==,
+      }
+
   require-directory@2.1.1:
     resolution:
       {
@@ -19612,10 +19588,38 @@ snapshots:
     dependencies:
       convex: 1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
 
+  "@convex-dev/persistent-text-streaming@0.3.0(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)":
+    dependencies:
+      convex: 1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+
+  "@convex-dev/rate-limiter@0.2.14(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(react@19.2.0)":
+    dependencies:
+      convex: 1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+    optionalDependencies:
+      react: 19.2.0
+
   "@convex-dev/react-query@0.0.0-alpha.8(@tanstack/react-query@5.90.2(react@19.2.0))(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))":
     dependencies:
       "@tanstack/react-query": 5.90.2(react@19.2.0)
       convex: 1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+
+  "@convex-dev/resend@0.1.13(convex-helpers@0.1.104(@standard-schema/spec@1.0.0)(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(hono@4.10.1)(react@19.2.0)(typescript@5.9.3)(zod@3.25.76))(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(react@19.2.0)":
+    dependencies:
+      "@convex-dev/rate-limiter": 0.2.14(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(react@19.2.0)
+      "@convex-dev/workpool": 0.2.19(convex-helpers@0.1.104(@standard-schema/spec@1.0.0)(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(hono@4.10.1)(react@19.2.0)(typescript@5.9.3)(zod@3.25.76))(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))
+      convex: 1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+      convex-helpers: 0.1.104(@standard-schema/spec@1.0.0)(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(hono@4.10.1)(react@19.2.0)(typescript@5.9.3)(zod@3.25.76)
+      remeda: 2.33.4
+      svix: 1.77.0
+    transitivePeerDependencies:
+      - react
+
+  "@convex-dev/workpool@0.2.19(convex-helpers@0.1.104(@standard-schema/spec@1.0.0)(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(hono@4.10.1)(react@19.2.0)(typescript@5.9.3)(zod@3.25.76))(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))":
+    dependencies:
+      convex: 1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+      convex-helpers: 0.1.104(@standard-schema/spec@1.0.0)(convex@1.27.5(@clerk/clerk-react@5.51.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0))(hono@4.10.1)(react@19.2.0)(typescript@5.9.3)(zod@3.25.76)
 
   "@cspell/cspell-bundled-dicts@9.6.0":
     dependencies:
@@ -19883,7 +19887,7 @@ snapshots:
 
   "@dodopayments/core@0.3.8(zod@3.25.76)":
     dependencies:
-      dodopayments: 2.14.3
+      dodopayments: 2.16.0
       standardwebhooks: 1.0.0
       zod: 3.25.76
 
@@ -22076,40 +22080,6 @@ snapshots:
   "@remirror/core-constants@3.0.0": {}
 
   "@rolldown/binding-android-arm64@1.0.0-beta.59":
-    optional: true
-
-  "@rolldown/binding-darwin-arm64@1.0.0-beta.59":
-    optional: true
-
-  "@rolldown/binding-darwin-x64@1.0.0-beta.59":
-    optional: true
-
-  "@rolldown/binding-freebsd-x64@1.0.0-beta.59":
-    optional: true
-
-  "@rolldown/binding-linux-arm-gnueabihf@1.0.0-beta.59":
-    optional: true
-
-  "@rolldown/binding-linux-arm64-gnu@1.0.0-beta.59":
-    optional: true
-
-  "@rolldown/binding-linux-arm64-musl@1.0.0-beta.59":
-    optional: true
-
-  "@rolldown/binding-linux-x64-gnu@1.0.0-beta.59":
-    optional: true
-
-  "@rolldown/binding-linux-x64-musl@1.0.0-beta.59":
-    optional: true
-
-  "@rolldown/binding-openharmony-arm64@1.0.0-beta.59":
-    optional: true
-
-  "@rolldown/binding-wasm32-wasi@1.0.0-beta.59":
-    dependencies:
-      "@napi-rs/wasm-runtime": 1.1.1
-    optional: true
-
     optional: true
 
   "@rolldown/binding-darwin-arm64@1.0.0-beta.59":
@@ -24903,7 +24873,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  dodopayments@2.14.3:
+  dodopayments@2.16.0:
     dependencies:
       standardwebhooks: 1.0.0
 
@@ -29882,6 +29852,8 @@ snapshots:
       unified: 11.0.5
     transitivePeerDependencies:
       - supports-color
+
+  remeda@2.33.4: {}
 
   require-directory@2.1.1: {}
 
