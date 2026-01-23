@@ -16,7 +16,7 @@
     "dev-web-help": "turbo run dev --filter=web-help",
     "dev-web-docs": "turbo run dev --filter=web-docs",
     "dev-browser-app": "turbo run dev --filter=browser-app",
-    "dev-backend": "turbo run dev --filter=backend",
+    "dev-backend": "turbo run dev --filter=@workspace/backend",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",

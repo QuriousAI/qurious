@@ -6,7 +6,7 @@ import { ActionCache } from "@convex-dev/action-cache";
 import { components, internal } from "../../_generated/api";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/api-client";
 import { Paper } from "@workspace/semantic-scholar/src/types/paper";
-import { captureEvent } from "../../lib/posthog";
+import { captureEvent } from "../../lib/analytics";
 
 const getPaperRecommendationsCache = new ActionCache(components.actionCache, {
   action:

@@ -11,7 +11,7 @@ import {
   GetRelevantPapersReturnType,
 } from "@workspace/semantic-scholar/src/index";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/api-client";
-import { captureEvent } from "../../lib/posthog";
+import { captureEvent } from "../../lib/analytics";
 
 const publicationTypeUnion = v.union(
   ...publicationTypes.map((type) => v.literal(type)),
@@ -101,7 +101,7 @@ export const getRelevantPapersInternal = internalAction({
         limit: args.limit,
         offset: args.offset,
         totalResults: result.value.total,
-        returnedResults: result.value.data.length,
+        returnedResults: result.value.data?.length ?? 0,
       },
     );
 
