@@ -1,12 +1,22 @@
 import { v } from "convex/values";
-import { action, internalAction } from "../../_generated/server";
+import {
+  action,
+  httpAction,
+  internalAction,
+  mutation,
+  query,
+} from "../../_generated/server";
 import { ActionCache } from "@convex-dev/action-cache";
 import { api, components, internal } from "../../_generated/api";
-import { generateText } from "ai";
+import { streamText } from "ai";
 import { MODELS } from "./_models";
 import { PAPER_SUMMARY_CREDITS } from "../../credits";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/api-client";
-import { captureEvent } from "../../lib/posthog";
+import {
+  PersistentTextStreaming,
+  StreamId,
+  StreamIdValidator,
+} from "@convex-dev/persistent-text-streaming";
 // Paper Summarization
 
 const SUMMARIZE_PAPER_PROMPT = (
@@ -21,59 +31,82 @@ const SUMMARIZE_PAPER_PROMPT = (
   
   Papers: ${papers}`;
 
-const summarizePapersCache = new ActionCache(components.actionCache, {
-  action: internal.externalActions.ai.paperSummary.summarizePaperInternal,
+export const streamSummary = httpAction(async (ctx, request) => {
+  console.log("Request received");
+  const body = await request.json();
+
+  // AI SDK useChat sends: { messages: Message[], id: string, ...body }
+  const messages = body.messages as Array<{ role: string; content: string }>;
+  const papers = body.papers as string;
+  const userSummarySettings = (body.userSummarySettings as string) ?? "";
+
+  // Extract query from the last user message
+  const lastUserMessage = messages?.filter((m) => m.role === "user").pop();
+  const query = lastUserMessage?.content ?? "";
+
+  console.log(
+    "Parsed request - query:",
+    query,
+    "papers length:",
+    papers?.length,
+  );
+
+  const prompt = SUMMARIZE_PAPER_PROMPT(query, papers, userSummarySettings);
+
+  const result = streamText({
+    model: MODELS.PAPER_SUMMARY,
+    prompt,
+  });
+
+  return result.toUIMessageStreamResponse({
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      Vary: "Origin",
+    },
+  });
 });
+// const summarizePapersCache = new ActionCache(components.actionCache, {
+//   action: internal.externalActions.ai.paperSummary.summarizePaperInternal,
+// });
 
-export const summarizePaper = action({
-  args: {
-    query: v.string(),
-    papers: v.any(),
-    userSummarySettings: v.string(),
-  },
-  handler: async (ctx, args): Promise<string> => {
-    return await summarizePapersCache.fetch(ctx, {
-      query: args.query,
-      papers: args.papers,
-      userSummarySettings: args.userSummarySettings,
-    });
-  },
-});
+// export const summarizePaper = action({
+//   args: {
+//     query: v.string(),
+//     papers: v.any(),
+//     userSummarySettings: v.string(),
+//   },
+//   handler: async (ctx, args): Promise<string> => {
+//     return await summarizePapersCache.fetch(ctx, {
+//       query: args.query,
+//       papers: args.papers,
+//       userSummarySettings: args.userSummarySettings,
+//     });
+//   },
+// });
 
-export const summarizePaperInternal = internalAction({
-  args: {
-    query: v.string(),
-    papers: v.any(),
-    userSummarySettings: v.string(),
-  },
-  handler: async (ctx, args) => {
-    await ctx.runMutation(internal.users.mutations.checkCredits, {
-      amount: PAPER_SUMMARY_CREDITS,
-    });
+// export const summarizePaperInternal = internalAction({
+//   args: {
+//     query: v.string(),
+//     papers: v.any(),
+//     userSummarySettings: v.string(),
+//   },
+//   handler: async (ctx, args) => {
+//     await ctx.runMutation(internal.users.mutations.checkCredits, {
+//       amount: PAPER_SUMMARY_CREDITS,
+//     });
 
-    const prompt = SUMMARIZE_PAPER_PROMPT(
-      args.query,
-      JSON.stringify(args.papers),
-      args.userSummarySettings,
-    );
+//     await ctx.runMutation(internal.users.mutations.deductCredits, {
+//       amount: PAPER_SUMMARY_CREDITS,
+//     });
 
-    const result = await generateText({
-      model: MODELS.PAPER_SUMMARY,
-      prompt,
-    });
+//     // Track paper summarization event
+//     await captureEvent(ctx, "paper_summarized", {
+//       query: args.query,
+//       paperCount: Array.isArray(args.papers) ? args.papers.length : 1,
+//       creditsUsed: PAPER_SUMMARY_CREDITS,
+//     });
 
-    await ctx.runMutation(internal.users.mutations.deductCredits, {
-      amount: PAPER_SUMMARY_CREDITS,
-    });
-
-    // Track paper summarization event
-    await captureEvent(ctx, "paper_summarized", {
-      query: args.query,
-      paperCount: Array.isArray(args.papers) ? args.papers.length : 1,
-      creditsUsed: PAPER_SUMMARY_CREDITS,
-    });
-
-    const { text } = result;
-    return text;
-  },
-});
+//     const { text } = result;
+//     return text;
+//   },
+// });

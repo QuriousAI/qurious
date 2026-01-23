@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "react-markdown";
 import { motion, type Variants } from "motion/react";
 
@@ -33,10 +33,12 @@ import { SORTING } from "@/components/search-bar";
 import {
   useFollowUpQuery,
   useGetRelevantPapersInfiniteQuery,
-  useSummarizePaperQuery,
   useTransformQueryQuery,
 } from "@/queries";
 import { useGetCurrentUserQuery } from "@/queries/users";
+
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 
 // ============================================================================
 // Types
@@ -308,6 +310,10 @@ export const SearchResults = ({
   fieldsOfStudy = [],
 }: SearchResultsProps) => {
   const [sortBy, setSortBy] = useState<SortOption>("relevance");
+  const hasSentMessage = useRef(false);
+
+  // Get user settings
+  const { data: user } = useGetCurrentUserQuery();
 
   // Transform query for better search results
   const {
@@ -334,30 +340,74 @@ export const SearchResults = ({
     enabled: !!transformedQuery,
   });
 
-  // Get user settings
-  const { data: user } = useGetCurrentUserQuery();
+  // Set up streaming chat for summary
+  const CONVEX_SITE_URL = process.env.NEXT_PUBLIC_CONVEX_URL!.replace(
+    /.cloud$/,
+    ".site",
+  );
 
-  // Generate summary
   const {
-    data: summary,
-    isPending: summaryPending,
-    error: summaryError,
-  } = useSummarizePaperQuery({
-    query: q,
-    papers,
-    enabled: !!papers,
-    userSummarySettings: user?.summarySettings ?? "",
+    messages,
+    sendMessage,
+    status,
+    error: chatError,
+  } = useChat({
+    transport: new DefaultChatTransport({
+      api: `${CONVEX_SITE_URL}/ai`,
+    }),
   });
 
-  // Generate follow-up questions
+  // Send message when papers are loaded
+  useEffect(() => {
+    if (papers && papers.length > 0 && !hasSentMessage.current) {
+      hasSentMessage.current = true;
+      sendMessage(
+        { text: q },
+        {
+          body: {
+            papers: JSON.stringify(
+              papers.map((p) => ({
+                title: p.title,
+                abstract: p.abstract,
+                tldr: p.tldr,
+              })),
+            ),
+            userSummarySettings: user?.summarySettings ?? "",
+          },
+        },
+      );
+    }
+  }, [papers, q, sendMessage, user?.summarySettings]);
+
+  // Extract summary from assistant messages (no useMemo to ensure streaming updates)
+  const assistantMessages = messages.filter((m) => m.role === "assistant");
+  const lastAssistantMessage = assistantMessages[assistantMessages.length - 1];
+  const summary = lastAssistantMessage
+    ? lastAssistantMessage.parts
+        .filter(
+          (part): part is { type: "text"; text: string } =>
+            part.type === "text",
+        )
+        .map((p) => p.text)
+        .join("")
+    : undefined;
+
+  const isStreaming = status === "streaming";
+  // Show pending state only before streaming starts (waiting for papers or waiting for stream)
+  const summaryPending =
+    (papers && papers.length > 0 && !summary && !isStreaming) ||
+    status === "submitted";
+  const summaryError = chatError ?? null;
+
+  // Generate follow-up questions once summary is complete
   const {
     data: suggestedQuestions,
     isPending: suggestedPending,
     error: suggestedError,
   } = useFollowUpQuery({
     query: q,
-    summary,
-    enabled: !!summary,
+    summary: summary ?? "",
+    enabled: !!summary && !isStreaming,
     userDetails: user?.details ?? "",
   });
 
