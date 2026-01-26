@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack --port 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@workspace/design-system": "workspace:*",
@@ -21,8 +21,8 @@
     "@types/node": "^20",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19",
+    "@workspace/eslint-config": "workspace:*",
     "eslint": "^9",
-    "eslint-config-next": "15.3.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

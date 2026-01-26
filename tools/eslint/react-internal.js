@@ -1,4 +1,4 @@
-import { config as baseConfig } from "./base.js";
+import { baseEslintConfig } from "./base.js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import globals from "globals";
 import js from "@eslint/js";
@@ -10,8 +10,8 @@ import tseslint from "typescript-eslint";
  * A custom ESLint configuration for libraries that use React.
  *
  * @type {import("eslint").Linter.Config[]} */
-export const reactInternalEslintconfig = [
-  ...baseConfig,
+export const config = [
+  ...baseEslintConfig,
   js.configs.recommended,
   eslintConfigPrettier,
   ...tseslint.configs.recommended,

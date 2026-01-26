@@ -1,1 +1,1 @@
-Managed by BetterStack. Repositery made for better management.
+Managed by BetterStack. Repository made for better management.

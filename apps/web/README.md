@@ -26,7 +26,7 @@
 ## Creating A New App
 
 - Create from template.
-- Upate configs from `/packages`.
+- Update configs from `/packages`.
   ⚠️ Important: after you add the @workspace dependency, it won't just work out of the box. Like any other package, after you add it your dependency list, you then need to install it. `pnpm install` at root level.
 
 1. Eslint:
