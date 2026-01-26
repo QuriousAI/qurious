@@ -1,7 +1,7 @@
 import { query, internalQuery } from "../_generated/server";
 import { v } from "convex/values";
 import { getCurrentUserOrThrow } from "./helpers";
-import { captureEvent } from "../lib/posthog";
+import { captureEvent } from "../lib/analytics";
 
 export const getCurrentUser = query({
   args: {},

@@ -7,7 +7,7 @@ import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import { STUDY_SNAPSHOT_CREDITS } from "../../credits";
 import { MODELS } from "./_models";
-import { captureEvent } from "../../lib/posthog";
+import { captureEvent } from "../../lib/analytics";
 
 const STUDY_SNAPSHOT_PROMPT = (abstract: string, fields: string[]) => `
 You're a tool for extracting specific details from research papers. You'll be given a paper abstract and asked to return the specified field. If you can't find a specific field in the abstract, return that field as null.

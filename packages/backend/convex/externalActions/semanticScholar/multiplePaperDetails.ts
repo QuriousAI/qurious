@@ -7,7 +7,7 @@ import { components, internal } from "../../_generated/api";
 import type { Paper } from "@workspace/semantic-scholar/src";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/client";
 
-import { captureEvent } from "../../lib/posthog";
+import { captureEvent } from "../../lib/analytics";
 
 // Multiple Paper Details
 

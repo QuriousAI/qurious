@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 import { mutation } from "../_generated/server";
 import { getCurrentUserIdOrThrow } from "../users/helpers";
-import { captureEvent } from "../lib/posthog";
+import { captureEvent } from "../lib/analytics";
 
 export const createSearch = mutation({
   args: {

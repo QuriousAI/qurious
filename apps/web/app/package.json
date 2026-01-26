@@ -10,10 +10,12 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@ai-sdk/react": "^3.0.50",
     "@citation-js/core": "^0.7.18",
     "@citation-js/plugin-csl": "^0.7.18",
     "@clerk/nextjs": "^6.20.1",
     "@clerk/themes": "^2.2.48",
+    "@convex-dev/persistent-text-streaming": "^0.3.0",
     "@convex-dev/react-query": "0.0.0-alpha.8",
     "@hookform/resolvers": "^5.0.1",
     "@t3-oss/env-nextjs": "^0.13.8",
@@ -25,6 +27,7 @@
     "@workspace/backend": "workspace:*",
     "@workspace/design-system": "workspace:*",
     "@workspace/semantic-scholar": "workspace:*",
+    "ai": "^6.0.48",
     "convex": "^1.24.2",
     "d3": "^7.9.0",
     "echarts-for-react": "^3.0.2",

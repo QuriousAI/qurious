@@ -31,7 +31,7 @@ export const useGetRelevantPapersInfiniteQuery = (options: {
           fieldsOfStudy: options.fieldsOfStudy,
           offset: pageParam,
           fields: options.fields,
-        }
+        },
       );
 
       return result;
@@ -54,7 +54,7 @@ export const useGetPaperDetailsQuery = (options: {
   useQuery({
     ...convexAction(
       api.externalActions.semanticScholar.paperDetails.getPaperDetails,
-      { paperId: options.paperId, fields: options.fields }
+      { paperId: options.paperId, fields: options.fields },
     ),
   });
 
@@ -66,7 +66,7 @@ export const useGetMultiplePapersDetailsQuery = (options: {
     ...convexAction(
       api.externalActions.semanticScholar.multiplePaperDetails
         .getMultiplePaperDetails,
-      { paperIds: options.paperIds, fields: options.fields }
+      { paperIds: options.paperIds, fields: options.fields },
     ),
   });
 
@@ -90,7 +90,7 @@ export const useGetPaperReferencesQuery = (options: {
   useQuery({
     ...convexAction(
       api.externalActions.semanticScholar.paperReferences.getPaperReferences,
-      { paperId: options.paperId, fields: options.fields }
+      { paperId: options.paperId, fields: options.fields },
     ),
   });
 
@@ -101,7 +101,7 @@ export const useGetPaperCitationsQuery = (options: {
   useQuery({
     ...convexAction(
       api.externalActions.semanticScholar.paperCitations.getPaperCitations,
-      { paperId: options.paperId, fields: options.fields }
+      { paperId: options.paperId, fields: options.fields },
     ),
   });
 
@@ -113,6 +113,6 @@ export const useGetPaperRecommendationsQuery = (options: {
     ...convexAction(
       api.externalActions.semanticScholar.paperRecommendations
         .getPaperRecommendations,
-      { paperId: options.paperId, fields: options.fields }
+      { paperId: options.paperId, fields: options.fields },
     ),
   });

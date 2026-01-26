@@ -2,7 +2,7 @@ import { ConvexError, v } from "convex/values";
 import { query } from "../_generated/server";
 import { getCurrentUserIdOrThrow } from "../users/helpers";
 import { getOrThrow } from "convex-helpers/server/relationships";
-import { captureEvent } from "../lib/posthog";
+import { captureEvent } from "../lib/analytics";
 
 export const getCurrentUserFolders = query({
   handler: async (ctx) => {
