@@ -2,7 +2,7 @@ import { internalMutation } from "../_generated/server";
 import { UserJSON } from "@clerk/backend";
 import { ConvexError, v, Validator } from "convex/values";
 import { getCurrentUserOrThrow, userByClerkId } from "./helpers";
-import { captureEvent } from "../lib/posthog";
+import { captureEvent } from "../lib/analytics";
 
 // "upsert" means to either update an existing record or insert a new one if the record doesn't exist
 export const updateFromClerk = internalMutation({
@@ -134,7 +134,6 @@ export const addCredits = internalMutation({
       newCredits: user.credits + args.amount,
     });
 
-    ctx.db.patch(user._id, {
     await ctx.db.patch(user._id, {
       credits: user.credits + args.amount,
     });

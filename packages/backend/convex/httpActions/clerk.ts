@@ -2,8 +2,7 @@ import type { WebhookEvent as ClerkWebhookEvent } from "@clerk/backend";
 import { Webhook as SvixWebhook } from "svix";
 import { httpAction } from "../_generated/server";
 import { internal } from "../_generated/api";
-import { captureEvent } from "../lib/posthog";
-// import { envVariables } from "../env";
+import { captureEvent } from "../lib/analytics";
 
 async function validateClerkWebhookRequest(req: Request) {
   const clerkSvixWebhook = new SvixWebhook(
@@ -54,7 +53,6 @@ export const clerkHandler = httpAction(async (ctx, request) => {
         userId: event.data.id,
         email: event.data.email_addresses?.[0]?.email_address,
       });
-      // throw new Error("supposed to send welcome email here with resend")
 
       // Send welcome email
       const primaryEmail =

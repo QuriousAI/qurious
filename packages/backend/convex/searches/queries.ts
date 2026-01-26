@@ -3,7 +3,7 @@ import { getCurrentUserIdOrThrow } from "../users/helpers";
 import { getAll, getAllOrThrow } from "convex-helpers/server/relationships";
 import { Id } from "../_generated/dataModel";
 import { v } from "convex/values";
-import { captureEvent } from "../lib/posthog";
+import { captureEvent } from "../lib/analytics";
 
 export const getCurrentUserSearches = query({
   args: {},

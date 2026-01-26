@@ -6,7 +6,7 @@ import { ActionCache } from "@convex-dev/action-cache";
 import { components, internal } from "../../_generated/api";
 import { z } from "zod";
 import { MODELS } from "./_models";
-import { captureEvent } from "../../lib/posthog";
+import { captureEvent } from "../../lib/analytics";
 
 const FOLLOW_UP_PROMPT = (
   query: string,

@@ -5,7 +5,7 @@ import { components, internal } from "../../_generated/api";
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
 import { MODELS } from "./_models";
-import { captureEvent } from "../../lib/posthog";
+import { captureEvent } from "../../lib/analytics";
 
 const TRANSFORM_QUERY_PROMPT = (
   query: string,

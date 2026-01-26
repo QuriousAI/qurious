@@ -2,6 +2,12 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
+  summaryStreams: defineTable({
+    streamId: v.string(),
+    query: v.string(),
+    papers: v.string(), // JSON stringified papers
+    userSummarySettings: v.string(),
+  }).index("byStreamId", ["streamId"]),
   searches: defineTable({
     query: v.string(),
     userId: v.id("users"),

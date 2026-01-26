@@ -2,7 +2,7 @@ import { ConvexError, v } from "convex/values";
 import { mutation } from "../_generated/server";
 import { getOrThrow } from "convex-helpers/server/relationships";
 import { getCurrentUserIdOrThrow } from "../users/helpers";
-import { captureEvent } from "../lib/posthog";
+import { captureEvent } from "../lib/analytics";
 
 export const addPaperToFolder = mutation({
   args: {
