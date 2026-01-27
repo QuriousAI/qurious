@@ -56,7 +56,7 @@ describe("Folder Mutations", () => {
       (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
 
       const { createFolder } = await import("../folders/mutations");
-      await createFolder.handler(ctx, {
+      await (createFolder as any).handler(ctx, {
         name: "Research Papers",
         description: "My research collection",
       });
@@ -87,7 +87,7 @@ describe("Folder Mutations", () => {
       const { captureEvent } = await import("../lib/analytics");
       const { createFolder } = await import("../folders/mutations");
 
-      await createFolder.handler(ctx, {
+      await (createFolder as any).handler(ctx, {
         name: "Test Folder",
         description: "Test Description",
       });
@@ -116,7 +116,7 @@ describe("Folder Mutations", () => {
       (getOrThrow as any).mockResolvedValue(folder);
 
       const { addPaperToFolder } = await import("../folders/mutations");
-      await addPaperToFolder.handler(ctx, {
+      await (addPaperToFolder as any).handler(ctx, {
         folderId: folder._id,
         paperId: "paper3",
       });
@@ -137,7 +137,7 @@ describe("Folder Mutations", () => {
       const { captureEvent } = await import("../lib/analytics");
       const { addPaperToFolder } = await import("../folders/mutations");
 
-      await addPaperToFolder.handler(ctx, {
+      await (addPaperToFolder as any).handler(ctx, {
         folderId: folder._id,
         paperId: "paper2",
       });
@@ -166,7 +166,7 @@ describe("Folder Mutations", () => {
       (getOrThrow as any).mockResolvedValue(folder);
 
       const { removePaperFromFolder } = await import("../folders/mutations");
-      await removePaperFromFolder.handler(ctx, {
+      await (removePaperFromFolder as any).handler(ctx, {
         folderId: folder._id,
         paperId: "paper2",
       });
@@ -187,7 +187,7 @@ describe("Folder Mutations", () => {
       (getOrThrow as any).mockResolvedValue(folder);
 
       const { removePaperFromFolder } = await import("../folders/mutations");
-      await removePaperFromFolder.handler(ctx, {
+      await (removePaperFromFolder as any).handler(ctx, {
         folderId: folder._id,
         paperId: "paper_nonexistent",
       });
@@ -213,7 +213,7 @@ describe("Folder Mutations", () => {
 
       const { addSearchToFolder } = await import("../folders/mutations");
       const newSearchId = "search_3" as Id<"searches">;
-      await addSearchToFolder.handler(ctx, {
+      await (addSearchToFolder as any).handler(ctx, {
         folderId: folder._id,
         searchId: newSearchId,
       });
@@ -239,7 +239,7 @@ describe("Folder Mutations", () => {
       (getOrThrow as any).mockResolvedValue(folder);
 
       const { removeSearchFromFolder } = await import("../folders/mutations");
-      await removeSearchFromFolder.handler(ctx, {
+      await (removeSearchFromFolder as any).handler(ctx, {
         folderId: folder._id,
         searchId: "search_2" as Id<"searches">,
       });
@@ -256,7 +256,7 @@ describe("Folder Mutations", () => {
       const folderId = "folder_delete123" as Id<"folders">;
 
       const { deleteFolder } = await import("../folders/mutations");
-      await deleteFolder.handler(ctx, { folderId });
+      await (deleteFolder as any).handler(ctx, { folderId });
 
       expect(ctx.db.delete).toHaveBeenCalledWith(folderId);
     });
@@ -268,7 +268,7 @@ describe("Folder Mutations", () => {
       const { captureEvent } = await import("../lib/analytics");
       const { deleteFolder } = await import("../folders/mutations");
 
-      await deleteFolder.handler(ctx, { folderId });
+      await (deleteFolder as any).handler(ctx, { folderId });
 
       expect(captureEvent).toHaveBeenCalledWith(
         ctx,
@@ -295,7 +295,7 @@ describe("Folder Mutations", () => {
       (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
 
       const { updateFolderPrivacy } = await import("../folders/mutations");
-      await updateFolderPrivacy.handler(ctx, {
+      await (updateFolderPrivacy as any).handler(ctx, {
         folderId: folder._id,
         isPrivate: false, // Make public
       });
@@ -318,7 +318,7 @@ describe("Folder Mutations", () => {
       const { updateFolderPrivacy } = await import("../folders/mutations");
 
       await expect(
-        updateFolderPrivacy.handler(ctx, {
+        (updateFolderPrivacy as any).handler(ctx, {
           folderId: "folder_123" as Id<"folders">,
           isPrivate: false,
         }),
@@ -343,7 +343,7 @@ describe("Folder Mutations", () => {
       const { updateFolderPrivacy } = await import("../folders/mutations");
 
       await expect(
-        updateFolderPrivacy.handler(ctx, {
+        (updateFolderPrivacy as any).handler(ctx, {
           folderId: folder._id,
           isPrivate: false,
         }),
@@ -370,7 +370,7 @@ describe("Folder Mutations", () => {
       (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
 
       const { updateFolderName } = await import("../folders/mutations");
-      await updateFolderName.handler(ctx, {
+      await (updateFolderName as any).handler(ctx, {
         folderId: folder._id,
         name: "New Name",
       });
@@ -397,7 +397,7 @@ describe("Folder Mutations", () => {
       const { updateFolderName } = await import("../folders/mutations");
 
       await expect(
-        updateFolderName.handler(ctx, {
+        (updateFolderName as any).handler(ctx, {
           folderId: folder._id,
           name: "New Name",
         }),
@@ -422,7 +422,7 @@ describe("Folder Mutations", () => {
       (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
 
       const { updateFolderContent } = await import("../folders/mutations");
-      await updateFolderContent.handler(ctx, {
+      await (updateFolderContent as any).handler(ctx, {
         folderId: folder._id,
         content: "New content with more details",
       });
@@ -449,7 +449,7 @@ describe("Folder Mutations", () => {
       const { updateFolderContent } = await import("../folders/mutations");
 
       await expect(
-        updateFolderContent.handler(ctx, {
+        (updateFolderContent as any).handler(ctx, {
           folderId: folder._id,
           content: "New content",
         }),

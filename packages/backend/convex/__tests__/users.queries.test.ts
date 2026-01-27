@@ -42,7 +42,7 @@ describe("User Queries", () => {
       (getCurrentUserOrThrow as any).mockResolvedValue(mockUser);
 
       const { getCurrentUser } = await import("../users/queries");
-      const result = await getCurrentUser.handler(ctx, {});
+      const result = await (getCurrentUser as any).handler(ctx, {});
 
       expect(result).toEqual(mockUser);
       expect(getCurrentUserOrThrow).toHaveBeenCalledWith(ctx);
@@ -59,7 +59,7 @@ describe("User Queries", () => {
 
       const { getCurrentUser } = await import("../users/queries");
 
-      await expect(getCurrentUser.handler(ctx, {})).rejects.toThrow(
+      await expect((getCurrentUser as any).handler(ctx, {})).rejects.toThrow(
         "User not authenticated",
       );
     });
@@ -75,7 +75,7 @@ describe("User Queries", () => {
       const { captureEvent } = await import("../lib/analytics");
       const { getCurrentUser } = await import("../users/queries");
 
-      await getCurrentUser.handler(ctx, {});
+      await (getCurrentUser as any).handler(ctx, {});
 
       expect(captureEvent).toHaveBeenCalledWith(
         ctx,
@@ -91,15 +91,16 @@ describe("User Queries", () => {
       const ctx = createMockCtx();
 
       const mockFirst = vi.fn().mockResolvedValue(mockUser);
-      const mockEq = vi.fn().mockReturnValue({ first: mockFirst });
-      const mockWithIndex = vi.fn().mockReturnValue({ eq: mockEq });
+      const mockWithIndex = vi.fn().mockReturnValue({ first: mockFirst });
 
       ctx.db.query = vi.fn().mockReturnValue({
         withIndex: mockWithIndex,
       });
 
       const { getByAuthId } = await import("../users/queries");
-      const result = await getByAuthId.handler(ctx, { authId: "clerk_abc123" });
+      const result = await (getByAuthId as any).handler(ctx, {
+        authId: "clerk_abc123",
+      });
 
       expect(result).toEqual(mockUser);
       expect(ctx.db.query).toHaveBeenCalledWith("users");
@@ -140,7 +141,7 @@ describe("User Queries", () => {
       });
 
       const { getByAuthId } = await import("../users/queries");
-      const result = await getByAuthId.handler(ctx, { authId: "" });
+      const result = await (getByAuthId as any).handler(ctx, { authId: "" });
 
       expect(result).toBeNull();
     });

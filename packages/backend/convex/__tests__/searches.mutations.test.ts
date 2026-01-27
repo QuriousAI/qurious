@@ -44,7 +44,7 @@ describe("Search Mutations", () => {
       (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
 
       const { createSearch } = await import("../searches/mutations");
-      await createSearch.handler(ctx, { query: "machine learning" });
+      await (createSearch as any).handler(ctx, { query: "machine learning" });
 
       expect(ctx.db.insert).toHaveBeenCalledWith("searches", {
         query: "machine learning",
@@ -67,7 +67,7 @@ describe("Search Mutations", () => {
       const { createSearch } = await import("../searches/mutations");
 
       const query = "neural networks";
-      await createSearch.handler(ctx, { query });
+      await (createSearch as any).handler(ctx, { query });
 
       expect(captureEvent).toHaveBeenCalledWith(
         ctx,
@@ -91,7 +91,7 @@ describe("Search Mutations", () => {
       (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
 
       const { createSearch } = await import("../searches/mutations");
-      await createSearch.handler(ctx, { query: "" });
+      await (createSearch as any).handler(ctx, { query: "" });
 
       expect(ctx.db.insert).toHaveBeenCalledWith("searches", {
         query: "",
@@ -111,7 +111,7 @@ describe("Search Mutations", () => {
       (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
 
       const { createSearch } = await import("../searches/mutations");
-      await createSearch.handler(ctx, { query: longQuery });
+      await (createSearch as any).handler(ctx, { query: longQuery });
 
       expect(ctx.db.insert).toHaveBeenCalledWith("searches", {
         query: longQuery,
@@ -130,7 +130,7 @@ describe("Search Mutations", () => {
       const { createSearch } = await import("../searches/mutations");
 
       await expect(
-        createSearch.handler(ctx, { query: "test" }),
+        (createSearch as any).handler(ctx, { query: "test" }),
       ).rejects.toThrow("User not authenticated");
     });
   });
@@ -141,7 +141,7 @@ describe("Search Mutations", () => {
       const searchId = "search_delete123" as Id<"searches">;
 
       const { deleteSearch } = await import("../searches/mutations");
-      await deleteSearch.handler(ctx, { searchId });
+      await (deleteSearch as any).handler(ctx, { searchId });
 
       expect(ctx.db.delete).toHaveBeenCalledWith(searchId);
     });
@@ -153,7 +153,7 @@ describe("Search Mutations", () => {
       const { captureEvent } = await import("../lib/analytics");
       const { deleteSearch } = await import("../searches/mutations");
 
-      await deleteSearch.handler(ctx, { searchId });
+      await (deleteSearch as any).handler(ctx, { searchId });
 
       expect(captureEvent).toHaveBeenCalledWith(
         ctx,
@@ -193,7 +193,7 @@ describe("Search Mutations", () => {
 
       const { deleteCurrentUserSearches } =
         await import("../searches/mutations");
-      await deleteCurrentUserSearches.handler(ctx, {});
+      await (deleteCurrentUserSearches as any).handler(ctx, {});
 
       // Verify all searches were deleted
       expect(ctx.db.delete).toHaveBeenCalledTimes(3);
@@ -216,7 +216,7 @@ describe("Search Mutations", () => {
 
       const { deleteCurrentUserSearches } =
         await import("../searches/mutations");
-      await deleteCurrentUserSearches.handler(ctx, {});
+      await (deleteCurrentUserSearches as any).handler(ctx, {});
 
       expect(ctx.db.delete).not.toHaveBeenCalled();
     });
@@ -242,7 +242,7 @@ describe("Search Mutations", () => {
       const { deleteCurrentUserSearches } =
         await import("../searches/mutations");
 
-      await deleteCurrentUserSearches.handler(ctx, {});
+      await (deleteCurrentUserSearches as any).handler(ctx, {});
 
       expect(captureEvent).toHaveBeenCalledWith(
         ctx,
@@ -262,9 +262,9 @@ describe("Search Mutations", () => {
       const { deleteCurrentUserSearches } =
         await import("../searches/mutations");
 
-      await expect(deleteCurrentUserSearches.handler(ctx, {})).rejects.toThrow(
-        "User not authenticated",
-      );
+      await expect(
+        (deleteCurrentUserSearches as any).handler(ctx, {}),
+      ).rejects.toThrow("User not authenticated");
     });
   });
 });

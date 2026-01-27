@@ -22,15 +22,29 @@ export const createMockAuth = (userId?: Id<"users">, sessionId?: string) => ({
 export const createMockDb = () => {
   const store = new Map<string, any[]>();
 
-  return {
-    query: vi.fn((tableName: string) => ({
+  const createQueryBuilder = (tableName: string) => {
+    const builder: any = {
       collect: vi.fn().mockResolvedValue(store.get(tableName) || []),
-      order: vi.fn().mockReturnThis(),
-      filter: vi.fn().mockReturnThis(),
-      withIndex: vi.fn().mockReturnThis(),
-      eq: vi.fn().mockReturnThis(),
+      order: vi.fn().mockReturnValue(undefined), // Will be set to return builder
+      filter: vi.fn().mockReturnValue(undefined),
+      withIndex: vi.fn().mockReturnValue(undefined),
+      eq: vi.fn().mockReturnValue(undefined),
       first: vi.fn().mockResolvedValue(store.get(tableName)?.[0] || null),
-    })),
+      unique: vi.fn().mockResolvedValue(store.get(tableName)?.[0] || null),
+      take: vi.fn().mockResolvedValue(store.get(tableName)?.slice(0, 1) || []),
+    };
+
+    // Fix chaining interactions
+    builder.order.mockReturnValue(builder);
+    builder.filter.mockReturnValue(builder);
+    builder.withIndex.mockReturnValue(builder);
+    builder.eq.mockReturnValue(builder);
+
+    return builder;
+  };
+
+  return {
+    query: vi.fn((tableName: string) => createQueryBuilder(tableName)),
     insert: vi.fn((tableName: string, doc: any) => {
       const id = `${tableName}_${Date.now()}` as any;
       const newDoc = { ...doc, _id: id, _creationTime: Date.now() };
@@ -158,3 +172,13 @@ export const mockAuthenticatedUser = (ctx: any, user: any) => {
 export const mockUnauthenticatedUser = (ctx: any) => {
   ctx.auth.getUserIdentity.mockResolvedValue(null);
 };
+
+// Mock Convex server functions to expose handler directly
+vi.mock("../_generated/server", () => ({
+  mutation: (args: any) => args,
+  query: (args: any) => args,
+  internalMutation: (args: any) => args,
+  internalQuery: (args: any) => args,
+  action: (args: any) => args,
+  internalAction: (args: any) => args,
+}));

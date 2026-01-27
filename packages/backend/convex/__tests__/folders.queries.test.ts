@@ -11,19 +11,25 @@ import { createMockCtx, createMockFolder, createMockUser } from "./setup";
 import { Id } from "../_generated/dataModel";
 
 // Mock analytics
-const mockCaptureEvent = vi.fn();
+const { mockCaptureEvent } = vi.hoisted(() => ({
+  mockCaptureEvent: vi.fn(),
+}));
 vi.mock("../lib/analytics", () => ({
   captureEvent: mockCaptureEvent,
 }));
 
 // Mock helpers
-const mockGetCurrentUserIdOrThrow = vi.fn();
+const { mockGetCurrentUserIdOrThrow } = vi.hoisted(() => ({
+  mockGetCurrentUserIdOrThrow: vi.fn(),
+}));
 vi.mock("../users/helpers", () => ({
   getCurrentUserIdOrThrow: mockGetCurrentUserIdOrThrow,
 }));
 
 // Mock convex-helpers
-const mockGetOrThrow = vi.fn();
+const { mockGetOrThrow } = vi.hoisted(() => ({
+  mockGetOrThrow: vi.fn(),
+}));
 vi.mock("convex-helpers/server/relationships", () => ({
   getOrThrow: mockGetOrThrow,
 }));
@@ -59,7 +65,7 @@ describe("Folder Queries", () => {
 
       mockGetCurrentUserIdOrThrow.mockResolvedValue(mockUser._id);
 
-      const result = await getCurrentUserFolders.handler(ctx, {});
+      const result = await (getCurrentUserFolders as any).handler(ctx, {});
 
       expect(result).toEqual(userFolders);
       expect(result).toHaveLength(2);
@@ -76,7 +82,7 @@ describe("Folder Queries", () => {
 
       mockGetCurrentUserIdOrThrow.mockResolvedValue(mockUser._id);
 
-      const result = await getCurrentUserFolders.handler(ctx, {});
+      const result = await (getCurrentUserFolders as any).handler(ctx, {});
 
       expect(result).toEqual([]);
     });
@@ -97,7 +103,7 @@ describe("Folder Queries", () => {
 
       mockGetCurrentUserIdOrThrow.mockResolvedValue(mockUser._id);
 
-      await getCurrentUserFolders.handler(ctx, {});
+      await (getCurrentUserFolders as any).handler(ctx, {});
 
       expect(mockCaptureEvent).toHaveBeenCalledWith(
         ctx,
@@ -117,7 +123,7 @@ describe("Folder Queries", () => {
 
       mockGetOrThrow.mockResolvedValue(publicFolder);
 
-      const result = await getFolderById.handler(ctx, {
+      const result = await (getFolderById as any).handler(ctx, {
         folderId: publicFolder._id,
       });
 
@@ -137,7 +143,7 @@ describe("Folder Queries", () => {
       mockGetOrThrow.mockResolvedValue(privateFolder);
       mockGetCurrentUserIdOrThrow.mockResolvedValue(mockUser._id);
 
-      const result = await getFolderById.handler(ctx, {
+      const result = await (getFolderById as any).handler(ctx, {
         folderId: privateFolder._id,
       });
 
@@ -158,7 +164,7 @@ describe("Folder Queries", () => {
       mockGetCurrentUserIdOrThrow.mockResolvedValue(mockUser._id);
 
       await expect(
-        getFolderById.handler(ctx, { folderId: privateFolder._id }),
+        (getFolderById as any).handler(ctx, { folderId: privateFolder._id }),
       ).rejects.toThrow("You can't access this folder.");
     });
 
@@ -168,7 +174,7 @@ describe("Folder Queries", () => {
 
       mockGetOrThrow.mockResolvedValue(publicFolder);
 
-      await getFolderById.handler(ctx, { folderId: publicFolder._id });
+      await (getFolderById as any).handler(ctx, { folderId: publicFolder._id });
 
       expect(mockCaptureEvent).toHaveBeenCalledWith(
         ctx,
@@ -192,7 +198,9 @@ describe("Folder Queries", () => {
       mockGetOrThrow.mockResolvedValue(privateFolder);
       mockGetCurrentUserIdOrThrow.mockResolvedValue(mockUser._id);
 
-      await getFolderById.handler(ctx, { folderId: privateFolder._id });
+      await (getFolderById as any).handler(ctx, {
+        folderId: privateFolder._id,
+      });
 
       expect(mockCaptureEvent).toHaveBeenCalledWith(
         ctx,
@@ -218,7 +226,7 @@ describe("Folder Queries", () => {
       mockGetCurrentUserIdOrThrow.mockResolvedValue(mockUser._id);
 
       await expect(
-        getFolderById.handler(ctx, { folderId: privateFolder._id }),
+        (getFolderById as any).handler(ctx, { folderId: privateFolder._id }),
       ).rejects.toThrow();
 
       expect(mockCaptureEvent).toHaveBeenCalledWith(

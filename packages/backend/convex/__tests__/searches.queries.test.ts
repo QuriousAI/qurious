@@ -61,7 +61,7 @@ describe("Search Queries", () => {
       (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
 
       const { getCurrentUserSearches } = await import("../searches/queries");
-      const result = await getCurrentUserSearches.handler(ctx, {});
+      const result = await (getCurrentUserSearches as any).handler(ctx, {});
 
       expect(result).toEqual(userSearches);
       expect(result).toHaveLength(2);
@@ -81,7 +81,7 @@ describe("Search Queries", () => {
       (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
 
       const { getCurrentUserSearches } = await import("../searches/queries");
-      const result = await getCurrentUserSearches.handler(ctx, {});
+      const result = await (getCurrentUserSearches as any).handler(ctx, {});
 
       expect(result).toEqual([]);
     });
@@ -107,7 +107,7 @@ describe("Search Queries", () => {
       const { captureEvent } = await import("../lib/analytics");
       const { getCurrentUserSearches } = await import("../searches/queries");
 
-      await getCurrentUserSearches.handler(ctx, {});
+      await (getCurrentUserSearches as any).handler(ctx, {});
 
       expect(captureEvent).toHaveBeenCalledWith(
         ctx,
@@ -126,9 +126,9 @@ describe("Search Queries", () => {
 
       const { getCurrentUserSearches } = await import("../searches/queries");
 
-      await expect(getCurrentUserSearches.handler(ctx, {})).rejects.toThrow(
-        "User not authenticated",
-      );
+      await expect(
+        (getCurrentUserSearches as any).handler(ctx, {}),
+      ).rejects.toThrow("User not authenticated");
     });
   });
 
@@ -152,7 +152,7 @@ describe("Search Queries", () => {
       (getAllOrThrow as any).mockResolvedValue(searches);
 
       const { getMultiple } = await import("../searches/queries");
-      const result = await getMultiple.handler(ctx, { searchIds });
+      const result = await (getMultiple as any).handler(ctx, { searchIds });
 
       expect(result).toEqual(searches);
       expect(getAllOrThrow).toHaveBeenCalledWith(ctx.db, searchIds);
@@ -166,7 +166,7 @@ describe("Search Queries", () => {
       (getAllOrThrow as any).mockResolvedValue([]);
 
       const { getMultiple } = await import("../searches/queries");
-      const result = await getMultiple.handler(ctx, { searchIds: [] });
+      const result = await (getMultiple as any).handler(ctx, { searchIds: [] });
 
       expect(result).toEqual([]);
     });
@@ -190,7 +190,7 @@ describe("Search Queries", () => {
       const { captureEvent } = await import("../lib/analytics");
       const { getMultiple } = await import("../searches/queries");
 
-      await getMultiple.handler(ctx, { searchIds });
+      await (getMultiple as any).handler(ctx, { searchIds });
 
       expect(captureEvent).toHaveBeenCalledWith(
         ctx,
@@ -209,9 +209,9 @@ describe("Search Queries", () => {
 
       const { getMultiple } = await import("../searches/queries");
 
-      await expect(getMultiple.handler(ctx, { searchIds })).rejects.toThrow(
-        "Search not found",
-      );
+      await expect(
+        (getMultiple as any).handler(ctx, { searchIds }),
+      ).rejects.toThrow("Search not found");
     });
   });
 });

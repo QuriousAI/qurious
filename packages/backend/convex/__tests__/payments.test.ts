@@ -18,6 +18,7 @@ vi.mock("../dodo", () => ({
 describe("Payment Actions", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
   describe("createCheckout", () => {
@@ -32,7 +33,7 @@ describe("Payment Actions", () => {
       (checkout as any).mockResolvedValue(mockCheckoutSession);
 
       const { createCheckout } = await import("../payments");
-      const result = await createCheckout.handler(ctx, {
+      const result = await (createCheckout as any).handler(ctx, {
         product_cart: [{ product_id: "prod_123", quantity: 1 }],
         returnUrl: "https://app.qurious.ai/success",
       });
@@ -58,10 +59,10 @@ describe("Payment Actions", () => {
       const { createCheckout } = await import("../payments");
 
       await expect(
-        createCheckout.handler(ctx, {
+        (createCheckout as any).handler(ctx, {
           product_cart: [{ product_id: "prod_123", quantity: 1 }],
         }),
-      ).rejects.toThrow(/Failed to create checkout/i);
+      ).rejects.toThrow(/Unable to create checkout session/i);
     });
 
     test("should handle Dodo Payments API errors", async () => {
@@ -72,7 +73,7 @@ describe("Payment Actions", () => {
       const { createCheckout } = await import("../payments");
 
       await expect(
-        createCheckout.handler(ctx, {
+        (createCheckout as any).handler(ctx, {
           product_cart: [{ product_id: "prod_123", quantity: 1 }],
         }),
       ).rejects.toThrow("Unable to create checkout session. Please try again.");
@@ -88,7 +89,7 @@ describe("Payment Actions", () => {
       (checkout as any).mockResolvedValue(mockCheckoutSession);
 
       const { createCheckout } = await import("../payments");
-      await createCheckout.handler(ctx, {
+      await (createCheckout as any).handler(ctx, {
         product_cart: [
           { product_id: "prod_100_credits", quantity: 1 },
           { product_id: "prod_500_credits", quantity: 2 },
@@ -116,7 +117,7 @@ describe("Payment Actions", () => {
       (checkout as any).mockResolvedValue(mockCheckoutSession);
 
       const { createCheckout } = await import("../payments");
-      await createCheckout.handler(ctx, {
+      await (createCheckout as any).handler(ctx, {
         product_cart: [{ product_id: "prod_123", quantity: 1 }],
       });
 
@@ -141,7 +142,7 @@ describe("Payment Actions", () => {
       (customerPortal as any).mockResolvedValue(mockPortal);
 
       const { getCustomerPortal } = await import("../payments");
-      const result = await getCustomerPortal.handler(ctx, {});
+      const result = await (getCustomerPortal as any).handler(ctx, {});
 
       expect(result).toEqual(mockPortal);
       expect(customerPortal).toHaveBeenCalledWith(ctx, {});
@@ -154,8 +155,8 @@ describe("Payment Actions", () => {
 
       const { getCustomerPortal } = await import("../payments");
 
-      await expect(getCustomerPortal.handler(ctx, {})).rejects.toThrow(
-        "Customer portal did not return a portal_url",
+      await expect((getCustomerPortal as any).handler(ctx, {})).rejects.toThrow(
+        "Unable to generate customer portal link. Please try again.",
       );
     });
 
@@ -166,7 +167,7 @@ describe("Payment Actions", () => {
 
       const { getCustomerPortal } = await import("../payments");
 
-      await expect(getCustomerPortal.handler(ctx, {})).rejects.toThrow(
+      await expect((getCustomerPortal as any).handler(ctx, {})).rejects.toThrow(
         "Unable to generate customer portal link. Please try again.",
       );
     });
@@ -181,7 +182,7 @@ describe("Payment Actions", () => {
       (customerPortal as any).mockResolvedValue(mockPortal);
 
       const { getCustomerPortal } = await import("../payments");
-      await getCustomerPortal.handler(ctx, { send_email: true });
+      await (getCustomerPortal as any).handler(ctx, { send_email: true });
 
       expect(customerPortal).toHaveBeenCalledWith(ctx, { send_email: true });
     });
