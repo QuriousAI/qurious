@@ -2,15 +2,11 @@ import { expect, test, describe, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import { Avatar, AvatarImage, AvatarFallback } from "../src/components/avatar";
 
-afterEach(() => {
-  cleanup();
-});
-
 describe("Avatar Component", () => {
   test("renders avatar container", () => {
     const { container } = render(<Avatar />);
     const avatar = container.querySelector('[data-slot="avatar"]');
-    expect(avatar).toBeDefined();
+    expect(avatar).not.toBeNull();
   });
 
   test("renders avatar image", () => {
@@ -21,7 +17,7 @@ describe("Avatar Component", () => {
     );
     // Image may not load immediately in test environment
     const img = container.querySelector("img");
-    expect(img).toBeDefined();
+    expect(img).not.toBeNull();
   });
 
   test("renders fallback when image fails", () => {

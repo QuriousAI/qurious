@@ -31,15 +31,16 @@ describe("getRandomGroupedQuestions", () => {
   });
 
   test("returns shuffled results", () => {
-    const result1 = getRandomGroupedQuestions();
-    const result2 = getRandomGroupedQuestions();
+    const iterations = 10;
+    const orders = new Set<string>();
 
-    // Both should be arrays with data
-    expect(result1.length).toBeGreaterThan(0);
-    expect(result2.length).toBeGreaterThan(0);
+    for (let i = 0; i < iterations; i++) {
+      const result = getRandomGroupedQuestions();
+      const order = result.map((t) => t.topic).join(",");
+      orders.add(order);
+    }
 
-    // Results have the same structure
-    expect(typeof result1[0].topic).toBe("string");
-    expect(Array.isArray(result1[0].questions)).toBe(true);
+    // Expect at least 2 different orders in 10 tries
+    expect(orders.size).toBeGreaterThan(1);
   });
 });

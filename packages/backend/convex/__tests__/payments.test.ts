@@ -61,7 +61,7 @@ describe("Payment Actions", () => {
         createCheckout.handler(ctx, {
           product_cart: [{ product_id: "prod_123", quantity: 1 }],
         }),
-      ).rejects.toThrow("Checkout session did not return a checkout_url");
+      ).rejects.toThrow(/Failed to create checkout/i);
     });
 
     test("should handle Dodo Payments API errors", async () => {

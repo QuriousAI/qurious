@@ -23,7 +23,7 @@ test("CopyToClipboardButton renders with copy icon", () => {
   expect(screen.getByText("Copy")).toBeDefined();
   // Check that the Clipboard icon is rendered
   const clipboardIcon = container.querySelector(".lucide-clipboard");
-  expect(clipboardIcon).toBeDefined();
+  expect(clipboardIcon).not.toBeNull();
 });
 
 test("CopyToClipboardButton renders with share icon", () => {
@@ -37,5 +37,5 @@ test("CopyToClipboardButton renders with share icon", () => {
   expect(screen.getAllByText("Copy").length).toBeGreaterThan(0);
   // Check that the Share2 icon is rendered
   const shareIcon = container.querySelector(".lucide-share2, .lucide-share-2");
-  expect(shareIcon).toBeDefined();
+  expect(shareIcon).not.toBeNull();
 });

@@ -2,10 +2,6 @@ import { expect, test, describe, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import { Label } from "../src/components/label";
 
-afterEach(() => {
-  cleanup();
-});
-
 describe("Label Component", () => {
   test("renders label with text", () => {
     render(<Label>Username</Label>);
@@ -64,7 +60,7 @@ describe("Label Component", () => {
     expect(screen.getByText("City")).toBeDefined();
   });
 
-  test("supports click events", async () => {
+  test("supports click events", () => {
     let clicked = false;
     const { container } = render(
       <Label

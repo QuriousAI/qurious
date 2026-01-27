@@ -2,15 +2,11 @@ import { expect, test, describe, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import { Skeleton } from "../src/components/skeleton";
 
-afterEach(() => {
-  cleanup();
-});
-
 describe("Skeleton Component", () => {
   test("renders skeleton element", () => {
     const { container } = render(<Skeleton />);
     const skeleton = container.querySelector('[data-slot="skeleton"]');
-    expect(skeleton).toBeDefined();
+    expect(skeleton).not.toBeNull();
   });
 
   test("applies custom className", () => {
@@ -28,7 +24,7 @@ describe("Skeleton Component", () => {
   test("has background color", () => {
     const { container } = render(<Skeleton />);
     const skeleton = container.querySelector('[data-slot="skeleton"]');
-    expect(skeleton?.className).toContain("bg-");
+    expect(skeleton?.className).toContain("bg-accent");
   });
 
   test("renders with custom dimensions", () => {

@@ -9,10 +9,6 @@ import {
   SelectItem,
 } from "../src/components/select";
 
-afterEach(() => {
-  cleanup();
-});
-
 describe("Select Component", () => {
   test("renders select with trigger", () => {
     render(
@@ -157,7 +153,8 @@ describe("Select Component", () => {
     expect(screen.getByText("Option 2")).toBeDefined();
   });
 
-  test("renders SelectItem with check icon when selected", () => {
+  test("renders SelectItem with check icon when selected", async () => {
+    const user = userEvent.setup();
     const { container } = render(
       <Select defaultValue="test">
         <SelectTrigger>
@@ -169,7 +166,13 @@ describe("Select Component", () => {
       </Select>,
     );
 
-    const checkIcon = container.querySelector(".lucide-check");
-    expect(checkIcon).toBeDefined();
+    // Open select to see items
+    const trigger = container.querySelector('[data-slot="select-trigger"]');
+    if (trigger) {
+      await user.click(trigger as HTMLElement);
+    }
+
+    const checkIcon = document.querySelector(".lucide-check");
+    expect(checkIcon).not.toBeNull();
   });
 });

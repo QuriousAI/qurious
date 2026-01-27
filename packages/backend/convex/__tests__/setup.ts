@@ -39,12 +39,34 @@ export const createMockDb = () => {
       return Promise.resolve(id);
     }),
     patch: vi.fn((id: Id<any>, updates: Partial<any>) => {
+      // Find the table that contains this ID
+      for (const [tableName, docs] of store.entries()) {
+        const index = docs.findIndex((d) => d._id === id);
+        if (index !== -1) {
+          const updatedDoc = { ...docs[index], ...updates };
+          docs[index] = updatedDoc;
+          store.set(tableName, docs);
+          return Promise.resolve();
+        }
+      }
       return Promise.resolve();
     }),
     delete: vi.fn((id: Id<any>) => {
+      for (const [tableName, docs] of store.entries()) {
+        const index = docs.findIndex((d) => d._id === id);
+        if (index !== -1) {
+          docs.splice(index, 1);
+          store.set(tableName, docs);
+          return Promise.resolve();
+        }
+      }
       return Promise.resolve();
     }),
     get: vi.fn((id: Id<any>) => {
+      for (const [tableName, docs] of store.entries()) {
+        const doc = docs.find((d) => d._id === id);
+        if (doc) return Promise.resolve(doc);
+      }
       return Promise.resolve(null);
     }),
     _store: store, // Access internal store for assertions

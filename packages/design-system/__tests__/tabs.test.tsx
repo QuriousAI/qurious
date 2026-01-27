@@ -8,10 +8,6 @@ import {
   TabsContent,
 } from "../src/components/tabs";
 
-afterEach(() => {
-  cleanup();
-});
-
 describe("Tabs Component", () => {
   test("renders tabs with list and content", () => {
     render(
@@ -62,6 +58,15 @@ describe("Tabs Component", () => {
     await user.click(tab2Trigger);
 
     expect(screen.getByText("Content B")).toBeDefined();
+
+    // Verify tabs state
+    const tab1 = screen.getByText("Tab 1");
+    // Tab 2 was clicked (from user.click(tab2Trigger) above line 62)
+    // tab2Trigger is local variable, find it again or assume it worked.
+    const tab2 = screen.getByText("Tab 2");
+
+    expect(tab2.getAttribute("data-state")).toBe("active");
+    expect(tab1.getAttribute("data-state")).toBe("inactive");
   });
 
   test("applies custom className to tabs list", () => {

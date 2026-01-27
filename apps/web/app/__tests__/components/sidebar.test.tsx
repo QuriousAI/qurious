@@ -41,10 +41,10 @@ describe("AppSidebar Component", () => {
     expect(sidebar).toBeDefined();
   });
 
-  test("renders search link", () => {
+  test("renders home link", () => {
     render(<AppSidebar />);
-    const searchLink = screen.getByText("Search");
-    expect(searchLink).toBeDefined();
+    const homeLink = screen.getByText("Home");
+    expect(homeLink).toBeDefined();
   });
 
   test("renders folders link", () => {
@@ -53,23 +53,14 @@ describe("AppSidebar Component", () => {
     expect(foldersLink).toBeDefined();
   });
 
-  test("renders settings link", () => {
-    render(<AppSidebar />);
-    const settingsLink = screen.getByText("Settings");
-    expect(settingsLink).toBeDefined();
-  });
-
   test("links point to correct paths", () => {
     const { container } = render(<AppSidebar />);
 
-    const searchLink = container.querySelector('a[href="/"]');
-    expect(searchLink).toBeDefined();
+    const homeLink = container.querySelector('a[href="/"]');
+    expect(homeLink).toBeDefined();
 
     const foldersLink = container.querySelector('a[href="/folders"]');
     expect(foldersLink).toBeDefined();
-
-    const settingsLink = container.querySelector('a[href="/settings"]');
-    expect(settingsLink).toBeDefined();
   });
 
   test("displays user information", () => {

@@ -141,11 +141,15 @@ describe("PaperCard Component", () => {
     expect(screen.getByText(/Physics/)).toBeDefined();
   });
 
-  test("card is clickable", () => {
+  test("card is clickable and links to detail page", () => {
     const { container } = render(
       <PaperCard paper={mockPaper} resultIndex={1} />,
     );
-    const card = container.querySelector('[data-slot="card"]');
-    expect(card).toBeDefined();
+    // Should contain a link to the paper detail
+    const link = container.querySelector(
+      `a[href="/papers/${mockPaper.paperId}"]`,
+    );
+    expect(link).toBeDefined();
+    expect(link).not.toBeNull();
   });
 });

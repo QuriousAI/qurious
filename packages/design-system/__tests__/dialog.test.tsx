@@ -12,10 +12,6 @@ import {
 } from "../src/components/dialog";
 import { Button } from "../src/components/button";
 
-afterEach(() => {
-  cleanup();
-});
-
 describe("Dialog Component", () => {
   test("renders dialog trigger", () => {
     render(
@@ -116,10 +112,13 @@ describe("Dialog Component", () => {
     expect(screen.getByText("Dialog Content")).toBeDefined();
 
     // Find and click close button (X icon)
+    // Find and click close button (X icon)
     const closeButton = document.querySelector('[data-slot="dialog-close"]');
-    if (closeButton) {
-      await user.click(closeButton as HTMLElement);
-    }
+    expect(closeButton).not.toBeNull();
+    await user.click(closeButton as HTMLElement);
+
+    // Check that dialog content is gone
+    expect(screen.queryByText("Dialog Content")).toBeNull();
   });
 
   test("applies custom className to content", async () => {
@@ -137,8 +136,11 @@ describe("Dialog Component", () => {
 
     await user.click(screen.getByText("Open"));
 
-    const dialog = container.querySelector(".custom-dialog");
-    expect(dialog).toBeDefined();
+    await user.click(screen.getByText("Open"));
+
+    // Dialog content is portalled, query document
+    const dialog = document.querySelector(".custom-dialog");
+    expect(dialog).not.toBeNull();
   });
 
   test("renders controlled dialog", () => {
@@ -200,7 +202,7 @@ describe("Dialog Component", () => {
 
     await user.click(screen.getByText("Open"));
 
-    const overlay = container.querySelector('[data-slot="dialog-overlay"]');
-    expect(overlay).toBeDefined();
+    const overlay = document.querySelector('[data-slot="dialog-overlay"]');
+    expect(overlay).not.toBeNull();
   });
 });

@@ -43,20 +43,17 @@ describe("SearchBar Component", () => {
   });
 
   test("search button is disabled when input is empty", () => {
-    const { container } = render(<SearchBar />);
-    // Check for the submit button (primary variant)
-    const submitButton = container.querySelector(
-      '[data-slot="button"].bg-primary',
-    );
-    expect(submitButton?.hasAttribute("disabled")).toBe(true);
+    render(<SearchBar />);
+    const submitButton = screen.getByTestId("search-submit");
+    expect(submitButton.hasAttribute("disabled")).toBe(true);
   });
 
   test("search button is enabled when input has text", async () => {
     const user = userEvent.setup();
-    const { container } = render(<SearchBar />);
+    render(<SearchBar />);
     const textarea = screen.getByPlaceholderText(/ask anything/i);
-    const submitButton = container.querySelector(
-      '[data-slot="button"].bg-primary',
+    const submitButton = screen.getByTestId(
+      "search-submit",
     ) as HTMLButtonElement;
 
     await user.type(textarea, "test query");
@@ -64,8 +61,8 @@ describe("SearchBar Component", () => {
   });
 
   test("displays search icon", () => {
-    const { container } = render(<SearchBar />);
-    const searchIcon = container.querySelector(".lucide-search");
+    render(<SearchBar />);
+    const searchIcon = screen.getByTestId("search-icon");
     expect(searchIcon).toBeDefined();
   });
 
@@ -92,11 +89,8 @@ describe("SearchBar Component", () => {
   });
 
   test("renders options sheet button", () => {
-    const { container } = render(<SearchBar />);
-    // Options button should be a sheet trigger
-    const optionsButton = container.querySelector(
-      '[data-slot="sheet-trigger"]',
-    );
+    render(<SearchBar />);
+    const optionsButton = screen.getByTestId("options-button");
     expect(optionsButton).toBeDefined();
   });
 

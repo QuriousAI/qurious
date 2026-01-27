@@ -6,7 +6,6 @@
  * - updateFromClerk: Update user from Clerk webhook
  * - deleteFromClerk: Delete user from Clerk webhook
  * - deductCredits: Deduct credits from user account
- * - checkCredits: Check if user has sufficient credits
  */
 
 import { describe, test, expect, vi, beforeEach } from "vitest";

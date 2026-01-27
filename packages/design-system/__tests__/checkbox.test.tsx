@@ -3,15 +3,11 @@ import { render, screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Checkbox } from "../src/components/checkbox";
 
-afterEach(() => {
-  cleanup();
-});
-
 describe("Checkbox Component", () => {
   test("renders checkbox", () => {
     const { container } = render(<Checkbox />);
     const checkbox = container.querySelector('button[role="checkbox"]');
-    expect(checkbox).toBeDefined();
+    expect(checkbox).not.toBeNull();
   });
 
   test("handles checked state", () => {
@@ -77,7 +73,7 @@ describe("Checkbox Component", () => {
     const indicator = container.querySelector(
       '[data-slot="checkbox-indicator"]',
     );
-    expect(indicator).toBeDefined();
+    expect(indicator).not.toBeNull();
   });
 
   test("handles indeterminate state", () => {

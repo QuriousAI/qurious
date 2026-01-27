@@ -22,7 +22,8 @@ test("SearchCard renders with question text", () => {
   );
   expect(screen.getByText("What is quantum computing?")).toBeDefined();
   const link = container.querySelector("a");
-  expect(link?.getAttribute("href")).toBe(
+  expect(link).not.toBeNull();
+  expect(link!.getAttribute("href")).toBe(
     "/search?q=What is quantum computing?",
   );
 });
@@ -34,5 +35,6 @@ test("SearchCard renders with emoji when provided", () => {
   expect(screen.getByText("🧬")).toBeDefined();
   expect(screen.getByText("How do cells work?")).toBeDefined();
   const link = container.querySelector("a");
-  expect(link?.getAttribute("href")).toBe("/search?q=How do cells work?");
+  expect(link).not.toBeNull();
+  expect(link!.getAttribute("href")).toBe("/search?q=How do cells work?");
 });

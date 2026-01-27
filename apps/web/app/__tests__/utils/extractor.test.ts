@@ -171,4 +171,29 @@ describe("extractFieldsFromPapers", () => {
       abstract: "Has abstract",
     });
   });
+
+  test("handles empty tldr text", () => {
+    const papers: Paper[] = [
+      {
+        paperId: "1",
+        title: "Paper",
+        abstract: "Has abstract",
+        tldr: { text: "" },
+      } as Paper,
+    ];
+
+    const result = extractFieldsFromPapers(papers);
+    // Either it omits the tldr or returns it as is, depending on desired behavior.
+    // The prompt says "assert that the resulting array either omits the tldr or returns the paper without an empty tldr.text (mirroring the 'handles empty abstract string' test)"
+    // The "handles empty abstract string" test returns empty array if abstract is empty? No, line 154 expects result to equal [].
+    // So if tldr is empty (and abstract present), maybe it should return the paper but without tldr?
+    // "returns the paper without an empty tldr.text"
+    expect(result).toHaveLength(1);
+    expect(result?.[0]).toEqual({
+      title: "Paper",
+      abstract: "Has abstract",
+    });
+    // tldr should be omitted if text is empty
+    expect(result?.[0].tldr).toBeUndefined();
+  });
 });

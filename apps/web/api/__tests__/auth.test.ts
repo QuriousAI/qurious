@@ -23,7 +23,7 @@ describe("API Authentication", () => {
     const json = await res.json();
 
     expect(json).toHaveProperty("error");
-    expect(json.error).toBeDefined();
+    expect(json.error).not.toBeNull();
   });
 
   test("OPTIONS request for CORS", async () => {
@@ -58,6 +58,9 @@ describe("API Authentication", () => {
 
     // Check for common security headers
     const headers = res.headers;
-    expect(headers).toBeDefined();
+    expect(headers.get("content-security-policy")).not.toBeNull();
+    expect(headers.get("x-content-type-options")).toBe("nosniff");
+    expect(headers.get("x-frame-options")).toBe("DENY");
+    expect(headers.get("referrer-policy")).toBe("no-referrer");
   });
 });

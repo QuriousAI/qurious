@@ -232,11 +232,11 @@ function OptionsForm({
 }
 
 type SearchOptions = {
-  minimumCitations?: number;
-  publishedSince?: string;
-  openAccess?: boolean;
-  publicationTypes?: string[];
-  fieldsOfStudy?: string[];
+  minimumCitations: number;
+  publishedSince: string;
+  openAccess: boolean;
+  publicationTypes: string[];
+  fieldsOfStudy: string[];
 };
 
 export const SearchBarOptionsSheet = ({
@@ -251,7 +251,7 @@ export const SearchBarOptionsSheet = ({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" data-testid="options-button">
           <Filter className="" /> <span className="hidden">{buttonLabel}</span>
         </Button>
       </SheetTrigger>
@@ -280,7 +280,7 @@ function OptionsSheetContent({
 
   const handleApply = () => {
     const values = form.getValues();
-    setOptions(values);
+    setOptions(values as SearchOptions);
     toast.success("Search options applied");
   };
 
