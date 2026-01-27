@@ -11,7 +11,7 @@ describe("Separator Component", () => {
   test("renders separator", () => {
     const { container } = render(<Separator />);
     const separator = container.querySelector('[data-slot="separator"]');
-    expect(separator).toBeDefined();
+    expect(separator).not.toBeNull();
   });
 
   test("renders horizontal separator by default", () => {
@@ -41,7 +41,7 @@ describe("Separator Component", () => {
   test("can be non-decorative", () => {
     const { container } = render(<Separator decorative={false} />);
     const separator = container.querySelector('[role="separator"]');
-    expect(separator).toBeDefined();
+    expect(separator).not.toBeNull();
   });
 
   test("horizontal separator has correct height", () => {
@@ -65,8 +65,8 @@ describe("Separator Component", () => {
       </div>,
     );
 
-    expect(screen.getByText("Content above")).toBeDefined();
-    expect(screen.getByText("Content below")).toBeDefined();
+    expect(screen.getByText("Content above")).toBeTruthy();
+    expect(screen.getByText("Content below")).toBeTruthy();
   });
 
   test("renders multiple separators", () => {

@@ -25,13 +25,13 @@ Comprehensive test suite for Qurious AI backend (Convex functions) covering:
 packages/backend/convex/
 ├── __tests__/
 │   ├── setup.ts                     # Mock utilities & test helpers
-│   ├── users.queries.test.ts        # User query tests (3 tests)
+│   ├── users.queries.test.ts        # User query tests (6 tests)
 │   ├── users.mutations.test.ts      # User mutation tests (13 tests)
 │   ├── searches.queries.test.ts     # Search query tests (8 tests)
-│   ├── searches.mutations.test.ts   # Search mutation tests (10 tests)
+│   ├── searches.mutations.test.ts   # Search mutation tests (11 tests)
 │   ├── folders.queries.test.ts      # Folder query tests (9 tests)
-│   ├── folders.mutations.test.ts    # Folder mutation tests (15 tests)
-│   ├── payments.test.ts             # Payment action tests (8 tests)
+│   ├── folders.mutations.test.ts    # Folder mutation tests (17 tests)
+│   ├── payments.test.ts             # Payment action tests (9 tests)
 │   ├── credits.test.ts              # Credit constant tests (3 tests)
 │   └── schema.test.ts               # Schema validation tests (25 tests)
 ├── vitest.config.ts                 # Vitest configuration
@@ -46,7 +46,7 @@ packages/backend/convex/
 
 ## 🎯 Test Coverage by Module
 
-### ✅ Users Module (16 tests)
+### ✅ Users Module (19 tests)
 
 **Files Tested:**
 
@@ -96,7 +96,7 @@ packages/backend/convex/
 
 ---
 
-### ✅ Searches Module (18 tests)
+### ✅ Searches Module (19 tests)
 
 **Files Tested:**
 
@@ -142,7 +142,7 @@ packages/backend/convex/
 
 ---
 
-### ✅ Folders Module (24 tests)
+### ✅ Folders Module (26 tests)
 
 **Files Tested:**
 
@@ -208,7 +208,7 @@ packages/backend/convex/
 
 ---
 
-### ✅ Payments Module (8 tests)
+### ✅ Payments Module (9 tests)
 
 **Files Tested:**
 

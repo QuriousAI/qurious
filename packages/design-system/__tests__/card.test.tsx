@@ -16,7 +16,7 @@ afterEach(() => {
 describe("Card Component", () => {
   test("renders card with children", () => {
     render(<Card>Card content</Card>);
-    expect(screen.getByText("Card content")).toBeDefined();
+    expect(screen.getByText("Card content")).toBeTruthy();
   });
 
   test("applies custom className to card", () => {
@@ -27,23 +27,23 @@ describe("Card Component", () => {
 
   test("renders CardHeader with children", () => {
     render(<CardHeader>Header content</CardHeader>);
-    expect(screen.getByText("Header content")).toBeDefined();
+    expect(screen.getByText("Header content")).toBeTruthy();
   });
 
   test("renders CardTitle with text", () => {
     render(<CardTitle>Card Title</CardTitle>);
-    expect(screen.getByText("Card Title")).toBeDefined();
+    expect(screen.getByText("Card Title")).toBeTruthy();
   });
 
   test("CardTitle has correct data-slot attribute", () => {
     const { container } = render(<CardTitle>Title</CardTitle>);
     const title = container.querySelector('[data-slot="card-title"]');
-    expect(title).toBeDefined();
+    expect(title).not.toBeNull();
   });
 
   test("renders CardDescription with text", () => {
     render(<CardDescription>Card description text</CardDescription>);
-    expect(screen.getByText("Card description text")).toBeDefined();
+    expect(screen.getByText("Card description text")).toBeTruthy();
   });
 
   test("CardDescription has muted text styling", () => {
@@ -58,12 +58,12 @@ describe("Card Component", () => {
 
   test("renders CardContent with children", () => {
     render(<CardContent>Content section</CardContent>);
-    expect(screen.getByText("Content section")).toBeDefined();
+    expect(screen.getByText("Content section")).toBeTruthy();
   });
 
   test("renders CardFooter with children", () => {
     render(<CardFooter>Footer content</CardFooter>);
-    expect(screen.getByText("Footer content")).toBeDefined();
+    expect(screen.getByText("Footer content")).toBeTruthy();
   });
 
   test("renders complete card structure", () => {
@@ -78,10 +78,10 @@ describe("Card Component", () => {
       </Card>,
     );
 
-    expect(screen.getByText("Test Title")).toBeDefined();
-    expect(screen.getByText("Test Description")).toBeDefined();
-    expect(screen.getByText("Test Content")).toBeDefined();
-    expect(screen.getByText("Test Footer")).toBeDefined();
+    expect(screen.getByText("Test Title")).toBeTruthy();
+    expect(screen.getByText("Test Description")).toBeTruthy();
+    expect(screen.getByText("Test Content")).toBeTruthy();
+    expect(screen.getByText("Test Footer")).toBeTruthy();
   });
 
   test("applies custom className to all card parts", () => {
@@ -96,12 +96,12 @@ describe("Card Component", () => {
       </Card>,
     );
 
-    expect(container.querySelector(".card-custom")).toBeDefined();
-    expect(container.querySelector(".header-custom")).toBeDefined();
-    expect(container.querySelector(".title-custom")).toBeDefined();
-    expect(container.querySelector(".desc-custom")).toBeDefined();
-    expect(container.querySelector(".content-custom")).toBeDefined();
-    expect(container.querySelector(".footer-custom")).toBeDefined();
+    expect(container.querySelector(".card-custom")).not.toBeNull();
+    expect(container.querySelector(".header-custom")).not.toBeNull();
+    expect(container.querySelector(".title-custom")).not.toBeNull();
+    expect(container.querySelector(".desc-custom")).not.toBeNull();
+    expect(container.querySelector(".content-custom")).not.toBeNull();
+    expect(container.querySelector(".footer-custom")).not.toBeNull();
   });
 
   test("card has shadow and border styling", () => {
@@ -122,6 +122,6 @@ describe("Card Component", () => {
       </Card>,
     );
 
-    expect(screen.getByText("Nested Card")).toBeDefined();
+    expect(screen.getByText("Nested Card")).toBeTruthy();
   });
 });

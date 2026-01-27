@@ -11,7 +11,7 @@ describe("Switch Component", () => {
   test("renders switch element", () => {
     const { container } = render(<Switch />);
     const switchEl = container.querySelector('button[role="switch"]');
-    expect(switchEl).toBeDefined();
+    expect(switchEl).not.toBeNull();
   });
 
   test("handles checked state", () => {

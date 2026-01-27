@@ -1,5 +1,5 @@
-import { expect, test, describe, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { expect, test, describe } from "vitest";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
   Tabs,

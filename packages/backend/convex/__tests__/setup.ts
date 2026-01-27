@@ -82,7 +82,17 @@ export const createMockCtx = (
   } = {},
 ) => {
   const mockDb = createMockDb();
+  // Pass userId or clerkId info to auth
   const mockAuth = createMockAuth(options.userId);
+  if (options.clerkId) {
+    mockAuth.getUserIdentity.mockResolvedValue({
+      subject: options.clerkId,
+      tokenIdentifier: "test-token",
+    });
+  }
+  if (options.isAuthenticated === false) {
+    mockAuth.getUserIdentity.mockResolvedValue(null);
+  }
 
   return {
     db: mockDb,

@@ -217,11 +217,9 @@ describe("Folder Queries", () => {
       mockGetOrThrow.mockResolvedValue(privateFolder);
       mockGetCurrentUserIdOrThrow.mockResolvedValue(mockUser._id);
 
-      try {
-        await getFolderById.handler(ctx, { folderId: privateFolder._id });
-      } catch (error) {
-        // Expected error
-      }
+      await expect(
+        getFolderById.handler(ctx, { folderId: privateFolder._id }),
+      ).rejects.toThrow();
 
       expect(mockCaptureEvent).toHaveBeenCalledWith(
         ctx,

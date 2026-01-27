@@ -46,7 +46,8 @@ describe("User Mutations", () => {
         .mockResolvedValueOnce("folder_123" as Id<"folders">); // Second call for folder
 
       const { createFromClerk } = await import("../users/mutations");
-      await createFromClerk.handler(ctx, { data: clerkData });
+      // Cast to any to access internal handler for testing
+      await (createFromClerk as any).handler(ctx, { data: clerkData });
 
       // Verify user was created with correct data
       expect(ctx.db.insert).toHaveBeenCalledWith("users", {
@@ -86,8 +87,7 @@ describe("User Mutations", () => {
 
       const { captureEvent } = await import("../lib/analytics");
       const { createFromClerk } = await import("../users/mutations");
-
-      await createFromClerk.handler(ctx, { data: clerkData });
+      await (createFromClerk as any).handler(ctx, { data: clerkData });
 
       expect(captureEvent).toHaveBeenCalledWith(
         ctx,
@@ -114,7 +114,7 @@ describe("User Mutations", () => {
       (userByClerkId as any).mockResolvedValue(mockUser);
 
       const { updateFromClerk } = await import("../users/mutations");
-      await updateFromClerk.handler(ctx, { data: clerkData });
+      await (updateFromClerk as any).handler(ctx, { data: clerkData });
 
       expect(ctx.db.patch).toHaveBeenCalledWith(mockUser._id, {
         name: "John Updated",
@@ -135,7 +135,7 @@ describe("User Mutations", () => {
       const { updateFromClerk } = await import("../users/mutations");
 
       await expect(
-        updateFromClerk.handler(ctx, { data: clerkData }),
+        (updateFromClerk as any).handler(ctx, { data: clerkData }),
       ).rejects.toThrow("user doesn't exist");
     });
 
@@ -154,7 +154,7 @@ describe("User Mutations", () => {
       const { captureEvent } = await import("../lib/analytics");
       const { updateFromClerk } = await import("../users/mutations");
 
-      await updateFromClerk.handler(ctx, { data: clerkData });
+      await (updateFromClerk as any).handler(ctx, { data: clerkData });
 
       expect(captureEvent).toHaveBeenCalledWith(
         ctx,
@@ -173,7 +173,9 @@ describe("User Mutations", () => {
       (userByClerkId as any).mockResolvedValue(mockUser);
 
       const { deleteFromClerk } = await import("../users/mutations");
-      await deleteFromClerk.handler(ctx, { clerkUserId: "clerk_delete" });
+      await (deleteFromClerk as any).handler(ctx, {
+        clerkUserId: "clerk_delete",
+      });
 
       expect(ctx.db.delete).toHaveBeenCalledWith(mockUser._id);
     });
@@ -187,7 +189,9 @@ describe("User Mutations", () => {
       const { deleteFromClerk } = await import("../users/mutations");
 
       await expect(
-        deleteFromClerk.handler(ctx, { clerkUserId: "clerk_nonexistent" }),
+        (deleteFromClerk as any).handler(ctx, {
+          clerkUserId: "clerk_nonexistent",
+        }),
       ).rejects.toThrow("user doesn't exist");
     });
   });
@@ -202,7 +206,7 @@ describe("User Mutations", () => {
       (getCurrentUserOrThrow as any).mockResolvedValue(mockUser);
 
       const { deductCredits } = await import("../users/mutations");
-      await deductCredits.handler(ctx, { amount: 10 });
+      await (deductCredits as any).handler(ctx, { amount: 10 });
 
       expect(ctx.db.patch).toHaveBeenCalledWith(mockUser._id, {
         credits: 90,
@@ -219,9 +223,9 @@ describe("User Mutations", () => {
 
       const { deductCredits } = await import("../users/mutations");
 
-      await expect(deductCredits.handler(ctx, { amount: 10 })).rejects.toThrow(
-        "insufficient credits",
-      );
+      await expect(
+        (deductCredits as any).handler(ctx, { amount: 10 }),
+      ).rejects.toThrow("insufficient credits");
     });
 
     test("should track analytics on successful deduction", async () => {
@@ -235,7 +239,7 @@ describe("User Mutations", () => {
       const { captureEvent } = await import("../lib/analytics");
       const { deductCredits } = await import("../users/mutations");
 
-      await deductCredits.handler(ctx, { amount: 10 });
+      await (deductCredits as any).handler(ctx, { amount: 10 });
 
       expect(captureEvent).toHaveBeenCalledWith(
         ctx,
@@ -259,11 +263,9 @@ describe("User Mutations", () => {
       const { captureEvent } = await import("../lib/analytics");
       const { deductCredits } = await import("../users/mutations");
 
-      try {
-        await deductCredits.handler(ctx, { amount: 10 });
-      } catch (error) {
-        // Expected error
-      }
+      await expect(
+        (deductCredits as any).handler(ctx, { amount: 10 }),
+      ).rejects.toThrow("insufficient credits");
 
       expect(captureEvent).toHaveBeenCalledWith(
         ctx,
@@ -285,7 +287,7 @@ describe("User Mutations", () => {
       (getCurrentUserOrThrow as any).mockResolvedValue(mockUser);
 
       const { deductCredits } = await import("../users/mutations");
-      await deductCredits.handler(ctx, { amount: 10 });
+      await (deductCredits as any).handler(ctx, { amount: 10 });
 
       expect(ctx.db.patch).toHaveBeenCalledWith(mockUser._id, {
         credits: 0,
@@ -301,7 +303,7 @@ describe("User Mutations", () => {
       (getCurrentUserOrThrow as any).mockResolvedValue(mockUser);
 
       const { deductCredits } = await import("../users/mutations");
-      await deductCredits.handler(ctx, { amount: 0 });
+      await (deductCredits as any).handler(ctx, { amount: 0 });
 
       expect(ctx.db.patch).toHaveBeenCalledWith(mockUser._id, {
         credits: 100,

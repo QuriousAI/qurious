@@ -280,7 +280,14 @@ function OptionsSheetContent({
 
   const handleApply = () => {
     const values = form.getValues();
-    setOptions(values as SearchOptions);
+    const safeOptions: SearchOptions = {
+      minimumCitations: values.minimumCitations ?? 0,
+      publishedSince: values.publishedSince ?? "",
+      openAccess: values.openAccess ?? false,
+      publicationTypes: values.publicationTypes ?? [],
+      fieldsOfStudy: values.fieldsOfStudy ?? [],
+    };
+    setOptions(safeOptions);
     toast.success("Search options applied");
   };
 
