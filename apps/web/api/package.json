@@ -2,15 +2,18 @@
   "name": "web-api",
   "type": "module",
   "dependencies": {
+    "@unkey/hono": "^2.0.0",
     "hono": "^4.10.1"
   },
   "scripts": {
-    "dev": "vc dev --listen 3010"
+    "dev": "vc dev --listen 3010",
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
     "tsx": "^4.7.1",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   },
   "version": "dev"
 }
