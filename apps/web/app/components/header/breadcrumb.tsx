@@ -9,7 +9,7 @@ import {
   BreadcrumbSeparator,
 } from "@workspace/design-system/components/breadcrumb";
 import {
-  ChevronRight,
+  SlashIcon,
   Home,
   File,
   Folders,
@@ -22,7 +22,7 @@ import { motion } from "motion/react";
 const ChevronSeparator = () => {
   return (
     <BreadcrumbSeparator className="text-muted-foreground/50">
-      <ChevronRight className="size-3.5" />
+      <SlashIcon className="size-3.5" />
     </BreadcrumbSeparator>
   );
 };
@@ -37,7 +37,7 @@ export const HeaderBreadcrumb = (props: { className: string }) => {
   const pathname = usePathname();
   let breadcrumbItems: (React.ReactNode | null)[] = [
     <BreadcrumbItem key="home">
-      <BreadcrumbPage className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-muted/50 text-foreground text-sm font-medium">
+      <BreadcrumbPage className="flex items-center gap-1.5 px-2 py-1 rounded-md text-foreground text-sm font-medium">
         <Home className="size-3.5" /> Home
       </BreadcrumbPage>
     </BreadcrumbItem>,
@@ -58,7 +58,7 @@ export const HeaderBreadcrumb = (props: { className: string }) => {
       return (
         <BreadcrumbItem key={i}>
           {isLast ? (
-            <BreadcrumbPage className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-muted/50 text-foreground text-sm font-medium">
+            <BreadcrumbPage className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-foreground text-sm font-medium">
               {icon} <span className="capitalize">{segment}</span>
             </BreadcrumbPage>
           ) : (
@@ -86,7 +86,7 @@ export const HeaderBreadcrumb = (props: { className: string }) => {
           <BreadcrumbItem>
             <BreadcrumbLink
               href="/"
-              className="text-base font-semibold tracking-tight text-foreground hover:text-primary transition-colors duration-200"
+              className="text-sm tracking-tight text-foreground hover:text-primary transition-colors duration-200"
             >
               Qurious
             </BreadcrumbLink>
