@@ -9,6 +9,16 @@ const GRAPH_API_URL = `${SEMANTIC_SCHOLAR_API_URL}/graph/v1`;
 const RECOMMENDATIONS_API_URL = `${SEMANTIC_SCHOLAR_API_URL}/recommendations/v1`;
 
 export class SemanticScholarAPIClient {
+  private apiKey?: string;
+
+  /**
+   * Creates a new SemanticScholarAPIClient instance.
+   * @param apiKey - Optional API key for authenticated requests.
+   */
+  constructor(apiKey?: string) {
+    this.apiKey = apiKey;
+  }
+
   /**
    * Searches for relevant papers based on a query. Typically used on `/search` page inside app.
    * Calls https://api.semanticscholar.org/graph/v1/paper/search
@@ -39,7 +49,9 @@ export class SemanticScholarAPIClient {
     }).toString();
 
     return fetchSemanticScholarAPI<GetRelevantPapersReturnType>(
-      `${GRAPH_API_URL}/paper/search?${searchParams}`
+      `${GRAPH_API_URL}/paper/search?${searchParams}`,
+      undefined,
+      this.apiKey,
     );
   }
 
@@ -53,7 +65,9 @@ export class SemanticScholarAPIClient {
     }).toString();
 
     return fetchSemanticScholarAPI<Paper>(
-      `${GRAPH_API_URL}/paper/${options.paperId}?${searchParams}`
+      `${GRAPH_API_URL}/paper/${options.paperId}?${searchParams}`,
+      undefined,
+      this.apiKey,
     );
   }
 
@@ -71,7 +85,8 @@ export class SemanticScholarAPIClient {
       {
         method: "POST",
         body: JSON.stringify({ ids: options.paperIds }),
-      }
+      },
+      this.apiKey,
     );
   }
 
@@ -87,7 +102,9 @@ export class SemanticScholarAPIClient {
     return fetchSemanticScholarAPI<{
       recommendedPapers: Paper[];
     }>(
-      `${RECOMMENDATIONS_API_URL}/papers/forpaper/${options.paperId}?${searchParams}`
+      `${RECOMMENDATIONS_API_URL}/papers/forpaper/${options.paperId}?${searchParams}`,
+      undefined,
+      this.apiKey,
     );
   }
 
@@ -100,7 +117,11 @@ export class SemanticScholarAPIClient {
       data: {
         citedPaper: Paper;
       }[];
-    }>(`${GRAPH_API_URL}/paper/${options.paperId}/references?${searchParams}`);
+    }>(
+      `${GRAPH_API_URL}/paper/${options.paperId}/references?${searchParams}`,
+      undefined,
+      this.apiKey,
+    );
   }
 
   getPaperCitations(options: { paperId: string; fields: string[] }) {
@@ -112,6 +133,10 @@ export class SemanticScholarAPIClient {
       data: {
         citingPaper: Paper;
       }[];
-    }>(`${GRAPH_API_URL}/paper/${options.paperId}/citations?${searchParams}`);
+    }>(
+      `${GRAPH_API_URL}/paper/${options.paperId}/citations?${searchParams}`,
+      undefined,
+      this.apiKey,
+    );
   }
 }

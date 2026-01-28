@@ -1,20 +1,27 @@
-import { ok, err } from "neverthrow";
 import { nanoid } from "nanoid";
 import { performance } from "node:perf_hooks";
 
 /**
  * Fetches and validates responses from the Semantic Scholar API.
  * @param url - The URL to fetch.
+ * @param init - Optional fetch init options.
+ * @param apiKey - Optional API key for authenticated requests.
  */
 export const fetchSemanticScholarAPI = async <T>(
   url: string,
-  init?: RequestInit
+  init?: RequestInit,
+  apiKey?: string,
 ) => {
   const id = nanoid();
   console.log(`[${id}] Making request to ${url}`);
 
+  const headers: HeadersInit = {
+    ...init?.headers,
+    ...(apiKey ? { "x-api-key": apiKey } : {}),
+  };
+
   const start = performance.now();
-  const response = await fetch(url, init);
+  const response = await fetch(url, { ...init, headers });
   const end = performance.now();
 
   const duration = (end - start).toFixed(2);
@@ -42,19 +49,15 @@ export const fetchSemanticScholarAPI = async <T>(
     }
 
     console.log(
-      `[${id}] error: ${response.status} - ${errorCode} - ${errorMessage}`
+      `[${id}] error: ${response.status} - ${errorCode} - ${errorMessage}`,
     );
     console.log(`[${id}] error data: ${JSON.stringify(data)}`);
 
     // To understand this, go to https://github.com/supermacro/neverthrow
-    return err({
-      responseStatus: response.status,
-      errorCode,
-      errorMessage,
-    });
+    throw new Error(`${response.status} - ${errorCode} - ${errorMessage}`);
   }
 
   // To understand this, go to https://github.com/supermacro/neverthrow
   console.log(`[${id}] success`);
-  return ok(data as T);
+  return data as T;
 };

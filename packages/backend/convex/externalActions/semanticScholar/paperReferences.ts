@@ -47,7 +47,9 @@ export const getPaperReferencesInternal = internalAction({
     fields: v.array(v.string()),
   },
   handler: async (ctx, args) => {
-    const semanticScholar = new SemanticScholarAPIClient();
+    const semanticScholar = new SemanticScholarAPIClient(
+      process.env.SEMANTIC_SCHOLAR_API_KEY,
+    );
     const result = await semanticScholar.getPaperReferences({
       paperId: args.paperId,
       fields: args.fields,

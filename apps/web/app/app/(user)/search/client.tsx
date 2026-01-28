@@ -80,6 +80,13 @@ const PAPER_FIELDS = [
   "publicationTypes",
 ] as const;
 
+const SORT_LABELS: Record<SortOption, string> = {
+  relevance: "Most Relevant",
+  citationCount: "Most Cited",
+  date: "Most Recent",
+  influentialCitationCount: "Most Influential",
+};
+
 // Animation variants for staggered list items
 const staggerContainerVariants: Variants = {
   hidden: {},
@@ -284,7 +291,7 @@ const PapersSection = ({
               <SelectContent>
                 {SORTING.map((option) => (
                   <SelectItem key={option} value={option}>
-                    {option}
+                    {SORT_LABELS[option]}
                   </SelectItem>
                 ))}
               </SelectContent>
