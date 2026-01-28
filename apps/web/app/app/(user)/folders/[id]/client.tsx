@@ -13,13 +13,14 @@ import { Id, Doc } from "@workspace/backend/_generated/dataModel";
 import { Switch } from "@workspace/design-system/components/switch";
 import Tiptap from "@/components/tiptap";
 import { Heading } from "@/components/global-heading";
-import { Folder, NotebookPen } from "@workspace/design-system/icons";
+import { Folder, NotebookPen, Lock } from "@workspace/design-system/icons";
 import { GlobalErrorHandler } from "@/components/global-error";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@workspace/design-system/lib/utils";
-import { Skeleton } from "@workspace/design-system/components/skeleton";
+import { TextShimmer } from "@workspace/design-system/components/motion-primitives/text-shimmer";
+import { useGetCurrentUserQuery } from "@/queries/users";
 
 /** Common paper fields used across multiple components */
 const PAPER_LIST_FIELDS = [
@@ -60,8 +61,8 @@ const FolderNav = (props: { folderId: string }) => {
             key={link.href}
             href={fullHref}
             className={cn(
-              "hover:text-blue-500 transition-colors",
-              isActive && "text-blue-500 font-medium",
+              "hover:text-primary transition-colors",
+              isActive && "text-primary font-medium",
             )}
           >
             {link.label}
@@ -72,7 +73,11 @@ const FolderNav = (props: { folderId: string }) => {
   );
 };
 
-const FolderHero = (props: { folder: Doc<"folders">; folderId: string }) => {
+const FolderHero = (props: {
+  folder: Doc<"folders">;
+  folderId: string;
+  isOwner: boolean;
+}) => {
   const updateFolderPrivacyMutation = useUpdateFolderPrivacyMutation();
 
   return (
@@ -91,42 +96,48 @@ const FolderHero = (props: { folder: Doc<"folders">; folderId: string }) => {
         {props.folder.name}
       </motion.div>
 
-      <div className="flex items-center justify-between mt-4">
-        <div className="flex items-center space-x-2">
-          <Label htmlFor="privacy-toggle" className="text-sm font-medium">
-            Private Folder
-          </Label>
-          <Switch
-            id="privacy-toggle"
-            checked={!props.folder.public}
-            onCheckedChange={(checked) => {
-              updateFolderPrivacyMutation.mutate({
-                folderId: props.folderId as Id<"folders">,
-                isPrivate: checked,
-              });
-            }}
-          />
+      {props.isOwner && (
+        <div className="flex items-center justify-between mt-4">
+          <div className="flex items-center space-x-2">
+            <Label htmlFor="privacy-toggle" className="text-sm font-medium">
+              Private Folder
+            </Label>
+            <Switch
+              id="privacy-toggle"
+              checked={!props.folder.public}
+              onCheckedChange={(checked) => {
+                updateFolderPrivacyMutation.mutate({
+                  folderId: props.folderId as Id<"folders">,
+                  isPrivate: checked,
+                });
+              }}
+            />
+          </div>
+          <p className="text-xs text-muted-foreground">
+            {!props.folder.public
+              ? "Only you can see this folder"
+              : "Anyone can see this folder"}
+          </p>
         </div>
-        <p className="text-xs text-muted-foreground">
-          {!props.folder.public
-            ? "Only you can see this folder"
-            : "Anyone can see this folder"}
-        </p>
-      </div>
+      )}
 
       <div className="mt-1 text-neutral-400">{props.folder.description}</div>
       <Separator className="mt-4" />
       <div className="mt-4 flex flex-col gap-2">
         <Heading
           heading="Notes"
-          subHeading="Add and edit notes for this folder."
+          subHeading={
+            props.isOwner
+              ? "Add and edit notes for this folder."
+              : "View notes for this folder."
+          }
           icon={<NotebookPen />}
         />
         <div className="border p-2 rounded-md">
           <Tiptap
             content={props.folder.content}
             folderId={props.folder._id}
-            editable={true}
+            editable={props.isOwner}
           />
         </div>
       </div>
@@ -145,19 +156,49 @@ export function FolderLayoutClient(props: {
     error,
   } = useGetFolderByIdQuery(props.folderId as Id<"folders">);
 
+  const { data: currentUser } = useGetCurrentUserQuery();
+
+  // Determine if the current user is the owner of the folder
+  const isOwner = Boolean(
+    currentUser && folder && folder.userId === currentUser._id,
+  );
+
   if (isPending) {
-    return <Skeleton className="h-full w-full" />;
+    return <TextShimmer duration={1}>Loading folder...</TextShimmer>;
   }
 
   if (error) {
     if (error.message === "Folder not found") {
-      return <div>Folder not found</div>;
+      return (
+        <div className="flex flex-col items-center justify-center h-full gap-6 text-center px-4">
+          <Folder className="size-20 text-muted-foreground" />
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">Folder not found</h2>
+            <p className="text-muted-foreground text-lg max-w-md">
+              This folder may have been deleted or doesn't exist.
+            </p>
+          </div>
+        </div>
+      );
     }
 
     if (error.message.includes("Uncaught Error: Can't get current user!")) {
       return (
-        <div className="flex items-center justify-center h-full">
-          This folder is private. If you're the owner - log in to access.
+        <div className="flex flex-col items-center justify-center h-full gap-6 text-center px-4">
+          <div className="relative">
+            <Folder className="size-20 text-muted-foreground" />
+            <div className="absolute -bottom-1 -right-1 bg-background rounded-full p-1">
+              <div className="bg-muted rounded-full p-2">
+                <Lock className="size-5 text-muted-foreground" />
+              </div>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold">This folder is private</h2>
+            <p className="text-muted-foreground text-lg max-w-md">
+              If you're the owner, please log in to access this folder.
+            </p>
+          </div>
         </div>
       );
     }
@@ -167,7 +208,7 @@ export function FolderLayoutClient(props: {
 
   return (
     <div className="flex flex-col gap-4">
-      <FolderHero folder={folder} folderId={props.folderId} />
+      <FolderHero folder={folder} folderId={props.folderId} isOwner={isOwner} />
       <FolderNav folderId={props.folderId} />
       {props.children}
     </div>
@@ -192,7 +233,7 @@ export function PapersPage(props: { folderId: string }) {
   });
 
   if (isFolderPending || isPapersPending) {
-    return <Skeleton className="h-64 w-full" />;
+    return <TextShimmer duration={1}>Loading papers...</TextShimmer>;
   }
 
   const error = folderError || papersError;
@@ -252,7 +293,7 @@ export function SearchesPage(props: { folderId: string }) {
   } = useGetMultipleSearchesQuery(folder?.searchIds ?? []);
 
   if (isFolderPending || isSearchesPending) {
-    return <Skeleton className="h-64 w-full" />;
+    return <TextShimmer duration={1}>Loading searches...</TextShimmer>;
   }
 
   const error = folderError || searchesError;

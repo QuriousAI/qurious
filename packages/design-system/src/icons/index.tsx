@@ -16,6 +16,7 @@ export {
   FolderPlus,
   Folders,
   Home,
+  Lock,
   LogIn,
   LogOut,
   MoreVertical,
