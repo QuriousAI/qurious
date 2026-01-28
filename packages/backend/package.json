@@ -1,7 +1,11 @@
 {
   "name": "@workspace/backend",
   "scripts": {
-    "dev": "convex dev"
+    "dev": "convex dev",
+    "test": "vitest run",
+    "test:all": "vitest run",
+    "test:watch": "vitest schema.test.ts credits.test.ts",
+    "test:coverage": "vitest run --coverage schema.test.ts credits.test.ts"
   },
   "exports": {
     "./*": "./convex/*"
@@ -26,6 +30,9 @@
     "zod": "^3.25.32"
   },
   "devDependencies": {
-    "typescript": "^5.8.3"
+    "@types/node": "^22.10.5",
+    "@vitest/coverage-v8": "^3.2.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
   }
 }

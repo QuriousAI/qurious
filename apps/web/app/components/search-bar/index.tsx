@@ -44,7 +44,7 @@ const SearchToggleGroup = () => {
   return (
     <ButtonGroup>
       <Button variant="outline">
-        <Search />
+        <Search data-testid="search-icon" />
         <span className="hidden">Normal</span>
       </Button>
       <Button variant="outline" disabled>
@@ -176,6 +176,7 @@ export const SearchBar = (props: { q?: string; options?: typeof FILTERS }) => {
               className="hover:cursor-pointer"
               onClick={handleButtonClick}
               disabled={search.trim().length === 0}
+              data-testid="search-submit"
             >
               <Link href={`/search?q=${search}`}>
                 <ChevronRight />
