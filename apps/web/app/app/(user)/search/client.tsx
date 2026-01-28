@@ -40,6 +40,8 @@ import { useGetCurrentUserQuery } from "@/queries/users";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 
+import { TextShimmer } from "@workspace/design-system/components/motion-primitives/text-shimmer";
+
 // ============================================================================
 // Types
 // ============================================================================
@@ -112,6 +114,7 @@ const SectionSeparator = () => (
 type SummarySectionProps = {
   summary: string | undefined;
   isPending: boolean;
+  isFetching: boolean;
   error: Error | null;
   paperCount: number;
 };
@@ -119,6 +122,7 @@ type SummarySectionProps = {
 const SummarySection = ({
   summary,
   isPending,
+  isFetching,
   error,
   paperCount,
 }: SummarySectionProps) => (
@@ -138,7 +142,13 @@ const SummarySection = ({
       }
     />
     {isPending ? (
-      <Skeleton className="w-full h-12" />
+      <TextShimmer className="w-full h-12" duration={1}>
+        Waiting for papers...
+      </TextShimmer>
+    ) : isFetching ? (
+      <TextShimmer className="w-full h-12" duration={1}>
+        Getting summary...
+      </TextShimmer>
     ) : error ? (
       <GlobalErrorHandler error={error} />
     ) : (
@@ -152,12 +162,14 @@ const SummarySection = ({
 type SuggestedSectionProps = {
   questions: string[] | undefined;
   isPending: boolean;
+  isFetching: boolean;
   error: Error | null;
 };
 
 const SuggestedSection = ({
   questions,
   isPending,
+  isFetching,
   error,
 }: SuggestedSectionProps) => (
   <div className="flex flex-col gap-2">
@@ -168,7 +180,13 @@ const SuggestedSection = ({
       icon={<Search />}
     />
     {isPending ? (
-      <Skeleton className="w-full h-12" />
+      <TextShimmer className="w-full h-12" duration={1}>
+        Waiting for summary...
+      </TextShimmer>
+    ) : isFetching ? (
+      <TextShimmer className="w-full h-12" duration={1}>
+        Getting suggestions...
+      </TextShimmer>
     ) : error ? (
       <GlobalErrorHandler error={error} />
     ) : (
@@ -193,7 +211,9 @@ type PapersSectionProps = {
     typeof useGetRelevantPapersInfiniteQuery
   >["papersFlatMapped"];
   totalPapers: number;
+  searchQuery: string | undefined;
   isPending: boolean;
+  isFetching: boolean;
   error: Error | null;
   sortBy: SortOption;
   onSortChange: (value: SortOption) => void;
@@ -203,7 +223,9 @@ type PapersSectionProps = {
 const PapersSection = ({
   papers,
   totalPapers,
+  searchQuery,
   isPending,
+  isFetching,
   error,
   sortBy,
   onSortChange,
@@ -240,8 +262,10 @@ const PapersSection = ({
   const displayedCount = papers?.length ?? 0;
   const subHeading =
     totalPapers > 0
-      ? `Found ${totalPapers.toLocaleString()} relevant papers, showing top ${displayedCount} results.`
-      : `Showing ${displayedCount} results.`;
+      ? `Found ${totalPapers.toLocaleString()} relevant papers, showing top ${displayedCount} results for "${searchQuery}".`
+      : `Showing ${displayedCount} results for "${searchQuery}".`;
+
+  const isLoading = isPending || isFetching;
 
   return (
     <>
@@ -267,7 +291,13 @@ const PapersSection = ({
           }
         />
         {isPending ? (
-          <div>Getting relevant papers...</div>
+          <TextShimmer className="w-full h-12" duration={1}>
+            Waiting for query transformation...
+          </TextShimmer>
+        ) : isFetching ? (
+          <TextShimmer className="w-full h-12" duration={1}>
+            Getting papers...
+          </TextShimmer>
         ) : error ? (
           <GlobalErrorHandler error={error} />
         ) : (
@@ -289,7 +319,7 @@ const PapersSection = ({
         variant="secondary"
         onClick={onLoadMore}
         className="place-self-center"
-        disabled={isPending || !!error}
+        disabled={isLoading || !!error}
       >
         Load More Results
         <ChevronDown />
@@ -326,6 +356,7 @@ export const SearchResults = ({
   const {
     papersFlatMapped: papers,
     isPending: papersPending,
+    isFetching: papersFetching,
     error: papersError,
     fetchNextPage,
     totalPapers,
@@ -411,14 +442,27 @@ export const SearchResults = ({
     userDetails: user?.details ?? "",
   });
 
-  const isLoadingPapers = transformQueryPending || papersPending;
   const papersLoadError = transformQueryError ?? papersError;
+
+  // Determine pending vs fetching states for each section
+  // Papers: pending when waiting for query transform, fetching when getting papers
+  const papersPendingState = transformQueryPending;
+  const papersFetchingState = papersPending || papersFetching;
+
+  // Summary: pending when waiting for papers, fetching when generating summary
+  const summaryPendingState = papersPendingState || papersFetchingState;
+  const summaryFetchingState = summaryPending;
+
+  // Suggested: pending when waiting for summary, fetching when generating suggestions
+  const suggestedPendingState = summaryPendingState || summaryFetchingState;
+  const suggestedFetchingState = suggestedPending;
 
   return (
     <div className="flex flex-col gap-8 w-full">
       <SummarySection
         summary={summary}
-        isPending={summaryPending}
+        isPending={summaryPendingState}
+        isFetching={summaryFetchingState}
         error={summaryError}
         paperCount={papers?.length ?? 0}
       />
@@ -427,7 +471,8 @@ export const SearchResults = ({
 
       <SuggestedSection
         questions={suggestedQuestions}
-        isPending={suggestedPending}
+        isPending={suggestedPendingState}
+        isFetching={suggestedFetchingState}
         error={suggestedError}
       />
 
@@ -436,9 +481,11 @@ export const SearchResults = ({
       <PapersSection
         papers={papers}
         totalPapers={totalPapers}
-        isPending={isLoadingPapers}
+        isPending={papersPendingState}
+        isFetching={papersFetchingState}
         error={papersLoadError}
         sortBy={sortBy}
+        searchQuery={transformedQuery}
         onSortChange={(value) => setSortBy(value)}
         onLoadMore={fetchNextPage}
       />
