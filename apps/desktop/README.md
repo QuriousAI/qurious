@@ -1,1 +1,0 @@
-add tauri, and not electron cause im the GOAT!!!
