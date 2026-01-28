@@ -16,6 +16,7 @@ import { Button } from "@workspace/design-system/components/button";
 import { useEffect, useState } from "react";
 
 import { cn } from "@workspace/design-system/lib/utils";
+import { env } from "@/env";
 
 const NavChild = (props) => {
   return (
@@ -81,8 +82,8 @@ const HeaderNavigationMenu = () => {
         },
       ],
     },
-    { name: "Blog", link: process.env.NEXT_PUBLIC_WEB_BLOG_URL },
-    { name: "Help", link: process.env.NEXT_PUBLIC_WEB_HELP_URL },
+    { name: "Blog", link: env.NEXT_PUBLIC_WEB_BLOG_URL },
+    { name: "Help", link: env.NEXT_PUBLIC_WEB_HELP_URL },
   ];
 
   return (
@@ -155,7 +156,7 @@ export function Header() {
       <div className="px-1 text-lg font-semibold">
         <div className="flex items-center gap-2">
           <Button variant="secondary">
-            <Link href={`${process.env.NEXT_PUBLIC_WEB_APP_URL}/sign-up`}>
+            <Link href={`${env.NEXT_PUBLIC_WEB_APP_URL}/sign-up`}>
               Get Started
             </Link>
             <MoveRight strokeWidth={2} className="size-6" />

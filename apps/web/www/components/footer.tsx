@@ -1,5 +1,6 @@
 import { Discord } from "@workspace/design-system/icons";
 import Link from "next/link";
+import { env } from "@/env";
 
 const GreenPing = () => (
   <span className="relative flex size-3 opacity-80">
@@ -16,14 +17,14 @@ export const Footer = () => {
         { name: "Features", link: "/features" },
         { name: "Pricing", link: "/pricing" },
         { name: "Credits", link: "/credits" },
-        { name: "Help Center", link: process.env.NEXT_PUBLIC_WEB_HELP_URL },
+        { name: "Help Center", link: env.NEXT_PUBLIC_WEB_HELP_URL },
       ],
     },
     {
       name: "Company",
       children: [
         { name: "Contact", link: "/contact" },
-        { name: "Blog", link: process.env.NEXT_PUBLIC_WEB_BLOG_URL },
+        { name: "Blog", link: env.NEXT_PUBLIC_WEB_BLOG_URL },
         { name: "Discord", link: "" },
       ],
     },
@@ -51,7 +52,7 @@ export const Footer = () => {
         </Link>
 
         <Link
-          href={process.env.NEXT_PUBLIC_WEB_STATUS_URL ?? ""}
+          href={env.NEXT_PUBLIC_WEB_STATUS_URL ?? ""}
           target="_blank"
           className="text-sm flex gap-2 items-center"
         >

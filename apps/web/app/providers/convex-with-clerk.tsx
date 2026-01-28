@@ -9,11 +9,10 @@ import {
 } from "@tanstack/react-query";
 import { ReactNode } from "react";
 import { ConvexQueryClient } from "@convex-dev/react-query";
+import { env } from "@/env";
 
 export function ConvexWithClerkProvider({ children }: { children: ReactNode }) {
-  const convexReactClient = new ConvexReactClient(
-    process.env.NEXT_PUBLIC_CONVEX_URL
-  );
+  const convexReactClient = new ConvexReactClient(env.NEXT_PUBLIC_CONVEX_URL);
   const convexQueryClient = new ConvexQueryClient(convexReactClient);
 
   const tanStackQueryClient = new TanStackQueryClient({

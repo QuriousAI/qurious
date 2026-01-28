@@ -6,6 +6,7 @@ import {
   TooltipTrigger,
 } from "@workspace/design-system/components/tooltip";
 import { CircleHelp } from "@workspace/design-system/icons";
+import { env } from "@/env";
 
 export const Help = () => {
   return (
@@ -17,10 +18,7 @@ export const Help = () => {
     >
       <Tooltip>
         <TooltipTrigger asChild>
-          <Link
-            target="_blank"
-            href={process.env.NEXT_PUBLIC_WEB_HELP_URL ?? ""}
-          >
+          <Link target="_blank" href={env.NEXT_PUBLIC_WEB_HELP_URL ?? ""}>
             <CircleHelp className="size-5" />
           </Link>
         </TooltipTrigger>

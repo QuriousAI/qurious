@@ -41,6 +41,7 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 
 import { TextShimmer } from "@workspace/design-system/components/motion-primitives/text-shimmer";
+import { env } from "@/env";
 
 // ============================================================================
 // Types
@@ -372,7 +373,7 @@ export const SearchResults = ({
   });
 
   // Set up streaming chat for summary
-  const CONVEX_SITE_URL = process.env.NEXT_PUBLIC_CONVEX_URL!.replace(
+  const CONVEX_SITE_URL = env.NEXT_PUBLIC_CONVEX_URL.replace(
     /.cloud$/,
     ".site",
   );

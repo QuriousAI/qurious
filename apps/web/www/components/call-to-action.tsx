@@ -1,6 +1,7 @@
 import { TAILWIND_GRADIENT_TEXT } from "@/utils/tailwind-gradient";
 import { Button } from "@workspace/design-system/components/button";
 import Link from "next/link";
+import { env } from "@/env";
 
 export const CallToAction = () => (
   <div className="self-center flex flex-col items-center gap-6 py-20 px-10 border border-y-2 border-dashed">
@@ -14,9 +15,7 @@ export const CallToAction = () => (
     </div>
     <div className="flex gap-4">
       <Button variant="default" className="text-xl py-6" size="lg">
-        <Link href={`${process.env.NEXT_PUBLIC_WEB_APP_URL}/sign-up`}>
-          Get Started
-        </Link>
+        <Link href={`${env.NEXT_PUBLIC_WEB_APP_URL}/sign-up`}>Get Started</Link>
         {/* <MoveRight strokeWidth={2.75} className="size-6" /> */}
       </Button>
       <Button variant="secondary" className="text-xl py-6" size="lg">
