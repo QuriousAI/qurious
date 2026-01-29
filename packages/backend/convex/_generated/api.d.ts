@@ -27,7 +27,6 @@ import type * as folders_mutations from "../folders/mutations.js";
 import type * as folders_queries from "../folders/queries.js";
 import type * as http from "../http.js";
 import type * as httpActions_clerk from "../httpActions/clerk.js";
-import type * as lib_analytics from "../lib/analytics.js";
 import type * as payments from "../payments.js";
 import type * as searches_mutations from "../searches/mutations.js";
 import type * as searches_queries from "../searches/queries.js";
@@ -62,7 +61,6 @@ declare const fullApi: ApiFromModules<{
   "folders/queries": typeof folders_queries;
   http: typeof http;
   "httpActions/clerk": typeof httpActions_clerk;
-  "lib/analytics": typeof lib_analytics;
   payments: typeof payments;
   "searches/mutations": typeof searches_mutations;
   "searches/queries": typeof searches_queries;
