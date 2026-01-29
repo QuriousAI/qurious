@@ -33,6 +33,54 @@ const SUMMARIZE_PAPER_PROMPT = (
 
 export const streamSummary = httpAction(async (ctx, request) => {
   console.log("Request received");
+
+  // Check authentication
+  const identity = await ctx.auth.getUserIdentity();
+  if (!identity) {
+    return new Response(
+      JSON.stringify({
+        error: "Unauthorized. Please sign in to use this feature.",
+      }),
+      {
+        status: 401,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      },
+    );
+  }
+
+  const clerkId = identity.subject;
+
+  // Check and deduct credits before streaming
+  try {
+    await ctx.runMutation(
+      internal.users.mutations.checkAndDeductCreditsByClerkId,
+      {
+        clerkId,
+        amount: PAPER_SUMMARY_CREDITS,
+      },
+    );
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Insufficient credits";
+    return new Response(
+      JSON.stringify({
+        error: errorMessage.includes("insufficient")
+          ? "Insufficient credits. Please purchase more credits to continue."
+          : errorMessage,
+      }),
+      {
+        status: 402,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      },
+    );
+  }
+
   const body = await request.json();
 
   // AI SDK useChat sends: { messages: Message[], id: string, ...body }

@@ -10,7 +10,17 @@ export const addPaperToFolder = mutation({
     paperId: v.string(),
   },
   handler: async (ctx, args) => {
+    const userId = await getCurrentUserIdOrThrow(ctx);
     const folder = await getOrThrow(ctx, args.folderId);
+
+    if (folder.userId !== userId) {
+      await captureEvent(ctx, "folder_mutation_add_paper_denied", {
+        folderId: args.folderId,
+        reason: "not_owner",
+      });
+      throw new ConvexError("You can only add papers to your own folders");
+    }
+
     await captureEvent(ctx, "folder_mutation_add_paper_to_folder", {
       folderId: args.folderId,
       paperId: args.paperId,
@@ -28,7 +38,17 @@ export const removePaperFromFolder = mutation({
     paperId: v.string(),
   },
   handler: async (ctx, args) => {
+    const userId = await getCurrentUserIdOrThrow(ctx);
     const folder = await getOrThrow(ctx, args.folderId);
+
+    if (folder.userId !== userId) {
+      await captureEvent(ctx, "folder_mutation_remove_paper_denied", {
+        folderId: args.folderId,
+        reason: "not_owner",
+      });
+      throw new ConvexError("You can only remove papers from your own folders");
+    }
+
     await captureEvent(ctx, "folder_mutation_remove_paper_from_folder", {
       folderId: args.folderId,
       paperId: args.paperId,
@@ -48,7 +68,17 @@ export const addSearchToFolder = mutation({
     searchId: v.id("searches"),
   },
   handler: async (ctx, args) => {
+    const userId = await getCurrentUserIdOrThrow(ctx);
     const folder = await getOrThrow(ctx, args.folderId);
+
+    if (folder.userId !== userId) {
+      await captureEvent(ctx, "folder_mutation_add_search_denied", {
+        folderId: args.folderId,
+        reason: "not_owner",
+      });
+      throw new ConvexError("You can only add searches to your own folders");
+    }
+
     await captureEvent(ctx, "folder_mutation_add_search_to_folder", {
       folderId: args.folderId,
       searchId: args.searchId,
@@ -60,14 +90,25 @@ export const addSearchToFolder = mutation({
   },
 });
 
-// wait, can anyone with the convex url endpoint run this?
 export const removeSearchFromFolder = mutation({
   args: {
     folderId: v.id("folders"),
     searchId: v.id("searches"),
   },
   handler: async (ctx, args) => {
+    const userId = await getCurrentUserIdOrThrow(ctx);
     const folder = await getOrThrow(ctx, args.folderId);
+
+    if (folder.userId !== userId) {
+      await captureEvent(ctx, "folder_mutation_remove_search_denied", {
+        folderId: args.folderId,
+        reason: "not_owner",
+      });
+      throw new ConvexError(
+        "You can only remove searches from your own folders",
+      );
+    }
+
     await captureEvent(ctx, "folder_mutation_remove_search_from_folder", {
       folderId: args.folderId,
       searchId: args.searchId,
@@ -84,6 +125,25 @@ export const deleteFolder = mutation({
     folderId: v.id("folders"),
   },
   handler: async (ctx, args) => {
+    const userId = await getCurrentUserIdOrThrow(ctx);
+    const folder = await ctx.db.get(args.folderId);
+
+    if (!folder) {
+      await captureEvent(ctx, "folder_mutation_delete_folder_failed", {
+        folderId: args.folderId,
+        reason: "folder_not_found",
+      });
+      throw new ConvexError("Folder not found");
+    }
+
+    if (folder.userId !== userId) {
+      await captureEvent(ctx, "folder_mutation_delete_folder_denied", {
+        folderId: args.folderId,
+        reason: "not_owner",
+      });
+      throw new ConvexError("You can only delete your own folders");
+    }
+
     await captureEvent(ctx, "folder_mutation_delete_folder", {
       folderId: args.folderId,
     });

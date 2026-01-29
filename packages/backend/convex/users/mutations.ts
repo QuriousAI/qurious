@@ -142,6 +142,49 @@ export const addCredits = internalMutation({
   },
 });
 
+// Check and deduct credits by Clerk ID (for HTTP actions that don't inherit auth context)
+export const checkAndDeductCreditsByClerkId = internalMutation({
+  args: {
+    clerkId: v.string(),
+    amount: v.number(),
+  },
+  async handler(ctx, args) {
+    const user = await userByClerkId(ctx, args.clerkId);
+
+    if (!user) {
+      await captureEvent(ctx, "user_mutation_check_deduct_credits_failed", {
+        clerkId: args.clerkId,
+        amount: args.amount,
+        reason: "user_not_found",
+      });
+      throw new ConvexError("User not found");
+    }
+
+    if (user.credits < args.amount) {
+      await captureEvent(ctx, "user_mutation_check_deduct_credits_failed", {
+        clerkId: args.clerkId,
+        amount: args.amount,
+        currentCredits: user.credits,
+        reason: "insufficient_credits",
+      });
+      throw new ConvexError("insufficient credits");
+    }
+
+    await captureEvent(ctx, "user_mutation_check_deduct_credits", {
+      clerkId: args.clerkId,
+      amount: args.amount,
+      previousCredits: user.credits,
+      newCredits: user.credits - args.amount,
+    });
+
+    await ctx.db.patch(user._id, {
+      credits: user.credits - args.amount,
+    });
+
+    return { success: true, remainingCredits: user.credits - args.amount };
+  },
+});
+
 // Add credits by DodoPayments customer ID (for webhook handlers)
 export const addCreditsByDodoCustomerId = internalMutation({
   args: {

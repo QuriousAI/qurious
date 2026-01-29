@@ -1,4 +1,4 @@
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import { mutation } from "../_generated/server";
 import { getCurrentUserIdOrThrow } from "../users/helpers";
 import { captureEvent } from "../lib/analytics";
@@ -26,6 +26,25 @@ export const deleteSearch = mutation({
     searchId: v.id("searches"),
   },
   handler: async (ctx, args) => {
+    const userId = await getCurrentUserIdOrThrow(ctx);
+    const search = await ctx.db.get(args.searchId);
+
+    if (!search) {
+      await captureEvent(ctx, "search_mutation_delete_search_failed", {
+        searchId: args.searchId,
+        reason: "search_not_found",
+      });
+      throw new ConvexError("Search not found");
+    }
+
+    if (search.userId !== userId) {
+      await captureEvent(ctx, "search_mutation_delete_search_denied", {
+        searchId: args.searchId,
+        reason: "not_owner",
+      });
+      throw new ConvexError("You can only delete your own searches");
+    }
+
     await captureEvent(ctx, "search_mutation_delete_search", {
       searchId: args.searchId,
     });
