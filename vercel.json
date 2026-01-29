@@ -1,4 +1,1 @@
-{
-    "buildCommand": "cd ../.. && pnpm turbo run build --filter=web...",
-    "ignoreCommand": "git diff --quiet HEAD^ HEAD apps/web"
-}
+
