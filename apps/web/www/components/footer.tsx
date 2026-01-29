@@ -15,8 +15,6 @@ export const Footer = () => {
       name: "Product",
       children: [
         { name: "Features", link: "/features" },
-        { name: "Pricing", link: "/pricing" },
-        { name: "Credits", link: "/credits" },
         { name: "Help Center", link: env.NEXT_PUBLIC_WEB_HELP_URL },
       ],
     },
@@ -25,7 +23,7 @@ export const Footer = () => {
       children: [
         { name: "Contact", link: "/contact" },
         { name: "Blog", link: env.NEXT_PUBLIC_WEB_BLOG_URL },
-        { name: "Discord", link: "" },
+        { name: "Discord", link: env.NEXT_PUBLIC_DISCORD_URL },
       ],
     },
     {
@@ -47,7 +45,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <Link href="discord">
+        <Link href={env.NEXT_PUBLIC_DISCORD_URL ?? "#"} target="_blank">
           <Discord className="text-neutral-400" />
         </Link>
 

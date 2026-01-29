@@ -17,19 +17,21 @@ export const metadata: Metadata = {
 };
 
 const BackgroundGridsAndBlob = () => {
+  return (
+    <div className="min-h-screen w-full relative bg-black">
+      {/* Copper Forge Background with Top Glow */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249, 115, 22, 0.25), transparent 70%), #000000",
+        }}
+      />
 
-return <div className="min-h-screen w-full relative bg-black">
-    {/* Copper Forge Background with Top Glow */}
-    <div
-      className="absolute inset-0 z-0"
-      style={{
-        background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249, 115, 22, 0.25), transparent 70%), #000000",
-      }}
-    />
-  
-    {/* Your Content/Components */}
-  </div>
-}
+      {/* Your Content/Components */}
+    </div>
+  );
+};
 
 const BackgroundGridsAndBlob2 = () => {
   return (
@@ -59,8 +61,6 @@ const BackgroundGridsAndBlob2 = () => {
   );
 };
 
-
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
@@ -71,7 +71,7 @@ export default function RootLayout({
           <BackgroundGridsAndBlob2 />
           <div className="flex flex-col items-center justify-center">
             <Header />
-            {children}
+            <div className="max-w-5xl mx-auto">{children}</div>
           </div>
           <Separator />
           <Footer />

@@ -4,8 +4,11 @@
     "eslint --fix",
     "prettier --write"
   ],
-  "*.{json,md,yml,yaml,html,css}": [
+  "*.{json,md,html,css}": [
     "cspell --no-summary --no-progress",
+    "prettier --write"
+  ],
+  "*.{yml,yaml}": [
     "prettier --write"
   ]
 }

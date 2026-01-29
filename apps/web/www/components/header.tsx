@@ -35,38 +35,8 @@ const NavChild = (props) => {
 
 const HeaderNavigationMenu = () => {
   const NAVIGATION_LINKS = [
-    {
-      name: "Product",
-      children: [
-        {
-          name: "Features",
-          link: "/features",
-          description:
-            "Explore Qurious's powerful features for AI-powered learning and knowledge management",
-        },
-        {
-          name: "Pricing",
-          link: "/pricing",
-          description: "Flexible pricing plans to suit your learning needs",
-        },
-        {
-          name: "Credits",
-          link: "/credits",
-          description:
-            "Learn about our credit system and how to manage your usage",
-        },
-      ],
-    },
-    {
-      name: "Company",
-      children: [
-        {
-          name: "Contact",
-          link: "/contact",
-          description: "Get in touch with our team for support or inquiries",
-        },
-      ],
-    },
+    { name: "Features", link: "/features" },
+    { name: "Contact", link: "/contact" },
     {
       name: "Legal",
       children: [
@@ -98,11 +68,7 @@ const HeaderNavigationMenu = () => {
               />
             )}
             <NavigationMenuItem>
-              {nl.link ? (
-                <NavigationMenuLink>
-                  <Link href={nl.link}>{nl.name}</Link>
-                </NavigationMenuLink>
-              ) : (
+              {nl.children ? (
                 <>
                   <NavigationMenuTrigger className="bg-transparent">
                     {nl.name}
@@ -119,6 +85,15 @@ const HeaderNavigationMenu = () => {
                     </ul>
                   </NavigationMenuContent>
                 </>
+              ) : (
+                <NavigationMenuLink asChild>
+                  <Link
+                    href={nl.link ?? "#"}
+                    target={nl.link?.startsWith("http") ? "_blank" : undefined}
+                  >
+                    {nl.name}
+                  </Link>
+                </NavigationMenuLink>
               )}
             </NavigationMenuItem>
           </>
@@ -147,7 +122,7 @@ export function Header() {
         isScrolled && "w-3/4 top-4 border rounded-2xl",
       )}
     >
-      <div className="text-lg">Qurious</div>
+      <div className="text-lg font-bold">Qurious</div>
 
       <div className="absolute left-1/2 -translate-x-1/2">
         <HeaderNavigationMenu />

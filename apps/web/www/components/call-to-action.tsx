@@ -14,12 +14,8 @@ export const CallToAction = () => (
       </div>
     </div>
     <div className="flex gap-4">
-      <Button variant="default" className="text-xl py-6" size="lg">
+      <Button variant="default" className="text-2xl py-8 px-10" size="lg">
         <Link href={`${env.NEXT_PUBLIC_WEB_APP_URL}/sign-up`}>Get Started</Link>
-        {/* <MoveRight strokeWidth={2.75} className="size-6" /> */}
-      </Button>
-      <Button variant="secondary" className="text-xl py-6" size="lg">
-        <Link href="/pricing">View Pricing</Link>
         {/* <MoveRight strokeWidth={2.75} className="size-6" /> */}
       </Button>
     </div>

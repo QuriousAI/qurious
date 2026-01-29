@@ -119,8 +119,8 @@ const PaperNav = (props: { paperId: string }) => {
             key={link.href}
             href={fullHref}
             className={cn(
-              "hover:text-blue-500 transition-colors",
-              isActive && "text-blue-500 font-medium",
+              "hover:text-primary transition-colors",
+              isActive && "text-foreground font-medium",
             )}
           >
             {link.label}
