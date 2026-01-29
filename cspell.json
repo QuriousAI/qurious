@@ -81,7 +81,8 @@
     "whsec",
     "worklets",
     "zod",
-    "zotero"
+    "zotero",
+    "samhoque"
   ],
   "ignorePaths": [
     "**/*.map",

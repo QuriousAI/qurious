@@ -7,8 +7,5 @@
   "*.{json,md,html,css}": [
     "cspell --no-summary --no-progress",
     "prettier --write"
-  ],
-  "*.{yml,yaml}": [
-    "prettier --write"
   ]
 }
