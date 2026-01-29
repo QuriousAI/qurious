@@ -6,7 +6,6 @@ import { ActionCache } from "@convex-dev/action-cache";
 import { components, internal } from "../../_generated/api";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/api-client";
 import { Paper } from "@workspace/semantic-scholar/src/types/paper";
-import { captureEvent } from "../../lib/analytics";
 
 const getPaperRecommendationsCache = new ActionCache(components.actionCache, {
   action:
@@ -49,28 +48,10 @@ export const getPaperRecommendationsInternal = internalAction({
         fields: args.fields,
       });
 
-      await captureEvent(
-        ctx,
-        "semantic_scholar_action_get_paper_recommendations_internal",
-        {
-          paperId: args.paperId,
-          fieldsCount: args.fields.length,
-          recommendationsCount: result.recommendedPapers.length,
-        },
-      );
-
       return result;
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
-      await captureEvent(
-        ctx,
-        "semantic_scholar_action_get_paper_recommendations_internal_failed",
-        {
-          paperId: args.paperId,
-          error: errorMessage,
-        },
-      );
       throw new ConvexError(errorMessage);
     }
   },

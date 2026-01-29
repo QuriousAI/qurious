@@ -154,9 +154,6 @@ export const createMockFolder = (overrides: Partial<any> = {}) => ({
   ...overrides,
 });
 
-// Mock analytics capture
-export const mockCaptureEvent = vi.fn();
-
 // Utility to mock authentication for tests
 export const mockAuthenticatedUser = (ctx: any, user: any) => {
   ctx.auth.getUserIdentity.mockResolvedValue({

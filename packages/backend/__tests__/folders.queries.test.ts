@@ -10,14 +10,6 @@ import { describe, test, expect, vi, beforeEach } from "vitest";
 import { createMockCtx, createMockFolder, createMockUser } from "./setup";
 import { Id } from "../convex/_generated/dataModel";
 
-// Mock analytics
-const { mockCaptureEvent } = vi.hoisted(() => ({
-  mockCaptureEvent: vi.fn(),
-}));
-vi.mock("../lib/analytics", () => ({
-  captureEvent: mockCaptureEvent,
-}));
-
 // Mock helpers
 const { mockGetCurrentUserIdOrThrow } = vi.hoisted(() => ({
   mockGetCurrentUserIdOrThrow: vi.fn(),
@@ -72,7 +64,7 @@ describe("Folder Queries", () => {
 
       expect(result).toEqual(userFolders);
       expect(result).toHaveLength(2);
-      expect(result.every((f) => f.userId === mockUser._id)).toBe(true);
+      expect(result.every((f: any) => f.userId === mockUser._id)).toBe(true);
     });
 
     test("should return empty array when user has no folders", async () => {
@@ -88,31 +80,6 @@ describe("Folder Queries", () => {
       const result = await (getCurrentUserFolders as any).handler(ctx, {});
 
       expect(result).toEqual([]);
-    });
-
-    test("should track analytics with folder count", async () => {
-      const mockUser = createMockUser();
-      const ctx = createMockCtx({ userId: mockUser._id });
-
-      const userFolders = [
-        createMockFolder({ userId: mockUser._id }),
-        createMockFolder({ userId: mockUser._id }),
-        createMockFolder({ userId: mockUser._id }),
-      ];
-
-      const mockCollect = vi.fn().mockResolvedValue(userFolders);
-      const mockOrder = vi.fn().mockReturnValue({ collect: mockCollect });
-      ctx.db.query = vi.fn().mockReturnValue({ order: mockOrder });
-
-      mockGetCurrentUserIdOrThrow.mockResolvedValue(mockUser._id);
-
-      await (getCurrentUserFolders as any).handler(ctx, {});
-
-      expect(mockCaptureEvent).toHaveBeenCalledWith(
-        ctx,
-        "folder_query_get_current_user_folders",
-        { totalFolders: 3 },
-      );
     });
   });
 
@@ -169,79 +136,6 @@ describe("Folder Queries", () => {
       await expect(
         (getFolderById as any).handler(ctx, { folderId: privateFolder._id }),
       ).rejects.toThrow("You can't access this folder.");
-    });
-
-    test("should track analytics for public folder access", async () => {
-      const ctx = createMockCtx();
-      const publicFolder = createMockFolder({ public: true });
-
-      mockGetOrThrow.mockResolvedValue(publicFolder);
-
-      await (getFolderById as any).handler(ctx, { folderId: publicFolder._id });
-
-      expect(mockCaptureEvent).toHaveBeenCalledWith(
-        ctx,
-        "folder_query_get_folder_by_id",
-        {
-          folderId: publicFolder._id,
-          isPublic: true,
-        },
-      );
-    });
-
-    test("should track analytics for private folder owner access", async () => {
-      const mockUser = createMockUser();
-      const ctx = createMockCtx({ userId: mockUser._id });
-
-      const privateFolder = createMockFolder({
-        public: false,
-        userId: mockUser._id,
-      });
-
-      mockGetOrThrow.mockResolvedValue(privateFolder);
-      mockGetCurrentUserIdOrThrow.mockResolvedValue(mockUser._id);
-
-      await (getFolderById as any).handler(ctx, {
-        folderId: privateFolder._id,
-      });
-
-      expect(mockCaptureEvent).toHaveBeenCalledWith(
-        ctx,
-        "folder_query_get_folder_by_id",
-        {
-          folderId: privateFolder._id,
-          isPublic: false,
-          isOwner: true,
-        },
-      );
-    });
-
-    test("should track analytics for denied access", async () => {
-      const mockUser = createMockUser({ _id: "user_123" as Id<"users"> });
-      const ctx = createMockCtx({ userId: mockUser._id });
-
-      const privateFolder = createMockFolder({
-        public: false,
-        userId: "user_other" as Id<"users">,
-      });
-
-      mockGetOrThrow.mockResolvedValue(privateFolder);
-      mockGetCurrentUserIdOrThrow.mockResolvedValue(mockUser._id);
-
-      await expect(
-        (getFolderById as any).handler(ctx, { folderId: privateFolder._id }),
-      ).rejects.toThrow();
-
-      expect(mockCaptureEvent).toHaveBeenCalledWith(
-        ctx,
-        "folder_query_get_folder_by_id_denied",
-        {
-          folderId: privateFolder._id,
-          isPublic: false,
-          isOwner: false,
-          reason: "access_denied",
-        },
-      );
     });
   });
 });

@@ -3,9 +3,7 @@ import { action, internalAction } from "../../_generated/server";
 import { ActionCache } from "@convex-dev/action-cache";
 import { components, internal } from "../../_generated/api";
 import { generateText } from "ai";
-import { google } from "@ai-sdk/google";
 import { MODELS } from "./_models";
-import { captureEvent } from "../../lib/analytics";
 
 const TRANSFORM_QUERY_PROMPT = (
   query: string,
@@ -40,10 +38,6 @@ export const transformQuery = action({
     const result = await transformQueryCache.fetch(ctx, {
       query: args.query,
     });
-    await captureEvent(ctx, "ai_action_transform_query", {
-      queryLength: args.query.length,
-      transformedQueryLength: result.length,
-    });
     return result;
   },
 });
@@ -60,12 +54,6 @@ export const transformQueryInternal = internalAction({
     });
 
     const { text } = result;
-
-    await captureEvent(ctx, "ai_action_transform_query_internal", {
-      queryLength: args.query.length,
-      resultLength: text.length,
-      model: MODELS.TRANSFORM_QUERY,
-    });
 
     return text;
   },

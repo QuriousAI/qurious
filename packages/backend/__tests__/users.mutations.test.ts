@@ -10,13 +10,7 @@
 
 import { describe, test, expect, vi, beforeEach } from "vitest";
 import { createMockCtx, createMockUser, mockAuthenticatedUser } from "./setup";
-import { ConvexError } from "convex/values";
 import { Id } from "../convex/_generated/dataModel";
-
-// Mock analytics
-vi.mock("../lib/analytics", () => ({
-  captureEvent: vi.fn(),
-}));
 
 // Mock helpers
 vi.mock("../users/helpers", () => ({
@@ -70,34 +64,6 @@ describe("User Mutations", () => {
         searchIds: [],
       });
     });
-
-    test("should track analytics with user email", async () => {
-      const ctx = createMockCtx();
-      const clerkData = {
-        id: "clerk_new123",
-        first_name: "Jane",
-        last_name: "Doe",
-        email_addresses: [{ email_address: "jane@example.com" }],
-      };
-
-      ctx.db.insert = vi
-        .fn()
-        .mockResolvedValueOnce("user_new123" as Id<"users">)
-        .mockResolvedValueOnce("folder_123" as Id<"folders">);
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { createFromClerk } = await import("../users/mutations");
-      await (createFromClerk as any).handler(ctx, { data: clerkData });
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "user_mutation_create_from_clerk",
-        {
-          clerkUserId: "clerk_new123",
-          email: "jane@example.com",
-        },
-      );
-    });
   });
 
   describe("updateFromClerk", () => {
@@ -137,30 +103,6 @@ describe("User Mutations", () => {
       await expect(
         (updateFromClerk as any).handler(ctx, { data: clerkData }),
       ).rejects.toThrow("user doesn't exist");
-    });
-
-    test("should track analytics event", async () => {
-      const ctx = createMockCtx();
-      const mockUser = createMockUser({ clerkId: "clerk_existing" });
-      const clerkData = {
-        id: "clerk_existing",
-        first_name: "John",
-        last_name: "Updated",
-      };
-
-      const { userByClerkId } = await import("../users/helpers");
-      (userByClerkId as any).mockResolvedValue(mockUser);
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { updateFromClerk } = await import("../users/mutations");
-
-      await (updateFromClerk as any).handler(ctx, { data: clerkData });
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "user_mutation_update_from_clerk",
-        { clerkUserId: "clerk_existing" },
-      );
     });
   });
 
@@ -226,56 +168,6 @@ describe("User Mutations", () => {
       await expect(
         (deductCredits as any).handler(ctx, { amount: 10 }),
       ).rejects.toThrow("insufficient credits");
-    });
-
-    test("should track analytics on successful deduction", async () => {
-      const ctx = createMockCtx();
-      const mockUser = createMockUser({ credits: 100 });
-      mockAuthenticatedUser(ctx, mockUser);
-
-      const { getCurrentUserOrThrow } = await import("../users/helpers");
-      (getCurrentUserOrThrow as any).mockResolvedValue(mockUser);
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { deductCredits } = await import("../users/mutations");
-
-      await (deductCredits as any).handler(ctx, { amount: 10 });
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "user_mutation_deduct_credits",
-        {
-          amount: 10,
-          previousCredits: 100,
-          newCredits: 90,
-        },
-      );
-    });
-
-    test("should track analytics on failed deduction", async () => {
-      const ctx = createMockCtx();
-      const mockUser = createMockUser({ credits: 5 });
-      mockAuthenticatedUser(ctx, mockUser);
-
-      const { getCurrentUserOrThrow } = await import("../users/helpers");
-      (getCurrentUserOrThrow as any).mockResolvedValue(mockUser);
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { deductCredits } = await import("../users/mutations");
-
-      await expect(
-        (deductCredits as any).handler(ctx, { amount: 10 }),
-      ).rejects.toThrow("insufficient credits");
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "user_mutation_deduct_credits_failed",
-        {
-          amount: 10,
-          currentCredits: 5,
-          reason: "insufficient_credits",
-        },
-      );
     });
 
     test("should handle exact credit amount", async () => {

@@ -15,11 +15,6 @@ import {
 } from "./setup";
 import { Id } from "../convex/_generated/dataModel";
 
-// Mock analytics
-vi.mock("../lib/analytics", () => ({
-  captureEvent: vi.fn(),
-}));
-
 // Mock helpers
 vi.mock("../users/helpers", () => ({
   getCurrentUserIdOrThrow: vi.fn(),
@@ -86,36 +81,6 @@ describe("Search Queries", () => {
       expect(result).toEqual([]);
     });
 
-    test("should track analytics with search count", async () => {
-      const mockUser = createMockUser();
-      const ctx = createMockCtx({ userId: mockUser._id });
-      mockAuthenticatedUser(ctx, mockUser);
-
-      const userSearches = [
-        createMockSearch({ userId: mockUser._id }),
-        createMockSearch({ userId: mockUser._id }),
-        createMockSearch({ userId: mockUser._id }),
-      ];
-
-      const mockCollect = vi.fn().mockResolvedValue(userSearches);
-      const mockOrder = vi.fn().mockReturnValue({ collect: mockCollect });
-      ctx.db.query = vi.fn().mockReturnValue({ order: mockOrder });
-
-      const { getCurrentUserIdOrThrow } = await import("../users/helpers");
-      (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { getCurrentUserSearches } = await import("../searches/queries");
-
-      await (getCurrentUserSearches as any).handler(ctx, {});
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "search_query_get_current_user_searches",
-        { totalSearches: 3 },
-      );
-    });
-
     test("should throw error for unauthenticated user", async () => {
       const ctx = createMockCtx();
 
@@ -169,34 +134,6 @@ describe("Search Queries", () => {
       const result = await (getMultiple as any).handler(ctx, { searchIds: [] });
 
       expect(result).toEqual([]);
-    });
-
-    test("should track analytics with search count", async () => {
-      const ctx = createMockCtx();
-      const searchIds = [
-        "search_1" as Id<"searches">,
-        "search_2" as Id<"searches">,
-      ];
-
-      const searches = [
-        createMockSearch({ _id: searchIds[0] }),
-        createMockSearch({ _id: searchIds[1] }),
-      ];
-
-      const { getAllOrThrow } =
-        await import("convex-helpers/server/relationships");
-      (getAllOrThrow as any).mockResolvedValue(searches);
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { getMultiple } = await import("../searches/queries");
-
-      await (getMultiple as any).handler(ctx, { searchIds });
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "search_query_get_multiple",
-        { searchCount: 2 },
-      );
     });
 
     test("should throw error when search not found", async () => {

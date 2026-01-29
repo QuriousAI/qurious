@@ -11,7 +11,6 @@ import {
   GetRelevantPapersReturnType,
 } from "@workspace/semantic-scholar/src/index";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/api-client";
-import { captureEvent } from "../../lib/analytics";
 
 const publicationTypeUnion = v.union(
   ...publicationTypes.map((type) => v.literal(type)),
@@ -84,31 +83,10 @@ export const getRelevantPapersInternal = internalAction({
         fields: args.fields,
       });
 
-      await captureEvent(
-        ctx,
-        "semantic_scholar_action_get_relevant_papers_internal",
-        {
-          query: args.query,
-          queryLength: args.query.length,
-          limit: args.limit,
-          offset: args.offset,
-          totalResults: result.total,
-          returnedResults: result.data?.length ?? 0,
-        },
-      );
-
       return result;
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
-      await captureEvent(
-        ctx,
-        "semantic_scholar_action_get_relevant_papers_internal_failed",
-        {
-          query: args.query,
-          error: errorMessage,
-        },
-      );
       throw new ConvexError(errorMessage);
     }
   },

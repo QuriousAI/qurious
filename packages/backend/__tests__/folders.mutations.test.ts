@@ -21,11 +21,12 @@ import {
   mockAuthenticatedUser,
 } from "./setup";
 import { Id } from "../convex/_generated/dataModel";
-import { ConvexError } from "convex/values";
 
-// Mock analytics
-vi.mock("../lib/analytics", () => ({
-  captureEvent: vi.fn(),
+// Mock PostHog
+vi.mock("@samhoque/convex-posthog", () => ({
+  PostHog: vi.fn().mockImplementation(() => ({
+    trackUserEvent: vi.fn().mockResolvedValue(undefined),
+  })),
 }));
 
 // Mock helpers
@@ -36,6 +37,13 @@ vi.mock("../users/helpers", () => ({
 // Mock convex-helpers
 vi.mock("convex-helpers/server/relationships", () => ({
   getOrThrow: vi.fn(),
+}));
+
+// Mock the generated api
+vi.mock("../convex/_generated/api", () => ({
+  components: {
+    posthog: {},
+  },
 }));
 
 describe("Folder Mutations", () => {
@@ -72,36 +80,6 @@ describe("Folder Mutations", () => {
         searchIds: [],
       });
     });
-
-    test("should track analytics event", async () => {
-      const mockUser = createMockUser();
-      const ctx = createMockCtx({ userId: mockUser._id });
-      mockAuthenticatedUser(ctx, mockUser);
-
-      const folderId = "folder_new123" as Id<"folders">;
-      ctx.db.insert = vi.fn().mockResolvedValue(folderId);
-
-      const { getCurrentUserIdOrThrow } = await import("../users/helpers");
-      (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { createFolder } = await import("../folders/mutations");
-
-      await (createFolder as any).handler(ctx, {
-        name: "Test Folder",
-        description: "Test Description",
-      });
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "folder_mutation_create_folder",
-        {
-          folderId,
-          name: "Test Folder",
-          type: "USER_CREATED_CUSTOM_FOLDER",
-        },
-      );
-    });
   });
 
   describe("addPaperToFolder", () => {
@@ -124,33 +102,6 @@ describe("Folder Mutations", () => {
       expect(ctx.db.patch).toHaveBeenCalledWith(folder._id, {
         paperExternalIds: ["paper1", "paper2", "paper3"],
       });
-    });
-
-    test("should track analytics with paper count", async () => {
-      const ctx = createMockCtx();
-      const folder = createMockFolder({ paperExternalIds: ["paper1"] });
-
-      const { getOrThrow } =
-        await import("convex-helpers/server/relationships");
-      (getOrThrow as any).mockResolvedValue(folder);
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { addPaperToFolder } = await import("../folders/mutations");
-
-      await (addPaperToFolder as any).handler(ctx, {
-        folderId: folder._id,
-        paperId: "paper2",
-      });
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "folder_mutation_add_paper_to_folder",
-        {
-          folderId: folder._id,
-          paperId: "paper2",
-          previousPaperCount: 1,
-        },
-      );
     });
   });
 
@@ -259,22 +210,6 @@ describe("Folder Mutations", () => {
       await (deleteFolder as any).handler(ctx, { folderId });
 
       expect(ctx.db.delete).toHaveBeenCalledWith(folderId);
-    });
-
-    test("should track analytics event", async () => {
-      const ctx = createMockCtx();
-      const folderId = "folder_delete123" as Id<"folders">;
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { deleteFolder } = await import("../folders/mutations");
-
-      await (deleteFolder as any).handler(ctx, { folderId });
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "folder_mutation_delete_folder",
-        { folderId },
-      );
     });
   });
 

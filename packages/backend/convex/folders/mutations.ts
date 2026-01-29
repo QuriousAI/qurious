@@ -2,7 +2,10 @@ import { ConvexError, v } from "convex/values";
 import { mutation } from "../_generated/server";
 import { getOrThrow } from "convex-helpers/server/relationships";
 import { getCurrentUserIdOrThrow } from "../users/helpers";
-import { captureEvent } from "../lib/analytics";
+import { PostHog } from "@samhoque/convex-posthog";
+import { components } from "../_generated/api";
+
+const posthog = new PostHog(components.posthog, {});
 
 export const addPaperToFolder = mutation({
   args: {
@@ -11,20 +14,29 @@ export const addPaperToFolder = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getCurrentUserIdOrThrow(ctx);
+    const identity = await ctx.auth.getUserIdentity();
     const folder = await getOrThrow(ctx, args.folderId);
 
     if (folder.userId !== userId) {
-      await captureEvent(ctx, "folder_mutation_add_paper_denied", {
-        folderId: args.folderId,
-        reason: "not_owner",
+      await posthog.trackUserEvent(ctx, {
+        userId: identity!.subject,
+        event: "folder_mutation_add_paper_denied",
+        properties: {
+          folderId: args.folderId,
+          reason: "not_owner",
+        },
       });
       throw new ConvexError("You can only add papers to your own folders");
     }
 
-    await captureEvent(ctx, "folder_mutation_add_paper_to_folder", {
-      folderId: args.folderId,
-      paperId: args.paperId,
-      previousPaperCount: folder.paperExternalIds.length,
+    await posthog.trackUserEvent(ctx, {
+      userId: identity!.subject,
+      event: "folder_mutation_add_paper_to_folder",
+      properties: {
+        folderId: args.folderId,
+        paperId: args.paperId,
+        previousPaperCount: folder.paperExternalIds.length,
+      },
     });
     await ctx.db.patch(args.folderId, {
       paperExternalIds: [...folder.paperExternalIds, args.paperId],
@@ -39,20 +51,29 @@ export const removePaperFromFolder = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getCurrentUserIdOrThrow(ctx);
+    const identity = await ctx.auth.getUserIdentity();
     const folder = await getOrThrow(ctx, args.folderId);
 
     if (folder.userId !== userId) {
-      await captureEvent(ctx, "folder_mutation_remove_paper_denied", {
-        folderId: args.folderId,
-        reason: "not_owner",
+      await posthog.trackUserEvent(ctx, {
+        userId: identity!.subject,
+        event: "folder_mutation_remove_paper_denied",
+        properties: {
+          folderId: args.folderId,
+          reason: "not_owner",
+        },
       });
       throw new ConvexError("You can only remove papers from your own folders");
     }
 
-    await captureEvent(ctx, "folder_mutation_remove_paper_from_folder", {
-      folderId: args.folderId,
-      paperId: args.paperId,
-      previousPaperCount: folder.paperExternalIds.length,
+    await posthog.trackUserEvent(ctx, {
+      userId: identity!.subject,
+      event: "folder_mutation_remove_paper_from_folder",
+      properties: {
+        folderId: args.folderId,
+        paperId: args.paperId,
+        previousPaperCount: folder.paperExternalIds.length,
+      },
     });
     await ctx.db.patch(args.folderId, {
       paperExternalIds: folder.paperExternalIds.filter(
@@ -69,20 +90,29 @@ export const addSearchToFolder = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getCurrentUserIdOrThrow(ctx);
+    const identity = await ctx.auth.getUserIdentity();
     const folder = await getOrThrow(ctx, args.folderId);
 
     if (folder.userId !== userId) {
-      await captureEvent(ctx, "folder_mutation_add_search_denied", {
-        folderId: args.folderId,
-        reason: "not_owner",
+      await posthog.trackUserEvent(ctx, {
+        userId: identity!.subject,
+        event: "folder_mutation_add_search_denied",
+        properties: {
+          folderId: args.folderId,
+          reason: "not_owner",
+        },
       });
       throw new ConvexError("You can only add searches to your own folders");
     }
 
-    await captureEvent(ctx, "folder_mutation_add_search_to_folder", {
-      folderId: args.folderId,
-      searchId: args.searchId,
-      previousSearchCount: folder.searchIds.length,
+    await posthog.trackUserEvent(ctx, {
+      userId: identity!.subject,
+      event: "folder_mutation_add_search_to_folder",
+      properties: {
+        folderId: args.folderId,
+        searchId: args.searchId,
+        previousSearchCount: folder.searchIds.length,
+      },
     });
     await ctx.db.patch(args.folderId, {
       searchIds: [...folder.searchIds, args.searchId],
@@ -97,22 +127,31 @@ export const removeSearchFromFolder = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getCurrentUserIdOrThrow(ctx);
+    const identity = await ctx.auth.getUserIdentity();
     const folder = await getOrThrow(ctx, args.folderId);
 
     if (folder.userId !== userId) {
-      await captureEvent(ctx, "folder_mutation_remove_search_denied", {
-        folderId: args.folderId,
-        reason: "not_owner",
+      await posthog.trackUserEvent(ctx, {
+        userId: identity!.subject,
+        event: "folder_mutation_remove_search_denied",
+        properties: {
+          folderId: args.folderId,
+          reason: "not_owner",
+        },
       });
       throw new ConvexError(
         "You can only remove searches from your own folders",
       );
     }
 
-    await captureEvent(ctx, "folder_mutation_remove_search_from_folder", {
-      folderId: args.folderId,
-      searchId: args.searchId,
-      previousSearchCount: folder.searchIds.length,
+    await posthog.trackUserEvent(ctx, {
+      userId: identity!.subject,
+      event: "folder_mutation_remove_search_from_folder",
+      properties: {
+        folderId: args.folderId,
+        searchId: args.searchId,
+        previousSearchCount: folder.searchIds.length,
+      },
     });
     await ctx.db.patch(args.folderId, {
       searchIds: folder.searchIds.filter((id) => id !== args.searchId),
@@ -126,26 +165,39 @@ export const deleteFolder = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getCurrentUserIdOrThrow(ctx);
+    const identity = await ctx.auth.getUserIdentity();
     const folder = await ctx.db.get(args.folderId);
 
     if (!folder) {
-      await captureEvent(ctx, "folder_mutation_delete_folder_failed", {
-        folderId: args.folderId,
-        reason: "folder_not_found",
+      await posthog.trackUserEvent(ctx, {
+        userId: identity!.subject,
+        event: "folder_mutation_delete_folder_failed",
+        properties: {
+          folderId: args.folderId,
+          reason: "folder_not_found",
+        },
       });
       throw new ConvexError("Folder not found");
     }
 
     if (folder.userId !== userId) {
-      await captureEvent(ctx, "folder_mutation_delete_folder_denied", {
-        folderId: args.folderId,
-        reason: "not_owner",
+      await posthog.trackUserEvent(ctx, {
+        userId: identity!.subject,
+        event: "folder_mutation_delete_folder_denied",
+        properties: {
+          folderId: args.folderId,
+          reason: "not_owner",
+        },
       });
       throw new ConvexError("You can only delete your own folders");
     }
 
-    await captureEvent(ctx, "folder_mutation_delete_folder", {
-      folderId: args.folderId,
+    await posthog.trackUserEvent(ctx, {
+      userId: identity!.subject,
+      event: "folder_mutation_delete_folder",
+      properties: {
+        folderId: args.folderId,
+      },
     });
     await ctx.db.delete(args.folderId);
   },
@@ -158,6 +210,7 @@ export const createFolder = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getCurrentUserIdOrThrow(ctx);
+    const identity = await ctx.auth.getUserIdentity();
     const folderId = await ctx.db.insert("folders", {
       name: args.name,
       description: args.description,
@@ -168,10 +221,14 @@ export const createFolder = mutation({
       paperExternalIds: [],
       searchIds: [],
     });
-    await captureEvent(ctx, "folder_mutation_create_folder", {
-      folderId,
-      name: args.name,
-      type: "USER_CREATED_CUSTOM_FOLDER",
+    await posthog.trackUserEvent(ctx, {
+      userId: identity!.subject,
+      event: "folder_mutation_create_folder",
+      properties: {
+        folderId,
+        name: args.name,
+        type: "USER_CREATED_CUSTOM_FOLDER",
+      },
     });
   },
 });
@@ -180,14 +237,19 @@ export const deleteCurrentUserFolders = mutation({
   args: {},
   handler: async (ctx) => {
     const userId = await getCurrentUserIdOrThrow(ctx);
+    const identity = await ctx.auth.getUserIdentity();
 
     const folders = await ctx.db
       .query("folders")
       .filter((q) => q.eq(q.field("userId"), userId))
       .collect();
 
-    await captureEvent(ctx, "folder_mutation_delete_current_user_folders", {
-      foldersDeleted: folders.length,
+    await posthog.trackUserEvent(ctx, {
+      userId: identity!.subject,
+      event: "folder_mutation_delete_current_user_folders",
+      properties: {
+        foldersDeleted: folders.length,
+      },
     });
 
     for (const folder of folders) {
@@ -203,32 +265,45 @@ export const updateFolderPrivacy = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getCurrentUserIdOrThrow(ctx);
+    const identity = await ctx.auth.getUserIdentity();
 
     const folder = await ctx.db.get(args.folderId);
     if (!folder) {
-      await captureEvent(ctx, "folder_mutation_update_privacy_failed", {
-        folderId: args.folderId,
-        reason: "folder_not_found",
+      await posthog.trackUserEvent(ctx, {
+        userId: identity!.subject,
+        event: "folder_mutation_update_privacy_failed",
+        properties: {
+          folderId: args.folderId,
+          reason: "folder_not_found",
+        },
       });
       throw new ConvexError("Folder not found");
     }
 
     // Only the folder owner can change privacy settings
     if (folder.userId !== userId) {
-      await captureEvent(ctx, "folder_mutation_update_privacy_denied", {
-        folderId: args.folderId,
-        reason: "not_owner",
+      await posthog.trackUserEvent(ctx, {
+        userId: identity!.subject,
+        event: "folder_mutation_update_privacy_denied",
+        properties: {
+          folderId: args.folderId,
+          reason: "not_owner",
+        },
       });
       throw new ConvexError(
         "You can only change privacy settings for your own folders",
       );
     }
 
-    await captureEvent(ctx, "folder_mutation_update_folder_privacy", {
-      folderId: args.folderId,
-      isPrivate: args.isPrivate,
-      previousPrivacy: folder.public ? "public" : "private",
-      newPrivacy: args.isPrivate ? "private" : "public",
+    await posthog.trackUserEvent(ctx, {
+      userId: identity!.subject,
+      event: "folder_mutation_update_folder_privacy",
+      properties: {
+        folderId: args.folderId,
+        isPrivate: args.isPrivate,
+        previousPrivacy: folder.public ? "public" : "private",
+        newPrivacy: args.isPrivate ? "private" : "public",
+      },
     });
 
     await ctx.db.patch(args.folderId, {
@@ -244,29 +319,42 @@ export const updateFolderName = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getCurrentUserIdOrThrow(ctx);
+    const identity = await ctx.auth.getUserIdentity();
 
     const folder = await ctx.db.get(args.folderId);
     if (!folder) {
-      await captureEvent(ctx, "folder_mutation_update_name_failed", {
-        folderId: args.folderId,
-        reason: "folder_not_found",
+      await posthog.trackUserEvent(ctx, {
+        userId: identity!.subject,
+        event: "folder_mutation_update_name_failed",
+        properties: {
+          folderId: args.folderId,
+          reason: "folder_not_found",
+        },
       });
       throw new ConvexError("Folder not found");
     }
 
     // Only the folder owner can rename the folder
     if (folder.userId !== userId) {
-      await captureEvent(ctx, "folder_mutation_update_name_denied", {
-        folderId: args.folderId,
-        reason: "not_owner",
+      await posthog.trackUserEvent(ctx, {
+        userId: identity!.subject,
+        event: "folder_mutation_update_name_denied",
+        properties: {
+          folderId: args.folderId,
+          reason: "not_owner",
+        },
       });
       throw new ConvexError("You can only rename your own folders");
     }
 
-    await captureEvent(ctx, "folder_mutation_update_folder_name", {
-      folderId: args.folderId,
-      previousName: folder.name,
-      newName: args.name,
+    await posthog.trackUserEvent(ctx, {
+      userId: identity!.subject,
+      event: "folder_mutation_update_folder_name",
+      properties: {
+        folderId: args.folderId,
+        previousName: folder.name,
+        newName: args.name,
+      },
     });
 
     await ctx.db.patch(args.folderId, {
@@ -282,29 +370,42 @@ export const updateFolderContent = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getCurrentUserIdOrThrow(ctx);
+    const identity = await ctx.auth.getUserIdentity();
 
     const folder = await ctx.db.get(args.folderId);
     if (!folder) {
-      await captureEvent(ctx, "folder_mutation_update_content_failed", {
-        folderId: args.folderId,
-        reason: "folder_not_found",
+      await posthog.trackUserEvent(ctx, {
+        userId: identity!.subject,
+        event: "folder_mutation_update_content_failed",
+        properties: {
+          folderId: args.folderId,
+          reason: "folder_not_found",
+        },
       });
       throw new ConvexError("Folder not found");
     }
 
     // Only the folder owner can update the folder content
     if (folder.userId !== userId) {
-      await captureEvent(ctx, "folder_mutation_update_content_denied", {
-        folderId: args.folderId,
-        reason: "not_owner",
+      await posthog.trackUserEvent(ctx, {
+        userId: identity!.subject,
+        event: "folder_mutation_update_content_denied",
+        properties: {
+          folderId: args.folderId,
+          reason: "not_owner",
+        },
       });
       throw new ConvexError("You can only update your own folders");
     }
 
-    await captureEvent(ctx, "folder_mutation_update_folder_content", {
-      folderId: args.folderId,
-      contentLength: args.content.length,
-      previousContentLength: folder.content.length,
+    await posthog.trackUserEvent(ctx, {
+      userId: identity!.subject,
+      event: "folder_mutation_update_folder_content",
+      properties: {
+        folderId: args.folderId,
+        contentLength: args.content.length,
+        previousContentLength: folder.content.length,
+      },
     });
 
     await ctx.db.patch(args.folderId, {

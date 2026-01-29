@@ -2,7 +2,6 @@ import { internalMutation } from "../_generated/server";
 import { UserJSON } from "@clerk/backend";
 import { ConvexError, v, Validator } from "convex/values";
 import { getCurrentUserOrThrow, userByClerkId } from "./helpers";
-import { captureEvent } from "../lib/analytics";
 
 // "upsert" means to either update an existing record or insert a new one if the record doesn't exist
 export const updateFromClerk = internalMutation({
@@ -10,9 +9,6 @@ export const updateFromClerk = internalMutation({
     data: v.any() as Validator<UserJSON>, // no runtime validation, trust Clerk - (bad idea?)
   },
   handler: async (ctx, args) => {
-    await captureEvent(ctx, "user_mutation_update_from_clerk", {
-      clerkUserId: args.data.id,
-    });
     const userAttributes = {
       name: `${args.data.first_name} ${args.data.last_name}`,
     };
@@ -27,10 +23,6 @@ export const createFromClerk = internalMutation({
     data: v.any() as Validator<UserJSON>,
   },
   async handler(ctx, args) {
-    await captureEvent(ctx, "user_mutation_create_from_clerk", {
-      clerkUserId: args.data.id,
-      email: args.data.email_addresses?.[0]?.email_address,
-    });
     const userAttributes = {
       clerkId: args.data.id,
       name: `${args.data.first_name} ${args.data.last_name}`,
@@ -58,9 +50,6 @@ export const createFromClerk = internalMutation({
 export const deleteFromClerk = internalMutation({
   args: { clerkUserId: v.string() },
   async handler(ctx, args) {
-    await captureEvent(ctx, "user_mutation_delete_from_clerk", {
-      clerkUserId: args.clerkUserId,
-    });
     const user = await userByClerkId(ctx, args.clerkUserId);
     if (!user) throw new Error("user doesn't exist");
     await ctx.db.delete(user._id);
@@ -75,19 +64,8 @@ export const deductCredits = internalMutation({
     const user = await getCurrentUserOrThrow(ctx);
 
     if (user.credits < args.amount) {
-      await captureEvent(ctx, "user_mutation_deduct_credits_failed", {
-        amount: args.amount,
-        currentCredits: user.credits,
-        reason: "insufficient_credits",
-      });
       throw new ConvexError("insufficient credits");
     }
-
-    await captureEvent(ctx, "user_mutation_deduct_credits", {
-      amount: args.amount,
-      previousCredits: user.credits,
-      newCredits: user.credits - args.amount,
-    });
 
     await ctx.db.patch(user._id, {
       credits: user.credits - args.amount,
@@ -103,19 +81,8 @@ export const checkCredits = internalMutation({
     const user = await getCurrentUserOrThrow(ctx);
 
     if (user.credits < args.amount) {
-      await captureEvent(ctx, "user_mutation_check_credits_failed", {
-        amount: args.amount,
-        currentCredits: user.credits,
-        reason: "insufficient_credits",
-      });
       throw new ConvexError("insufficient credits");
     }
-
-    await captureEvent(ctx, "user_mutation_check_credits", {
-      amount: args.amount,
-      currentCredits: user.credits,
-      result: "sufficient",
-    });
 
     return true;
   },
@@ -127,12 +94,6 @@ export const addCredits = internalMutation({
   },
   async handler(ctx, args) {
     const user = await getCurrentUserOrThrow(ctx);
-
-    await captureEvent(ctx, "user_mutation_add_credits", {
-      amount: args.amount,
-      previousCredits: user.credits,
-      newCredits: user.credits + args.amount,
-    });
 
     await ctx.db.patch(user._id, {
       credits: user.credits + args.amount,
@@ -152,30 +113,12 @@ export const checkAndDeductCreditsByClerkId = internalMutation({
     const user = await userByClerkId(ctx, args.clerkId);
 
     if (!user) {
-      await captureEvent(ctx, "user_mutation_check_deduct_credits_failed", {
-        clerkId: args.clerkId,
-        amount: args.amount,
-        reason: "user_not_found",
-      });
       throw new ConvexError("User not found");
     }
 
     if (user.credits < args.amount) {
-      await captureEvent(ctx, "user_mutation_check_deduct_credits_failed", {
-        clerkId: args.clerkId,
-        amount: args.amount,
-        currentCredits: user.credits,
-        reason: "insufficient_credits",
-      });
       throw new ConvexError("insufficient credits");
     }
-
-    await captureEvent(ctx, "user_mutation_check_deduct_credits", {
-      clerkId: args.clerkId,
-      amount: args.amount,
-      previousCredits: user.credits,
-      newCredits: user.credits - args.amount,
-    });
 
     await ctx.db.patch(user._id, {
       credits: user.credits - args.amount,
@@ -263,9 +206,5 @@ export const resetAllCredits = internalMutation({
         // });
       }
     }
-    await captureEvent(ctx, "user_mutation_reset_all_credits", {
-      totalUsers: users.length,
-      usersReset: resetCount,
-    });
   },
 });

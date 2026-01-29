@@ -6,7 +6,6 @@ import { ActionCache } from "@convex-dev/action-cache";
 import { components, internal } from "../../_generated/api";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/api-client";
 import { Paper } from "@workspace/semantic-scholar/src/types/paper";
-import { captureEvent } from "../../lib/analytics";
 
 const getPaperCitationsCache = new ActionCache(components.actionCache, {
   action:
@@ -32,11 +31,6 @@ export const getPaperCitations = action({
       paperId: args.paperId,
       fields: args.fields,
     });
-    await captureEvent(ctx, "semantic_scholar_action_get_paper_citations", {
-      paperId: args.paperId,
-      fieldsCount: args.fields.length,
-      citationsCount: result.data.length,
-    });
     return result;
   },
 });
@@ -57,28 +51,10 @@ export const getPaperCitationsInternal = internalAction({
         fields: args.fields,
       });
 
-      await captureEvent(
-        ctx,
-        "semantic_scholar_action_get_paper_citations_internal",
-        {
-          paperId: args.paperId,
-          fieldsCount: args.fields.length,
-          citationsCount: result.data.length,
-        },
-      );
-
       return result;
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
-      await captureEvent(
-        ctx,
-        "semantic_scholar_action_get_paper_citations_internal_failed",
-        {
-          paperId: args.paperId,
-          error: errorMessage,
-        },
-      );
       throw new ConvexError(errorMessage);
     }
   },

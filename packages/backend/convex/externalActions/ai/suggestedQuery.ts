@@ -1,12 +1,10 @@
 import { action, internalAction } from "../../_generated/server";
 import { v } from "convex/values";
 import { generateObject } from "ai";
-import { google } from "@ai-sdk/google";
 import { ActionCache } from "@convex-dev/action-cache";
 import { components, internal } from "../../_generated/api";
 import { z } from "zod";
 import { MODELS } from "./_models";
-import { captureEvent } from "../../lib/analytics";
 
 const FOLLOW_UP_PROMPT = (
   query: string,
@@ -53,12 +51,6 @@ export const followUpInternal = internalAction({
       prompt,
       schema: z.array(z.string()),
     });
-    await captureEvent(ctx, "ai_action_suggested_query_internal", {
-      queryLength: args.query.length,
-      summaryLength: args.summary.length,
-      suggestionsCount: result.object.length,
-      model: MODELS.SUGGESTED_QUERY,
-    });
     return result.object;
   },
 });
@@ -74,11 +66,6 @@ export const followUp = action({
       query: args.query,
       summary: args.summary,
       userDetails: args.userDetails,
-    });
-    await captureEvent(ctx, "ai_action_suggested_query", {
-      queryLength: args.query.length,
-      summaryLength: args.summary.length,
-      suggestionsCount: result.length,
     });
     return result;
   },

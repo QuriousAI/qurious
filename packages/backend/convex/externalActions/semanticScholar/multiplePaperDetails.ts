@@ -7,8 +7,6 @@ import { components, internal } from "../../_generated/api";
 import type { Paper } from "@workspace/semantic-scholar/src";
 import { SemanticScholarAPIClient } from "@workspace/semantic-scholar/src/client";
 
-import { captureEvent } from "../../lib/analytics";
-
 // Multiple Paper Details
 
 const getMultiplePaperDetailsCache = new ActionCache(components.actionCache, {
@@ -46,20 +44,10 @@ export const getMultiplePaperDetailsInternal = internalAction({
         fields: args.fields,
       });
 
-      // Track multiple paper details fetch event
-      await captureEvent(ctx, "get_multiple_paper_details", {
-        paperCount: args.paperIds.length,
-        fields: args.fields,
-      });
-
       return result;
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
-      await captureEvent(ctx, "get_multiple_paper_details_failed", {
-        paperCount: args.paperIds.length,
-        error: errorMessage,
-      });
       throw new ConvexError(errorMessage);
     }
   },

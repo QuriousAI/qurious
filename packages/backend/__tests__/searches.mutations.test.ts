@@ -16,14 +16,23 @@ import {
 } from "./setup";
 import { Id } from "../convex/_generated/dataModel";
 
-// Mock analytics
-vi.mock("../lib/analytics", () => ({
-  captureEvent: vi.fn(),
+// Mock PostHog
+vi.mock("@samhoque/convex-posthog", () => ({
+  PostHog: vi.fn().mockImplementation(() => ({
+    trackUserEvent: vi.fn().mockResolvedValue(undefined),
+  })),
 }));
 
 // Mock helpers
 vi.mock("../users/helpers", () => ({
   getCurrentUserIdOrThrow: vi.fn(),
+}));
+
+// Mock the generated api
+vi.mock("../convex/_generated/api", () => ({
+  components: {
+    posthog: {},
+  },
 }));
 
 describe("Search Mutations", () => {
@@ -50,34 +59,6 @@ describe("Search Mutations", () => {
         query: "machine learning",
         userId: mockUser._id,
       });
-    });
-
-    test("should track analytics with search details", async () => {
-      const mockUser = createMockUser();
-      const ctx = createMockCtx({ userId: mockUser._id });
-      mockAuthenticatedUser(ctx, mockUser);
-
-      const searchId = "search_new123" as Id<"searches">;
-      ctx.db.insert = vi.fn().mockResolvedValue(searchId);
-
-      const { getCurrentUserIdOrThrow } = await import("../users/helpers");
-      (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { createSearch } = await import("../searches/mutations");
-
-      const query = "neural networks";
-      await (createSearch as any).handler(ctx, { query });
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "search_mutation_create_search",
-        {
-          searchId,
-          query,
-          queryLength: query.length,
-        },
-      );
     });
 
     test("should handle empty query string", async () => {
@@ -145,22 +126,6 @@ describe("Search Mutations", () => {
 
       expect(ctx.db.delete).toHaveBeenCalledWith(searchId);
     });
-
-    test("should track analytics event", async () => {
-      const ctx = createMockCtx();
-      const searchId = "search_delete123" as Id<"searches">;
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { deleteSearch } = await import("../searches/mutations");
-
-      await (deleteSearch as any).handler(ctx, { searchId });
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "search_mutation_delete_search",
-        { searchId },
-      );
-    });
   });
 
   describe("deleteCurrentUserSearches", () => {
@@ -219,36 +184,6 @@ describe("Search Mutations", () => {
       await (deleteCurrentUserSearches as any).handler(ctx, {});
 
       expect(ctx.db.delete).not.toHaveBeenCalled();
-    });
-
-    test("should track analytics with deletion count", async () => {
-      const mockUser = createMockUser();
-      const ctx = createMockCtx({ userId: mockUser._id });
-      mockAuthenticatedUser(ctx, mockUser);
-
-      const userSearches = [
-        createMockSearch({ userId: mockUser._id }),
-        createMockSearch({ userId: mockUser._id }),
-      ];
-
-      const mockCollect = vi.fn().mockResolvedValue(userSearches);
-      const mockFilter = vi.fn().mockReturnValue({ collect: mockCollect });
-      ctx.db.query = vi.fn().mockReturnValue({ filter: mockFilter });
-
-      const { getCurrentUserIdOrThrow } = await import("../users/helpers");
-      (getCurrentUserIdOrThrow as any).mockResolvedValue(mockUser._id);
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { deleteCurrentUserSearches } =
-        await import("../searches/mutations");
-
-      await (deleteCurrentUserSearches as any).handler(ctx, {});
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "search_mutation_delete_current_user_searches",
-        { searchesDeleted: 2 },
-      );
     });
 
     test("should throw error for unauthenticated user", async () => {

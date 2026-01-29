@@ -14,11 +14,6 @@ import {
   mockUnauthenticatedUser,
 } from "./setup";
 
-// Mock analytics
-vi.mock("../lib/analytics", () => ({
-  captureEvent: vi.fn(),
-}));
-
 // Mock helpers
 vi.mock("../users/helpers", () => ({
   getCurrentUserOrThrow: vi.fn(),
@@ -61,26 +56,6 @@ describe("User Queries", () => {
 
       await expect((getCurrentUser as any).handler(ctx, {})).rejects.toThrow(
         "User not authenticated",
-      );
-    });
-
-    test("should track analytics event", async () => {
-      const mockUser = createMockUser();
-      const ctx = createMockCtx({ userId: mockUser._id });
-      mockAuthenticatedUser(ctx, mockUser);
-
-      const { getCurrentUserOrThrow } = await import("../users/helpers");
-      (getCurrentUserOrThrow as any).mockResolvedValue(mockUser);
-
-      const { captureEvent } = await import("../lib/analytics");
-      const { getCurrentUser } = await import("../users/queries");
-
-      await (getCurrentUser as any).handler(ctx, {});
-
-      expect(captureEvent).toHaveBeenCalledWith(
-        ctx,
-        "user_query_get_current_user",
-        {},
       );
     });
   });
