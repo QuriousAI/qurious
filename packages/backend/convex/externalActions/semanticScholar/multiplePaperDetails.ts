@@ -39,19 +39,28 @@ export const getMultiplePaperDetailsInternal = internalAction({
     const semanticScholar = new SemanticScholarAPIClient(
       process.env.SEMANTIC_SCHOLAR_API_KEY,
     );
-    const result = await semanticScholar.getMultiplePapersDetails({
-      paperIds: args.paperIds,
-      fields: args.fields,
-    });
 
-    if (result.isErr()) throw new ConvexError(result.error);
+    try {
+      const result = await semanticScholar.getMultiplePapersDetails({
+        paperIds: args.paperIds,
+        fields: args.fields,
+      });
 
-    // Track multiple paper details fetch event
-    await captureEvent(ctx, "get_multiple_paper_details", {
-      paperCount: args.paperIds.length,
-      fields: args.fields,
-    });
+      // Track multiple paper details fetch event
+      await captureEvent(ctx, "get_multiple_paper_details", {
+        paperCount: args.paperIds.length,
+        fields: args.fields,
+      });
 
-    return result.value;
+      return result;
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      await captureEvent(ctx, "get_multiple_paper_details_failed", {
+        paperCount: args.paperIds.length,
+        error: errorMessage,
+      });
+      throw new ConvexError(errorMessage);
+    }
   },
 });

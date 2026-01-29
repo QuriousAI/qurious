@@ -5,7 +5,7 @@
  */
 
 import { vi } from "vitest";
-import { Id } from "../_generated/dataModel";
+import { Id } from "../convex/_generated/dataModel";
 
 // Mock Convex context utilities
 export const createMockAuth = (userId?: Id<"users">, sessionId?: string) => ({
@@ -174,7 +174,7 @@ export const mockUnauthenticatedUser = (ctx: any) => {
 };
 
 // Mock Convex server functions to expose handler directly
-vi.mock("../_generated/server", () => ({
+vi.mock("../convex/_generated/server", () => ({
   mutation: (args: any) => args,
   query: (args: any) => args,
   internalMutation: (args: any) => args,

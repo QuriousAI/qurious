@@ -38,7 +38,7 @@ export async function captureEvent(
     const userId = await getUserId(ctx);
     const distinctId = userId ?? "anonymous";
 
-    await fetch(`${host}/capture/`, {
+    const response = await fetch(`${host}/capture/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,6 +55,15 @@ export async function captureEvent(
         timestamp: new Date().toISOString(),
       }),
     });
+
+    console.log("hi");
+
+    if (!response.ok) {
+      throw new Error(`Failed to capture event: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log("PostHog capture event response:", data);
   } catch (error) {
     // Silently fail analytics - don't break the app
     console.error("PostHog capture error:", error);

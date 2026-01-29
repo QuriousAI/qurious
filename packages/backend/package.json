@@ -18,6 +18,7 @@
     "@convex-dev/resend": "^0.1.0",
     "@dodopayments/convex": "^0.2.8",
     "@posthog/ai": "^6.4.3",
+    "@samhoque/convex-posthog": "^0.1.1",
     "@t3-oss/env-core": "^0.13.6",
     "@workspace/semantic-scholar": "workspace:*",
     "ai": "^6.0.48",

@@ -8,7 +8,7 @@
 
 import { describe, test, expect, vi, beforeEach } from "vitest";
 import { createMockCtx, createMockFolder, createMockUser } from "./setup";
-import { Id } from "../_generated/dataModel";
+import { Id } from "../convex/_generated/dataModel";
 
 // Mock analytics
 const { mockCaptureEvent } = vi.hoisted(() => ({
@@ -35,7 +35,10 @@ vi.mock("convex-helpers/server/relationships", () => ({
 }));
 
 // Import after mocks are set up
-import { getCurrentUserFolders, getFolderById } from "../folders/queries";
+import {
+  getCurrentUserFolders,
+  getFolderById,
+} from "../convex/folders/queries";
 
 describe("Folder Queries", () => {
   beforeEach(() => {

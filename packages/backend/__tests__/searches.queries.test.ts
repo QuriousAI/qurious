@@ -13,7 +13,7 @@ import {
   createMockUser,
   mockAuthenticatedUser,
 } from "./setup";
-import { Id } from "../_generated/dataModel";
+import { Id } from "../convex/_generated/dataModel";
 
 // Mock analytics
 vi.mock("../lib/analytics", () => ({

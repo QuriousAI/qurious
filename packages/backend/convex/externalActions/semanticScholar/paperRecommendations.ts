@@ -42,33 +42,36 @@ export const getPaperRecommendationsInternal = internalAction({
     const semanticScholar = new SemanticScholarAPIClient(
       process.env.SEMANTIC_SCHOLAR_API_KEY,
     );
-    const result = await semanticScholar.getRecommendedPapers({
-      paperId: args.paperId,
-      fields: args.fields,
-    });
 
-    if (result.isErr()) {
+    try {
+      const result = await semanticScholar.getRecommendedPapers({
+        paperId: args.paperId,
+        fields: args.fields,
+      });
+
+      await captureEvent(
+        ctx,
+        "semantic_scholar_action_get_paper_recommendations_internal",
+        {
+          paperId: args.paperId,
+          fieldsCount: args.fields.length,
+          recommendationsCount: result.recommendedPapers.length,
+        },
+      );
+
+      return result;
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
       await captureEvent(
         ctx,
         "semantic_scholar_action_get_paper_recommendations_internal_failed",
         {
           paperId: args.paperId,
-          error: result.error,
+          error: errorMessage,
         },
       );
-      throw new ConvexError(result.error);
+      throw new ConvexError(errorMessage);
     }
-
-    await captureEvent(
-      ctx,
-      "semantic_scholar_action_get_paper_recommendations_internal",
-      {
-        paperId: args.paperId,
-        fieldsCount: args.fields.length,
-        recommendationsCount: result.value.recommendedPapers.length,
-      },
-    );
-
-    return result.value;
   },
 });

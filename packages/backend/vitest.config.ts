@@ -16,7 +16,7 @@ export default defineConfig({
         "__tests__/**",
       ],
     },
-    include: ["convex/__tests__/**/*.test.ts"],
+    include: ["__tests__/**/*.test.ts"],
   },
   resolve: {
     alias: {

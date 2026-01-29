@@ -12,7 +12,6 @@ import type * as credits from "../credits.js";
 import type * as crons from "../crons.js";
 import type * as dodo from "../dodo.js";
 import type * as emails from "../emails.js";
-import type * as env from "../env.js";
 import type * as externalActions_ai__models from "../externalActions/ai/_models.js";
 import type * as externalActions_ai_paperSummary from "../externalActions/ai/paperSummary.js";
 import type * as externalActions_ai_studySnapshot from "../externalActions/ai/studySnapshot.js";
@@ -29,7 +28,6 @@ import type * as folders_queries from "../folders/queries.js";
 import type * as http from "../http.js";
 import type * as httpActions_clerk from "../httpActions/clerk.js";
 import type * as lib_analytics from "../lib/analytics.js";
-import type * as lib_posthog from "../lib/posthog.js";
 import type * as payments from "../payments.js";
 import type * as searches_mutations from "../searches/mutations.js";
 import type * as searches_queries from "../searches/queries.js";
@@ -44,20 +42,11 @@ import type {
   FunctionReference,
 } from "convex/server";
 
-/**
- * A utility for referencing Convex functions in your app's API.
- *
- * Usage:
- * ```js
- * const myFunctionReference = api.myModule.myFunction;
- * ```
- */
 declare const fullApi: ApiFromModules<{
   credits: typeof credits;
   crons: typeof crons;
   dodo: typeof dodo;
   emails: typeof emails;
-  env: typeof env;
   "externalActions/ai/_models": typeof externalActions_ai__models;
   "externalActions/ai/paperSummary": typeof externalActions_ai_paperSummary;
   "externalActions/ai/studySnapshot": typeof externalActions_ai_studySnapshot;
@@ -74,7 +63,6 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   "httpActions/clerk": typeof httpActions_clerk;
   "lib/analytics": typeof lib_analytics;
-  "lib/posthog": typeof lib_posthog;
   payments: typeof payments;
   "searches/mutations": typeof searches_mutations;
   "searches/queries": typeof searches_queries;
@@ -83,14 +71,30 @@ declare const fullApi: ApiFromModules<{
   "users/queries": typeof users_queries;
   "webhooks/mutations": typeof webhooks_mutations;
 }>;
-declare const fullApiWithMounts: typeof fullApi;
 
+/**
+ * A utility for referencing Convex functions in your app's public API.
+ *
+ * Usage:
+ * ```js
+ * const myFunctionReference = api.myModule.myFunction;
+ * ```
+ */
 export declare const api: FilterApi<
-  typeof fullApiWithMounts,
+  typeof fullApi,
   FunctionReference<any, "public">
 >;
+
+/**
+ * A utility for referencing Convex functions in your app's internal API.
+ *
+ * Usage:
+ * ```js
+ * const myFunctionReference = internal.myModule.myFunction;
+ * ```
+ */
 export declare const internal: FilterApi<
-  typeof fullApiWithMounts,
+  typeof fullApi,
   FunctionReference<any, "internal">
 >;
 
@@ -334,6 +338,22 @@ export declare const components: {
             | "delivery_delayed"
             | "bounced"
             | "failed";
+        },
+        null
+      >;
+    };
+  };
+  posthog: {
+    lib: {
+      trackEvent: FunctionReference<
+        "action",
+        "internal",
+        {
+          apiKey: string;
+          event: string;
+          host?: string;
+          properties?: any;
+          userId: string;
         },
         null
       >;

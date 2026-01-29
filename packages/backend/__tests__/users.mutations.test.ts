@@ -11,7 +11,7 @@
 import { describe, test, expect, vi, beforeEach } from "vitest";
 import { createMockCtx, createMockUser, mockAuthenticatedUser } from "./setup";
 import { ConvexError } from "convex/values";
-import { Id } from "../_generated/dataModel";
+import { Id } from "../convex/_generated/dataModel";
 
 // Mock analytics
 vi.mock("../lib/analytics", () => ({

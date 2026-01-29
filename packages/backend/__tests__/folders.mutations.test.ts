@@ -20,7 +20,7 @@ import {
   createMockUser,
   mockAuthenticatedUser,
 } from "./setup";
-import { Id } from "../_generated/dataModel";
+import { Id } from "../convex/_generated/dataModel";
 import { ConvexError } from "convex/values";
 
 // Mock analytics

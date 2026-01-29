@@ -5,7 +5,7 @@
  */
 
 import { describe, test, expect } from "vitest";
-import schema from "../schema";
+import schema from "../convex/schema";
 
 describe("Schema Validation", () => {
   describe("Users Table Schema", () => {
