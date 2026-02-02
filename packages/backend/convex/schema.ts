@@ -2,27 +2,23 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
-  summaryStreams: defineTable({
-    streamId: v.string(),
-    query: v.string(),
-    papers: v.string(), // JSON stringified papers
-    userSummarySettings: v.string(),
-  }).index("byStreamId", ["streamId"]),
   searches: defineTable({
     query: v.string(),
     userId: v.id("users"),
   }).index("byUserId", ["userId"]),
   users: defineTable({
     name: v.string(),
+    email: v.string(),
     details: v.string(),
     summarySettings: v.string(),
     clerkId: v.string(),
     credits: v.number(),
-    /** Dodo Payments customer ID */
     dodoCustomerId: v.optional(v.string()),
   })
     .index("byClerkId", ["clerkId"])
+    .index("byEmail", ["email"])
     .index("byDodoCustomerId", ["dodoCustomerId"]),
+
   folders: defineTable({
     name: v.string(),
     description: v.string(),
@@ -44,11 +40,7 @@ export default defineSchema({
   payments: defineTable({
     /** Dodo Payments customer ID */
     dodoPaymentsCustomerId: v.string(),
-    /** Email of the customer */
-    customerEmail: v.string(),
-    /** Name of the customer */
-    customerName: v.string(),
-    /** Dodo Payments product ID (Identifier of the product associated with this subscription) */
-    dodoPaymentsProductId: v.string(),
+    dodoPaymentsCustomerEmail: v.string(),
+    webhookPayload: v.string(),
   }).index("byDodoPaymentsCustomerId", ["dodoPaymentsCustomerId"]),
 });

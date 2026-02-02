@@ -1,7 +1,13 @@
-import { internalMutation } from "../_generated/server";
+import {
+  internalAction,
+  internalMutation,
+  internalQuery,
+} from "../_generated/server";
 import { UserJSON } from "@clerk/backend";
 import { ConvexError, v, Validator } from "convex/values";
 import { getCurrentUserOrThrow, userByClerkId } from "./helpers";
+import { createClerkClient } from "@clerk/backend";
+import { internal } from "../_generated/api";
 
 // "upsert" means to either update an existing record or insert a new one if the record doesn't exist
 export const updateFromClerk = internalMutation({
@@ -23,9 +29,16 @@ export const createFromClerk = internalMutation({
     data: v.any() as Validator<UserJSON>,
   },
   async handler(ctx, args) {
+    const email = args.data.primary_email_address_id;
+
+    if (!email) {
+      throw new Error("Email not found");
+    }
+
     const userAttributes = {
       clerkId: args.data.id,
       name: `${args.data.first_name} ${args.data.last_name}`,
+      email: email,
     };
 
     const insertedUserId = await ctx.db.insert("users", {
@@ -73,37 +86,37 @@ export const deductCredits = internalMutation({
   },
 });
 
-export const checkCredits = internalMutation({
-  args: {
-    amount: v.number(),
-  },
-  async handler(ctx, args) {
-    const user = await getCurrentUserOrThrow(ctx);
+// export const checkCredits = internalMutation({
+//   args: {
+//     amount: v.number(),
+//   },
+//   async handler(ctx, args) {
+//     const user = await getCurrentUserOrThrow(ctx);
 
-    if (user.credits < args.amount) {
-      throw new ConvexError("insufficient credits");
-    }
+//     if (user.credits < args.amount) {
+//       throw new ConvexError("insufficient credits");
+//     }
 
-    return true;
-  },
-});
+//     return true;
+//   },
+// });
 
-export const addCredits = internalMutation({
-  args: {
-    amount: v.number(),
-  },
-  async handler(ctx, args) {
-    const user = await getCurrentUserOrThrow(ctx);
+// export const addCredits = internalMutation({
+//   args: {
+//     amount: v.number(),
+//   },
+//   async handler(ctx, args) {
+//     const user = await getCurrentUserOrThrow(ctx);
 
-    await ctx.db.patch(user._id, {
-      credits: user.credits + args.amount,
-    });
+//     await ctx.db.patch(user._id, {
+//       credits: user.credits + args.amount,
+//     });
 
-    return true;
-  },
-});
+//     return true;
+//   },
+// });
 
-// Check and deduct credits by Clerk ID (for HTTP actions that don't inherit auth context)
+// // Check and deduct credits by Clerk ID (for HTTP actions that don't inherit auth context)
 export const checkAndDeductCreditsByClerkId = internalMutation({
   args: {
     clerkId: v.string(),
@@ -128,23 +141,21 @@ export const checkAndDeductCreditsByClerkId = internalMutation({
   },
 });
 
-// Add credits by DodoPayments customer ID (for webhook handlers)
-export const addCreditsByDodoCustomerId = internalMutation({
+// // Add credits by DodoPayments customer ID (for webhook handlers)
+export const addCreditsByEmail = internalMutation({
   args: {
-    dodoCustomerId: v.string(),
+    email: v.string(),
     amount: v.number(),
   },
   async handler(ctx, args) {
-    // Find user by dodoCustomerId using index
+    // Find user by email using index
     const user = await ctx.db
       .query("users")
-      .withIndex("byDodoCustomerId", (q) =>
-        q.eq("dodoCustomerId", args.dodoCustomerId),
-      )
+      .withIndex("byEmail", (q) => q.eq("email", args.email))
       .first();
 
     if (!user) {
-      console.warn(`User not found for dodoCustomerId: ${args.dodoCustomerId}`);
+      console.warn(`User not found for email: ${args.email}`);
       return false;
     }
 
@@ -156,55 +167,55 @@ export const addCreditsByDodoCustomerId = internalMutation({
   },
 });
 
-// Update user's dodoCustomerId (for webhook handlers)
-export const updateDodoCustomerId = internalMutation({
-  args: {
-    dodoCustomerId: v.string(),
-    customerEmail: v.string(),
-  },
-  async handler(ctx, args) {
-    // Try to find user by dodoCustomerId first
-    let user = await ctx.db
-      .query("users")
-      .withIndex("byDodoCustomerId", (q) =>
-        q.eq("dodoCustomerId", args.dodoCustomerId),
-      )
-      .first();
+// // Update user's dodoCustomerId (for webhook handlers)
+// export const updateDodoCustomerId = internalMutation({
+//   args: {
+//     dodoCustomerId: v.string(),
+//     customerEmail: v.string(),
+//   },
+//   async handler(ctx, args) {
+//     // Try to find user by dodoCustomerId first
+//     let user = await ctx.db
+//       .query("users")
+//       .withIndex("byDodoCustomerId", (q) =>
+//         q.eq("dodoCustomerId", args.dodoCustomerId),
+//       )
+//       .first();
 
-    // If not found, we need to match by email or other identifier
-    // Since we don't store email in users table, we'll need to rely on
-    // the payment record or other matching logic
-    // For now, if user already has dodoCustomerId, we're done
-    if (user) {
-      return user._id;
-    }
+//     // If not found, we need to match by email or other identifier
+//     // Since we don't store email in users table, we'll need to rely on
+//     // the payment record or other matching logic
+//     // For now, if user already has dodoCustomerId, we're done
+//     if (user) {
+//       return user._id;
+//     }
 
-    // Note: In a production app, you might want to match users by email
-    // stored in the identity or payment records. For now, we'll link
-    // the dodoCustomerId when we can match it through other means.
-    return null;
-  },
-});
+//     // Note: In a production app, you might want to match users by email
+//     // stored in the identity or payment records. For now, we'll link
+//     // the dodoCustomerId when we can match it through other means.
+//     return null;
+//   },
+// });
 
-export const resetAllCredits = internalMutation({
-  async handler(ctx) {
-    const users = await ctx.db.query("users").collect();
-    let resetCount = 0;
-    for (const user of users) {
-      if (user.credits < 100) {
-        // throw new Error("supposed to send notification here, but implementation not present")
-        await ctx.db.patch(user._id, { credits: 100 });
-        resetCount++;
-        // await notifications.workflows.trigger('workflow-key', {
-        //   recipients: [{
-        //     id: user._id,
-        //     email: 'user-email',
-        //   }],
-        //   data: {
-        //     message: 'Your credits have been reset to 100.',
-        //   },
-        // });
-      }
-    }
-  },
-});
+// export const resetAllCredits = internalMutation({
+//   async handler(ctx) {
+//     const users = await ctx.db.query("users").collect();
+//     let resetCount = 0;
+//     for (const user of users) {
+//       if (user.credits < 100) {
+//         // throw new Error("supposed to send notification here, but implementation not present")
+//         await ctx.db.patch(user._id, { credits: 100 });
+//         resetCount++;
+//         // await notifications.workflows.trigger('workflow-key', {
+//         //   recipients: [{
+//         //     id: user._id,
+//         //     email: 'user-email',
+//         //   }],
+//         //   data: {
+//         //     message: 'Your credits have been reset to 100.',
+//         //   },
+//         // });
+//       }
+//     }
+//   },
+// });

@@ -26,66 +26,21 @@ http.route({
     onPaymentSucceeded: async (ctx, payload) => {
       console.log("🎉 Payment Succeeded!");
 
-      // Extract customer ID and email from the properly typed payload
-      const dodoCustomerId =
-        payload.data.customer?.customer_id || payload.data.business_id;
-      const customerEmail = payload.data.customer?.email || "";
+      console.log("Payload:", payload);
+
+      const { customer } = payload.data;
 
       // Use Convex context to persist payment data
-      await ctx.runMutation(internal.webhooks.mutations.createPayment, {
-        paymentId: payload.data.payment_id,
-        dodoCustomerId: dodoCustomerId,
-        customerEmail: customerEmail,
-        amount: payload.data.total_amount,
-        currency: payload.data.currency,
-        status: payload.data.status,
+      await ctx.runMutation(internal.payments.mutations.createPayment, {
+        dodoPaymentsCustomerId: customer.customer_id,
+        dodoPaymentsCustomerEmail: customer.email,
         webhookPayload: JSON.stringify(payload),
       });
 
-      // Add credits to user account (adjust amount based on your product pricing)
-      // You may want to extract the credit amount from the product or payment amount
-      const totalAmount = payload.data.total_amount;
-      const creditsToAdd = Math.floor(totalAmount / 1); // Example: 1 credit per dollar
-      if (creditsToAdd > 0 && dodoCustomerId) {
-        await ctx.runMutation(
-          internal.users.mutations.addCreditsByDodoCustomerId,
-          {
-            dodoCustomerId: dodoCustomerId,
-            amount: creditsToAdd,
-          },
-        );
-      }
-    },
-
-    // Handle subscription activation
-    onSubscriptionActive: async (ctx, payload) => {
-      console.log("🎉 Subscription Activated!");
-
-      // Extract customer ID and email from the properly typed payload
-      const dodoCustomerId = payload.data.customer?.customer_id || "";
-      const customerEmail = payload.data.customer?.email || "";
-
-      // Use Convex context to persist subscription data
-      await ctx.runMutation(internal.webhooks.mutations.createSubscription, {
-        subscriptionId: payload.data.subscription_id,
-        dodoCustomerId: dodoCustomerId,
-        customerEmail: customerEmail,
-        status: payload.data.status,
-        productId: payload.data.product_id,
-        webhookPayload: JSON.stringify(payload),
+      await ctx.runMutation(internal.users.mutations.addCreditsByEmail, {
+        email: customer.email,
+        amount: 10,
       });
-    },
-
-    // Handle subscription cancellation
-    onSubscriptionCancelled: async (ctx, payload) => {
-      console.log("⚠️ Subscription Cancelled!");
-      // Handle subscription cancellation if needed
-    },
-
-    // Handle subscription renewal
-    onSubscriptionRenewed: async (ctx, payload) => {
-      console.log("🔄 Subscription Renewed!");
-      // Handle subscription renewal if needed
     },
   }),
 });

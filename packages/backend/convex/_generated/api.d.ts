@@ -27,13 +27,12 @@ import type * as folders_mutations from "../folders/mutations.js";
 import type * as folders_queries from "../folders/queries.js";
 import type * as http from "../http.js";
 import type * as httpActions_clerk from "../httpActions/clerk.js";
-import type * as payments from "../payments.js";
+import type * as payments_mutations from "../payments/mutations.js";
 import type * as searches_mutations from "../searches/mutations.js";
 import type * as searches_queries from "../searches/queries.js";
 import type * as users_helpers from "../users/helpers.js";
 import type * as users_mutations from "../users/mutations.js";
 import type * as users_queries from "../users/queries.js";
-import type * as webhooks_mutations from "../webhooks/mutations.js";
 
 import type {
   ApiFromModules,
@@ -61,13 +60,12 @@ declare const fullApi: ApiFromModules<{
   "folders/queries": typeof folders_queries;
   http: typeof http;
   "httpActions/clerk": typeof httpActions_clerk;
-  payments: typeof payments;
+  "payments/mutations": typeof payments_mutations;
   "searches/mutations": typeof searches_mutations;
   "searches/queries": typeof searches_queries;
   "users/helpers": typeof users_helpers;
   "users/mutations": typeof users_mutations;
   "users/queries": typeof users_queries;
-  "webhooks/mutations": typeof webhooks_mutations;
 }>;
 
 /**

@@ -19,8 +19,15 @@ import {
   MessageSquare,
   Camera,
   ExternalLink,
+  AlertCircleIcon,
 } from "@workspace/design-system/icons";
 import Link from "next/link";
+
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+} from "@workspace/design-system/components/alert";
 
 export function CreditsClient() {
   const userData = useQuery(api.users.queries.getCurrentUser);
@@ -42,23 +49,23 @@ export function CreditsClient() {
 
   const creditUsage = [
     {
-      feature: "Paper Summary",
+      feature: "Result Summary",
       credits: 2,
       icon: FileText,
-      description: "Full paper analysis",
+      description: "Full result analysis",
     },
     {
       feature: "Study Snapshot",
       credits: 1,
       icon: Camera,
-      description: "Quick overview",
+      description: "Quick snapshot of paper",
     },
-    {
-      feature: "Ask Paper",
-      credits: 1,
-      icon: MessageSquare,
-      description: "Q&A with paper",
-    },
+    // {
+    //   feature: "Ask Paper",
+    //   credits: 1,
+    //   icon: MessageSquare,
+    //   description: "Q&A with paper",
+    // },
   ];
 
   return (
@@ -135,7 +142,7 @@ export function CreditsClient() {
             Purchase additional credits to continue using AI features.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex flex-col gap-4">
           <Button asChild>
             <Link
               href="https://test.checkout.dodopayments.com/buy/pdt_1rRVmQaYdPvh3FcrzgFJ7?quantity=1"
@@ -147,6 +154,14 @@ export function CreditsClient() {
               <ExternalLink className="h-4 w-4" />
             </Link>
           </Button>
+          <Alert variant="destructive">
+            {/* <AlertTitle>Note:</AlertTitle> */}
+            <AlertCircleIcon className="h-4 w-4" />
+            <AlertDescription>
+              Enter your correct account email at checkout. Credits are applied
+              to the email provided and are non-transferable.
+            </AlertDescription>
+          </Alert>
         </CardContent>
       </Card>
     </div>
