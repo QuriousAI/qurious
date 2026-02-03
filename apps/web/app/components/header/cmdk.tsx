@@ -36,6 +36,7 @@ import Link from "next/link";
 
 import posthog from "posthog-js";
 import { env } from "@/env";
+import { useRouter } from "next/navigation";
 
 const CommandTrigger = (props) => {
   return (
