@@ -138,13 +138,9 @@ const PaperInformationFooter = ({ paper }: { paper: Paper }) => {
 
   const renderPublicationYear = () => {
     if (paper.publicationDate) {
-      return (
-        <Badge variant="ghost">
-          Published: {paper.publicationDate.slice(0, 10)}
-        </Badge>
-      );
+      return <Badge>Published: {paper.publicationDate.slice(0, 10)}</Badge>;
     } else if (typeof paper.year === "number") {
-      return <Badge variant="ghost">Year: {paper.year}</Badge>;
+      return <Badge>Year: {paper.year}</Badge>;
     }
     return null;
   };
