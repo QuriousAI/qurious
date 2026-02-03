@@ -1,10 +1,5 @@
 "use client";
 
-// import { pages } from "next/dist/build/templates/app-page";
-import { useSearchParams } from "next/navigation";
-import { useNextStep } from "nextstepjs";
-import { useEffect } from "react";
-
 // ShadCN Dialog Animations - Use Motions
 // TODO: Implement onboarding steps
 // const steps = [
@@ -32,14 +27,14 @@ import { useEffect } from "react";
 // Give Option To Quit Tour, or Close Button at Top
 
 export const Onboarder = () => {
-  const searchParams = useSearchParams();
-  const { startNextStep } = useNextStep();
+  // const searchParams = useSearchParams();
+  // const { startNextStep } = useNextStep();
 
-  useEffect(() => {
-    if (searchParams.get("onboarding") === "true") {
-      startNextStep("tour-1");
-    }
-  }, [searchParams, startNextStep]);
+  // useEffect(() => {
+  //   if (searchParams.get("onboarding") === "true") {
+  //     startNextStep("tour-1");
+  //   }
+  // }, [searchParams, startNextStep]);
 
   return <></>;
 };

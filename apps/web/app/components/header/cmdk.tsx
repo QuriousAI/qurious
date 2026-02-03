@@ -10,7 +10,6 @@ import {
   User,
   UserCog,
 } from "@workspace/design-system/icons";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { Card, CardContent } from "@workspace/design-system/components/card";
 import React, {
   ReactNode,
