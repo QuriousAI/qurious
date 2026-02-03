@@ -166,7 +166,7 @@ const PaperInformationFooter = ({ paper }: { paper: Paper }) => {
 
   const renderOpenAccess = () => {
     if (paper.isOpenAccess) {
-      return <Badge variant="success">Open Access</Badge>;
+      return <Badge>Open Access</Badge>;
     }
     return null;
   };
