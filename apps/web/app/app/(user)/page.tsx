@@ -4,12 +4,13 @@ import { getRandomGroupedQuestions } from "@/utils/questions";
 import { SearchBar } from "@/components/search-bar";
 import { SearchCard } from "@/components/cards";
 import { motion } from "motion/react";
+import { useMemo } from "react";
 
 export default function Home() {
   const genericTopics = getRandomGroupedQuestions();
   const hasOnboarded = false;
 
-  function getRandomGreeting() {
+  const randomGreeting = useMemo(() => {
     const greetings = [
       "Ready to help. What's on your mind?",
       "How can Qurious assist you today?",
@@ -42,7 +43,7 @@ export default function Home() {
       `Type to begin.`,
     ];
     return greetings[Math.floor(Math.random() * greetings.length)];
-  }
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-6">
@@ -54,12 +55,12 @@ export default function Home() {
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
           <motion.div
-            className="text-4xl font-medium"
+            className="text-4xl font-medium text-center"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            {getRandomGreeting()}
+            {randomGreeting}
           </motion.div>
         </motion.div>
 
