@@ -178,9 +178,9 @@ export const SearchBar = (props: { q?: string; options?: typeof FILTERS }) => {
               disabled={search.trim().length === 0}
               data-testid="search-submit"
             >
-              <Link href={`/search?q=${search}`}>
-                <ChevronRight />
-              </Link>
+              {/* <Link href={`/search?q=${search}`}> */}
+              <ChevronRight />
+              {/* </Link> */}
             </Button>
           </motion.div>
         </CardFooter>
