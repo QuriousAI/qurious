@@ -8,7 +8,15 @@
     "test:coverage": "vitest run --coverage schema.test.ts credits.test.ts"
   },
   "exports": {
-    "./*": "./convex/*"
+    "./*": "./convex/*",
+    "./_generated/*": "./convex/_generated/*"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./convex/*"
+      ]
+    }
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.13",
