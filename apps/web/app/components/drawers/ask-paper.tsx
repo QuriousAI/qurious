@@ -150,9 +150,7 @@ export const AskPaperDrawer = ({ paper }: AskPaperDrawerProps) => {
           <SheetTitle className="flex items-center gap-2 text-lg pr-8">
             <span className="line-clamp-2">{paper.title}</span>
             {paper.isOpenAccess && (
-              <Badge variant="success" className="flex-shrink-0">
-                Open Access
-              </Badge>
+              <Badge className="flex-shrink-0">Open Access</Badge>
             )}
           </SheetTitle>
           <SheetDescription className="text-sm">
