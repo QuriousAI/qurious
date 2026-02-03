@@ -27,13 +27,13 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="antialiased">
         <ClerkProvider>
-          <PostHogProvider>
-            <ConvexWithClerkProvider>
-              <ThemeProvider>
-                <FontProvider>{children}</FontProvider>
-              </ThemeProvider>
-            </ConvexWithClerkProvider>
-          </PostHogProvider>
+          {/* <PostHogProvider> */}
+          <ConvexWithClerkProvider>
+            <ThemeProvider>
+              <FontProvider>{children}</FontProvider>
+            </ThemeProvider>
+          </ConvexWithClerkProvider>
+          {/* </PostHogProvider> */}
         </ClerkProvider>
         <Analytics />
       </body>
