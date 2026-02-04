@@ -13,7 +13,9 @@ export const fetchSemanticScholarAPI = async <T>(
   apiKey?: string,
 ) => {
   const id = nanoid();
-  console.log(`[${id}] Making request to ${url}`);
+  console.log(
+    `[${id}] Making request to ${url} ${apiKey ? "with API key" : "without API key"}`,
+  );
 
   const headers: HeadersInit = {
     ...init?.headers,
