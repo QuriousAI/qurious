@@ -29,11 +29,7 @@ export const createFromClerk = internalMutation({
     data: v.any() as Validator<UserJSON>,
   },
   async handler(ctx, args) {
-    const email = args.data.primary_email_address_id;
-
-    if (!email) {
-      throw new Error("Email not found");
-    }
+    const email = args.data.email_addresses?.[0]?.email_address;
 
     const userAttributes = {
       clerkId: args.data.id,
