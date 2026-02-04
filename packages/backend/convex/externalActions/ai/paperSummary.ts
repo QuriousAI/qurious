@@ -80,8 +80,11 @@ export const streamSummary = httpAction(async (ctx, request) => {
       },
     );
   }
+  console.log("Credits deducted successfully");
 
   const body = await request.json();
+
+  console.log("Body received");
 
   // AI SDK useChat sends: { messages: Message[], id: string, ...body }
   const messages = body.messages as Array<{ role: string; content: string }>;
@@ -105,6 +108,8 @@ export const streamSummary = httpAction(async (ctx, request) => {
     model: MODELS.PAPER_SUMMARY,
     prompt,
   });
+
+  console.log("Result received");
 
   return result.toUIMessageStreamResponse({
     headers: {
