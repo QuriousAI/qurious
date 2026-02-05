@@ -32,11 +32,14 @@ const SUMMARIZE_PAPER_PROMPT = (
   Papers: ${papers}`;
 
 export const streamSummary = httpAction(async (ctx, request) => {
+  console.log({ request });
   console.log("Request received");
 
+  console.log("Getting user identity");
   // Check authentication
   const identity = await ctx.auth.getUserIdentity();
   if (!identity) {
+    console.log("User identity not found");
     return new Response(
       JSON.stringify({
         error: "Unauthorized. Please sign in to use this feature.",
@@ -50,9 +53,10 @@ export const streamSummary = httpAction(async (ctx, request) => {
       },
     );
   }
-
+  console.log("User identity found");
   const clerkId = identity.subject;
 
+  console.log("Checking and deducting credits");
   // Check and deduct credits before streaming
   try {
     await ctx.runMutation(

@@ -42,7 +42,7 @@ import { DefaultChatTransport } from "ai";
 
 import { TextShimmer } from "@workspace/design-system/components/motion-primitives/text-shimmer";
 import { env } from "@/env";
-
+import { useAuth } from "@clerk/clerk-react";
 // ============================================================================
 // Types
 // ============================================================================
@@ -385,6 +385,22 @@ export const SearchResults = ({
     ".site",
   );
 
+  const { getToken } = useAuth();
+  // const [token, setToken] = useState<string | null>(null);
+
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   getToken({ template: "convex" }).then((fetchedToken) => {
+  //     if (isMounted) {
+  //       setToken(fetchedToken);
+  //       console.log("Token", fetchedToken);
+  //     }
+  //   });
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, [getToken]);
+
   const {
     messages,
     sendMessage,
@@ -393,6 +409,20 @@ export const SearchResults = ({
   } = useChat({
     transport: new DefaultChatTransport({
       api: `${CONVEX_SITE_URL}/ai`,
+      headers: async () => {
+        const token = await getToken({ template: "convex" });
+       headers: async () => {
+         const token = await getToken({ template: "convex" });
+         return {
+           "Content-Type": "application/json",
+           Authorization: `Bearer ${token}`,
+         };
+       },
+        return {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+      },
     }),
   });
 
