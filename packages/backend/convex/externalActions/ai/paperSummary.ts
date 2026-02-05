@@ -32,6 +32,7 @@ const SUMMARIZE_PAPER_PROMPT = (
   Papers: ${papers}`;
 
 export const streamSummary = httpAction(async (ctx, request) => {
+  console.log({ request });
   console.log("Request received");
 
   console.log("Getting user identity");

@@ -13,6 +13,7 @@
     "@ai-sdk/react": "^3.0.70",
     "@citation-js/core": "^0.7.21",
     "@citation-js/plugin-csl": "^0.7.22",
+    "@clerk/clerk-react": "^5.60.0",
     "@clerk/nextjs": "^6.37.1",
     "@clerk/themes": "^2.4.51",
     "@convex-dev/persistent-text-streaming": "^0.3.0",
