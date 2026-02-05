@@ -411,13 +411,6 @@ export const SearchResults = ({
       api: `${CONVEX_SITE_URL}/ai`,
       headers: async () => {
         const token = await getToken({ template: "convex" });
-       headers: async () => {
-         const token = await getToken({ template: "convex" });
-         return {
-           "Content-Type": "application/json",
-           Authorization: `Bearer ${token}`,
-         };
-       },
         return {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
