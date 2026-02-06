@@ -11,6 +11,7 @@ import {
 } from "@workspace/design-system/icons";
 import { GeistSans, GeistMono } from "@workspace/design-system/font";
 import { ThemeProvider } from "@workspace/design-system/providers/theme-provider";
+import { env } from "@/env";
 
 export default function GlobalError({
   error,
@@ -61,7 +62,7 @@ export default function GlobalError({
                 <div className="flex gap-3">
                   <Button asChild size="sm" variant="outline" className="gap-2">
                     <a
-                      href="https://discord.gg/nQrrQThpBn"
+                      href={env.NEXT_PUBLIC_DISCORD_URL ?? "#"}
                       target="_blank"
                       rel="noopener noreferrer"
                     >

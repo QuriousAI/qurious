@@ -1,5 +1,6 @@
 "use client";
 
+import { env } from "@/env";
 import { Button } from "@workspace/design-system/components/button";
 import { SquareArrowOutUpRight, XIcon } from "@workspace/design-system/icons";
 import Link from "next/link";
@@ -9,7 +10,7 @@ import { useLocalStorage } from "react-use";
 export const AlphaWarning = () => {
   const [dismissedAlphaWarning, setDismissedAlphaWarning] = useLocalStorage(
     "dismissedAlphaWarning",
-    false
+    false,
   );
 
   if (dismissedAlphaWarning) {
@@ -24,7 +25,8 @@ export const AlphaWarning = () => {
         This is a pre-alpha version. Features may not work as expected and are
         bound to break. Report any bugs on the{" "}
         <Link
-          href="https://discord.gg/2a346Rf7me"
+          href={env.NEXT_PUBLIC_DISCORD_URL ?? "#"}
+          target="_blank"
           className="flex items-center gap-1 underline underline-offset-2"
         >
           Discord

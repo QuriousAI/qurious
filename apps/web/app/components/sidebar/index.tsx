@@ -24,6 +24,7 @@ import { SignUpButton } from "@clerk/nextjs";
 import { Button } from "@workspace/design-system/components/button";
 import { SearchGroup, SidebarMenuItem_UserDropdown } from "./authenticated";
 import { Skeleton } from "@workspace/design-system/components/skeleton";
+import { env } from "@/env";
 
 const SearchGroupSkeleton = () => {
   return (
@@ -150,7 +151,8 @@ export function AppSidebar() {
             >
               <Link
                 className="flex justify-center items-center gap-1"
-                href="https://discord.gg/2a346Rf7me"
+                href={env.NEXT_PUBLIC_DISCORD_URL ?? "#"}
+                target="_blank"
               >
                 <Discord className="size-5" /> Join the Discord!
                 <SquareArrowOutUpRight className="ml-1 size-5" />
