@@ -76,13 +76,19 @@
 
 ### Tech Stack
 
-- **Tooling:** Turborepo, Git
-- **Frontend:** Next.js, React, Tailwind CSS, shadcn/ui
-- **Backend:** Convex
-- **AI:** Vercel AI SDK
-- **Auth:** Clerk
-- **Analytics:** PostHog
-- **Deployment:** Vercel
+| Stack Layer                    | Technologies                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tooling**                    | <img src="assets/turborepo.svg" alt="Turborepo" width="20" style="vertical-align:middle;display:inline-block;" /> Turborepo &#124; Git                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| **Frontend**                   | <img src="assets/nextjs.svg" alt="Next.js" width="20" style="vertical-align:middle;display:inline-block;" /> Next.js &#124; <img src="assets/react.svg" alt="React" width="20" style="vertical-align:middle;display:inline-block;" /> React &#124; <img src="assets/tailwindcss.svg" alt="Tailwind CSS" width="20" style="vertical-align:middle;display:inline-block;" /> Tailwind CSS &#124; <img src="assets/shadcn-ui.svg" alt="shadcn/ui" width="20" style="vertical-align:middle;display:inline-block;" /> shadcn/ui &#124; <img src="assets/tanstack.svg" alt="TanStack Query" width="20" style="vertical-align:middle;display:inline-block;" /> TanStack Query |
+| **Backend**                    | <img src="assets/convex.svg" alt="Convex" width="20" style="vertical-align:middle;display:inline-block;" /> Convex                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **AI**                         | <img src="assets/vercel.svg" alt="Vercel AI SDK" width="20" style="vertical-align:middle;display:inline-block;" /> Vercel AI SDK                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| **Email**                      | <img src="assets/resend.svg" alt="Resend" width="20" style="vertical-align:middle;display:inline-block;" /> Resend                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **Payments**                   | <img src="assets/dodo-payments.svg" alt="DodoPayments" width="20" style="vertical-align:middle;display:inline-block;" /> DodoPayments                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| **Auth**                       | <img src="assets/clerk.svg" alt="Clerk" width="20" style="vertical-align:middle;display:inline-block;" /> Clerk                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| **Analytics & Error Tracking** | <img src="assets/posthog.svg" alt="PostHog" width="20" style="vertical-align:middle;display:inline-block;" /> PostHog                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| **Deployment**                 | <img src="assets/vercel.svg" alt="Vercel" width="20" style="vertical-align:middle;display:inline-block;" /> Vercel                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+
+<!-- Insert Semantic Scholar here -->
 
 ---
 
@@ -96,6 +102,7 @@
 ---
 
 ### Installation
+
 ```bash
 pnpm install
 ```
@@ -103,6 +110,7 @@ pnpm install
 This installs all workspace dependencies and tooling.
 
 ### One-time setup (Convex)
+
 ```bash
 pnpm run convex:login
 ```
@@ -110,6 +118,7 @@ pnpm run convex:login
 ### Environment Configuration
 
 Create a .env.local file in apps/web:
+
 ```bash
 CONVEX_URL=your_convex_url_here
 ```
@@ -117,25 +126,29 @@ CONVEX_URL=your_convex_url_here
 ### Run locally
 
 Run all services:
+
 ```bash
 pnpm dev
 ```
 
 Run without browser or web API apps:
+
 ```bash
 pnpm dev:no-ui
 
-or 
+or
 
 pnpm dev --filter=!browser-app --filter=!web-api
 ```
 
 Run Convex backend only:
+
 ```bash
 pnpm convex:dev
 ```
 
 ### Testing
+
 ```bash
 pnpm test
 ```
@@ -185,7 +198,7 @@ MIT License. See the [LICENSE](LICENSE) file for details.
 
 **Website:** [quriousai.xyz](https://quriousai.xyz)
 
-**Twitter/X:** [@QuriousAI_](https://x.com/QuriousAI_)
+**Twitter/X:** [@QuriousAI\_](https://x.com/QuriousAI_)
 
 **Discord:** [Join our server](https://discord.gg/nQrrQThpBn)
 
