@@ -18,7 +18,7 @@ export const sendWelcomeEmail = internalMutation({
     const { email, name } = args;
 
     await resend.sendEmail(ctx, {
-      from: "Qurious <onboarding@resend.dev>", // TODO: Update with your actual domain
+      from: "Qurious <welcome@quriousai.xyz>",
       to: email,
       subject: "Welcome to Qurious! 🎉",
       html: `
