@@ -88,7 +88,10 @@
 | **Analytics & Error Tracking** | <img src="assets/posthog.svg" alt="PostHog" width="20" style="vertical-align:middle;display:inline-block;" /> PostHog                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | **Deployment**                 | <img src="assets/vercel.svg" alt="Vercel" width="20" style="vertical-align:middle;display:inline-block;" /> Vercel                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 
-<!-- Insert Semantic Scholar here -->
+_The project couldn't be possible without:_
+<a href="https://www.semanticscholar.org/" target="_blank">
+<img src="assets/semantic-scholar.svg" alt="Semantic Scholar" style="vertical-align:middle;display:inline-block;" />
+</a>
 
 ---
 
