@@ -20,6 +20,7 @@ export function ConvexWithClerkProvider({ children }: { children: ReactNode }) {
       queries: {
         queryKeyHashFn: convexQueryClient.hashFn(),
         queryFn: convexQueryClient.queryFn(),
+        refetchOnWindowFocus: false,
       },
     },
   });
