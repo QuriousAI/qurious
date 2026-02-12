@@ -7,7 +7,7 @@
 <p align="center">
   <strong>AI-powered research discovery, summarization, and organization.</strong>
   <br/>
-  <strong>Open source alternative to Consensus & SciSpace.</strong>
+  <strong>Open source alternative to Google Scholar, Consensus and SciSpace.</strong>
 </p>
 
 <p align="center">
