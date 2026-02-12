@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/Qurious_Logo_Final__NO_BG.png" alt="Qurious Banner" />
+  <img src="assets/Qurious_Logo_Final__NO_BG.png" alt="Qurious Logo" width=80 />
 </p>
 
 <h1 align="center">Qurious</h1>
