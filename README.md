@@ -60,6 +60,8 @@
 
 **Qurious** is an AI-powered research assistant that helps researchers, students, and curious minds **find, understand, and organize scientific literature faster**.
 
+![](assets/Qurious_Video.mp4)
+
 ---
 
 ## Features
