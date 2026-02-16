@@ -19,7 +19,7 @@ const metadataBase = new URL(`https://quriousai.xyz`);
 export const createMetadata = ({
   title,
   description,
-  image,
+  image = "https://quriousai.xyz/image.png",
   ...properties
 }: MetadataGenerator): Metadata => {
   const parsedTitle = `${title} | ${applicationName}`;
@@ -27,7 +27,7 @@ export const createMetadata = ({
     title: parsedTitle,
     description,
     applicationName,
-    icons: "./logo.svg",
+    icons: "https://quriousai.xyz/logo.svg",
     metadataBase,
     authors: [author],
     creator: author.name,

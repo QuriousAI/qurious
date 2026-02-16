@@ -14,7 +14,7 @@ import { createMetadata } from "@workspace/seo/metadata";
 import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = createMetadata({
-  title: APP_NAME,
+  title: "Home",
   description: APP_DESCRIPTION,
 });
 
