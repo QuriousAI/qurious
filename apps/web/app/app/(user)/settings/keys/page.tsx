@@ -7,10 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@workspace/design-system/components/card";
+import { createMetadata } from "@workspace/seo/metadata";
 
-export const metadata = {
-  title: "API Keys | Qurious",
-};
+export const metadata = createMetadata({
+  title: "API Keys",
+  description: "Manage your API keys for external integrations",
+});
 
 export default function KeysSettingsPage() {
   return (

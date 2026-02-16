@@ -1,5 +1,6 @@
 import { api } from "@workspace/backend/_generated/api";
 import { fetchAction } from "convex/nextjs";
+import { createMetadata } from "@workspace/seo/metadata";
 import { PaperLayoutClient } from "./client";
 
 type Props = {
@@ -36,11 +37,16 @@ export async function generateMetadata({
       },
     );
 
-    return {
-      title: `${paper.title} | Paper | Qurious`,
-    };
+    return createMetadata({
+      title: `${paper.title} | Paper`,
+      description:
+        paper.tldr?.text || paper.abstract || "View paper details on Qurious",
+    });
   } catch {
-    return { title: "Paper | Qurious" };
+    return createMetadata({
+      title: "Paper",
+      description: "View paper details on Qurious",
+    });
   }
 }
 

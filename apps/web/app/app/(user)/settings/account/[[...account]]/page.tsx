@@ -9,10 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@workspace/design-system/components/card";
+import { createMetadata } from "@workspace/seo/metadata";
 
-export const metadata = {
-  title: "Account Settings | Qurious",
-};
+export const metadata = createMetadata({
+  title: "Account Settings",
+  description: "Manage your account profile and authentication settings",
+});
 
 export default function AccountSettingsPage() {
   return (

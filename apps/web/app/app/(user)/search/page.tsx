@@ -5,6 +5,7 @@ import {
   fieldsOfStudy,
   publicationTypes,
 } from "@workspace/semantic-scholar/src/index";
+import { createMetadata } from "@workspace/seo/metadata";
 
 import { SearchResults } from "./client";
 
@@ -33,9 +34,12 @@ export async function generateMetadata(props: Props) {
   const searchParams = await props.searchParams;
   const { q } = searchParamsSchema.parse(searchParams);
 
-  return {
-    title: q ? `${q} | Search | Qurious` : "Search | Qurious",
-  };
+  return createMetadata({
+    title: q ? `${q} | Search` : "Search",
+    description: q
+      ? `Search results for "${q}" on Qurious`
+      : "Search for research papers and academic content",
+  });
 }
 
 export default async function SearchPage(props: Props) {

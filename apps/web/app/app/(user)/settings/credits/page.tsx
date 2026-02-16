@@ -1,10 +1,12 @@
 import { Heading } from "@/components/global-heading";
 import { CreditsClient } from "./client";
 import { CreditCard } from "@workspace/design-system/icons";
+import { createMetadata } from "@workspace/seo/metadata";
 
-export const metadata = {
-  title: "Credits | Qurious",
-};
+export const metadata = createMetadata({
+  title: "Credits",
+  description: "Manage your credits and billing preferences",
+});
 
 export default function CreditsSettingsPage() {
   return (

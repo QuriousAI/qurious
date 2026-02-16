@@ -7,10 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@workspace/design-system/components/card";
+import { createMetadata } from "@workspace/seo/metadata";
 
-export const metadata = {
-  title: "Webhooks | Qurious",
-};
+export const metadata = createMetadata({
+  title: "Webhooks",
+  description: "Configure webhooks for real-time notifications",
+});
 
 export default function WebhooksSettingsPage() {
   return (

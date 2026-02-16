@@ -1,5 +1,4 @@
 import "@workspace/design-system/styles/globals.css";
-import type { Metadata } from "next";
 import { GeistSans, GeistMono } from "@workspace/design-system/font";
 
 // Providers
@@ -10,13 +9,14 @@ import { FontProvider } from "@workspace/design-system/providers/font-provider";
 import { PostHogProvider } from "@/providers/posthog-provider";
 
 import { APP_DESCRIPTION, APP_NAME } from "@workspace/design-system/content";
+import { createMetadata } from "@workspace/seo/metadata";
 
 import { Analytics } from "@vercel/analytics/next";
 
-export const metadata: Metadata = {
-  title: APP_NAME,
+export const metadata = createMetadata({
+  title: "Home",
   description: APP_DESCRIPTION,
-};
+});
 
 export default function RootLayout({
   children,

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "@workspace/design-system/styles/globals.css";
 
@@ -10,11 +9,12 @@ import { ThemeProvider } from "@workspace/design-system/providers/theme-provider
 import { APP_DESCRIPTION, APP_NAME } from "@workspace/design-system/content";
 import { Separator } from "@workspace/design-system/components/separator";
 import { Footer } from "@/components/footer";
+import { createMetadata } from "@workspace/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: APP_NAME,
   description: APP_DESCRIPTION,
-};
+});
 
 const BackgroundGridsAndBlob = () => {
   return (

@@ -1,0 +1,7 @@
+{
+  "name": "@workspace/seo",
+  "packageManager": "pnpm@10.18.2",
+  "dependencies": {
+    "next": "^16.1.6"
+  }
+}

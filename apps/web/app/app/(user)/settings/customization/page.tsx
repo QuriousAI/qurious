@@ -1,10 +1,12 @@
 import { Heading } from "@/components/global-heading";
 import { ContentSettingsBox } from "./client";
 import { Palette } from "@workspace/design-system/icons";
+import { createMetadata } from "@workspace/seo/metadata";
 
-export const metadata = {
-  title: "Customization Settings | Qurious",
-};
+export const metadata = createMetadata({
+  title: "Customization Settings",
+  description: "Customize your AI preferences and appearance",
+});
 
 export default function CustomizationSettingsPage() {
   return (
