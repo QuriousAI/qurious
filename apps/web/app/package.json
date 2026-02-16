@@ -28,6 +28,7 @@
     "@workspace/backend": "workspace:*",
     "@workspace/design-system": "workspace:*",
     "@workspace/semantic-scholar": "workspace:*",
+    "@workspace/seo": "workspace:*",
     "ai": "^6.0.68",
     "convex": "^1.31.7",
     "d3": "^7.9.0",

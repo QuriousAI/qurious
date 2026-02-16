@@ -246,6 +246,9 @@ importers:
       '@workspace/semantic-scholar':
         specifier: workspace:*
         version: link:../../../packages/semantic-scholar
+      '@workspace/seo':
+        specifier: workspace:*
+        version: link:../../../packages/seo
       ai:
         specifier: ^6.0.68
         version: 6.0.68(zod@3.25.76)
