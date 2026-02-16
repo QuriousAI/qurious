@@ -73,8 +73,6 @@ export const createMetadata = ({
 
   const metadata: Metadata = { ...defaultMetadata, ...properties };
 
-  console.log(metadata);
-
   if (image && metadata.openGraph) {
     metadata.openGraph.images = [
       {
@@ -84,6 +82,9 @@ export const createMetadata = ({
         alt: title,
       },
     ];
+    if (metadata.twitter) {
+      metadata.twitter.images = [image];
+    }
   }
 
   return metadata;
