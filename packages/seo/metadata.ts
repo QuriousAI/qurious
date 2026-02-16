@@ -27,6 +27,7 @@ export const createMetadata = ({
     title: parsedTitle,
     description,
     applicationName,
+    icons: "./logo.svg",
     metadataBase,
     authors: [author],
     creator: author.name,
@@ -53,6 +54,8 @@ export const createMetadata = ({
   };
 
   const metadata: Metadata = { ...defaultMetadata, ...properties };
+
+  console.log(metadata);
 
   if (image && metadata.openGraph) {
     metadata.openGraph.images = [
