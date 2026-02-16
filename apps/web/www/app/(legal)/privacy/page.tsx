@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { APP_NAME, LEGAL_CONFIG } from "@workspace/design-system/content";
+import { createMetadata } from "@workspace/seo/metadata";
 
-export const metadata: Metadata = {
-  title: `Privacy Policy | ${APP_NAME}`,
+export const metadata = createMetadata({
+  title: "Privacy Policy",
   description: `Privacy Policy for ${APP_NAME} - Learn how we collect, use, and protect your data.`,
-};
+});
 
 export default function PrivacyPage() {
   return (

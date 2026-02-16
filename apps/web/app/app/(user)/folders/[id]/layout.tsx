@@ -1,6 +1,7 @@
 import { fetchQuery } from "convex/nextjs";
 import { api } from "@workspace/backend/_generated/api";
 import { Id } from "@workspace/backend/_generated/dataModel";
+import { createMetadata } from "@workspace/seo/metadata";
 import { FolderLayoutClient } from "./client";
 
 type Props = {
@@ -19,11 +20,15 @@ export async function generateMetadata({
       folderId: id as Id<"folders">,
     });
 
-    return {
-      title: `${folder.name} | Folder | Qurious`,
-    };
+    return createMetadata({
+      title: `${folder.name} | Folder`,
+      description: `View and manage papers and searches in the ${folder.name} folder`,
+    });
   } catch {
-    return { title: "Folder | Qurious" };
+    return createMetadata({
+      title: "Folder",
+      description: "View and manage papers and searches in this folder",
+    });
   }
 }
 

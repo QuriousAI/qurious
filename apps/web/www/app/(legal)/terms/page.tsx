@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { APP_NAME, LEGAL_CONFIG } from "@workspace/design-system/content";
+import { createMetadata } from "@workspace/seo/metadata";
 
-export const metadata: Metadata = {
-  title: `Terms of Service | ${APP_NAME}`,
+export const metadata = createMetadata({
+  title: "Terms of Service",
   description: `Terms of Service for ${APP_NAME} - A research tool for the AI age.`,
-};
+});
 
 export default function TermsPage() {
   return (

@@ -1,20 +1,21 @@
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { InlineTOC } from 'fumadocs-ui/components/inline-toc';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
-import { blog } from '@/lib/source';
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { InlineTOC } from "fumadocs-ui/components/inline-toc";
+import defaultMdxComponents from "fumadocs-ui/mdx";
+import { blog } from "@/lib/source";
+import { createMetadata } from "@workspace/seo/metadata";
 
 export async function generateMetadata(props: {
-    params: Promise<{ slug: string }>;
-  }) {
-    const params = await props.params;
-    const page = blog.getPage([params.slug]);
-    if (!page) notFound();
-    return {
-      title: page.data.title,
-      description: page.data.description,
-    };
-  }
+  params: Promise<{ slug: string }>;
+}) {
+  const params = await props.params;
+  const page = blog.getPage([params.slug]);
+  if (!page) notFound();
+  return createMetadata({
+    title: page.data.title,
+    description: page.data.description || "Blog post",
+  });
+}
 
 export default async function Page(props: {
   params: Promise<{ slug: string }>;
