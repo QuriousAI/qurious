@@ -18,6 +18,17 @@
 </p>
 
 <p align="center">
+<a href="https://peerlist.io/alrightsahil/project/quriousai" target="_blank" rel="noreferrer">
+				<img
+					src="https://peerlist.io/api/v1/projects/embed/PRJHMQ6QGEBGOQKRAHQRKAQ8J6BQPA?showUpvote=false&theme=dark"
+					alt="QuriousAI"
+					style="width: auto; height: 72px;"
+				/>
+			</a>
+</p>
+      
+
+<p align="center">
   <a href="https://app.quriousai.xyz" target="_blank">
     <img alt="Product Badge" src="https://img.shields.io/badge/Product-F04438">
   </a>
